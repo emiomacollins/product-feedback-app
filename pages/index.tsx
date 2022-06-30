@@ -12,7 +12,7 @@ import Show from '../components/Show';
 import { contentStyles } from '../components/styled-components/Content';
 import { Flex, flexStyles } from '../components/styled-components/Flex';
 import { Breakpoints } from '../constants/breakpoints';
-import fetchFeedbacks from './home/api';
+import fetchFeedbacks from '../home/api';
 
 const sortOptions: DropdownOption[] = [
 	{ label: 'Most Upvotes', value: 'most_options' },
