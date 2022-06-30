@@ -65,7 +65,7 @@ const Container = styled.div`
 const Toggle = styled.button<ExpandedProps>`
 	${flexStyles}
 	color: var(--white);
-	padding-block: 2rem;
+	padding-block: 1rem;
 
 	&:focus {
 		outline: 0;
