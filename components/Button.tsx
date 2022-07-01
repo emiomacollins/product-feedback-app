@@ -20,6 +20,7 @@ export const Container = styled.button<StyleProps>`
 	font-weight: 600;
 	background: var(--purple);
 	border-radius: var(--radius-400);
+	white-space: nowrap;
 	transition: all 0.2s;
 
 	&:hover,

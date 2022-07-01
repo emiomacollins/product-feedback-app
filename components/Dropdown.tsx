@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import ArrowDownIcon from '../assets/svgs/custom/ArrowDownIcon';
 import checkIconPath from '../assets/svgs/icon-check.svg';
@@ -13,13 +14,13 @@ export interface DropdownOption {
 
 interface Props {
 	label: string;
-	selected: DropdownOption;
 	options: DropdownOption[];
-	setValue: (value: DropdownOption) => void;
+	setValue: (value: any) => void;
 }
 
-export default function Dropdown({ label, selected, options, setValue }: Props) {
+export default function Dropdown({ label, options, setValue }: Props) {
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
+	const [selected, setSelected] = useState(options[0]);
 
 	return (
 		<Container ref={ref}>
@@ -37,7 +38,8 @@ export default function Dropdown({ label, selected, options, setValue }: Props) 
 						<Option
 							key={label}
 							onClick={() => {
-								setValue(option);
+								setValue(value);
+								setSelected(option);
 								setExpanded(false);
 							}}
 						>
@@ -88,7 +90,7 @@ const Options = styled.div<ExpandedProps>`
 	box-shadow: var(--shadow-400);
 	background: var(--white);
 	position: absolute;
-	top: calc(100% + 1rem);
+	top: calc(100% + 2rem);
 	left: 0;
 	min-width: max-content;
 	overflow: hidden;

@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import closeIconPath from '../assets/svgs/icon-close.svg';
-import hamburgerIconPath from '../assets/svgs/icon-hamburger.svg';
-import useToggle from '../hooks/useToggle';
-import { contentStyles } from './styled-components/Content';
-import { Grid } from './styled-components/Grid';
-import { Overlay } from './styled-components/Overlay';
+import closeIconPath from '../../assets/svgs/icon-close.svg';
+import hamburgerIconPath from '../../assets/svgs/icon-hamburger.svg';
+import { contentStyles } from '../../components/styled-components/Content';
+import { Overlay } from '../../components/styled-components/Overlay';
+import useToggle from '../../hooks/useToggle';
+import Logo from './Logo';
 
 export default function Nav() {
 	const { expanded, toggle, setExpanded } = useToggle();
@@ -31,10 +31,7 @@ export default function Nav() {
 	return (
 		<Container navHeight={navHeight}>
 			<Content ref={navRef as any}>
-				<Grid gap={0}>
-					<h2>Frontend Mentor</h2>
-					<SubHeading>Feedback Board</SubHeading>
-				</Grid>
+				<Logo />
 
 				<Button onClick={toggle}>
 					<Icon visible={expanded}>
@@ -71,12 +68,6 @@ const Content = styled.div`
 	grid-template-columns: 1fr auto;
 	gap: 2rem;
 	padding-block: 1.5rem;
-`;
-
-const SubHeading = styled.p`
-	color: var(--light);
-	opacity: 0.8;
-	font-size: 350;
 `;
 
 const Button = styled.button`

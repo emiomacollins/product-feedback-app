@@ -21,9 +21,10 @@
 	--purple: #ad1fea;
 	--red: #d73737;
 	--white: #fff;
-	--light: #f7f8fd;
+	--light: #f2f4ff;
 	--blue: #4661e6;
 	--blue-light: #62bcfa;
+	--blue-light-300: #cfd7ff;
 	--blue-dark: #373f68;
 	--orange: #f49f85;
 	--gray: #647196;
@@ -38,7 +39,9 @@
 	);
 
 	--shadow-400: 0 0 30px 1px var(--black-transparent-100);
+
 	--radius-400: 0.6em;
+	--radius-500: 0.8em;
 }
 
 html,
