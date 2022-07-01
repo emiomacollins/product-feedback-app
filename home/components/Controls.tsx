@@ -9,16 +9,15 @@ import Show from '../../components/Show';
 import { contentStyles } from '../../components/styled-components/Content';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Breakpoints } from '../../constants/breakpoints';
+import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { setFeedbackSort } from '../../lib/redux/slices/feedback';
-import { Feedback, FeedbackSort } from '../../types/feedback';
+import { FeedbackSort } from '../../types/feedback';
 
-interface Props {
-	feedbacks: Feedback[];
-}
-
-export default function Controls({ feedbacks }: Props) {
+export default function Controls() {
 	const dispatch = useDispatch();
-	const count = feedbacks.length;
+	const { query } = useFeedbacks();
+	const { data: feedbacks } = query;
+	const count = feedbacks?.length;
 
 	function handleSetSort(value: FeedbackSort) {
 		dispatch(setFeedbackSort(value));

@@ -1,23 +1,20 @@
 import type { NextPage } from 'next';
-import { useQuery } from 'react-query';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import gradientPath from '../assets/images/gradient-desktop.png';
 import LoadQuery from '../components/LoadQuery';
 import Show from '../components/Show';
+import { Card } from '../components/styled-components/Card';
 import { Grid } from '../components/styled-components/Grid';
 import { Breakpoints } from '../constants/breakpoints';
-import fetchFeedbacks from '../home/api';
 import Controls from '../home/components/Controls';
-import FeedbackFilters from '../home/components/FeedbackFilters';
+import FeedbackList from '../home/components/FeedbackList';
+import Filters from '../home/components/Filters';
 import Logo from '../home/components/Logo';
 import Nav from '../home/components/Nav';
-import { getFeedbackFilter } from '../lib/redux/slices/feedback';
-import { Feedback } from '../types/feedback';
+import RoadmapCard from '../home/components/RoadmapCard';
+import { useFeedbacks } from '../hooks/useFeedbacks/useFeedbacks';
 
 const Home: NextPage = () => {
-	const fetchFeedbacksQuery = useQuery('fetchFeedbacks', fetchFeedbacks);
-	const filter = useSelector(getFeedbackFilter);
+	const { query } = useFeedbacks();
 
 	return (
 		<Container>
@@ -25,25 +22,25 @@ const Home: NextPage = () => {
 				<Nav />
 			</Show>
 
-			<LoadQuery query={fetchFeedbacksQuery}>
-				{(feedbacks: Feedback[]) => {
-					return (
-						<Columns>
-							<Show on={Breakpoints.tabletUp}>
-								<Cards gap={2.5}>
-									<LogoCard bg={gradientPath.src}>
-										<StyledLogo />
-									</LogoCard>
-									<FeedbackFilters />
-								</Cards>
-							</Show>
+			<LoadQuery query={query}>
+				{() => (
+					<Columns>
+						<Show on={Breakpoints.tabletUp}>
+							<Cards gap={2.5}>
+								<LogoCard>
+									<StyledLogo />
+								</LogoCard>
+								<Filters />
+								<RoadmapCard />
+							</Cards>
+						</Show>
 
-							<Grid>
-								<Controls feedbacks={feedbacks} />
-							</Grid>
-						</Columns>
-					);
-				}}
+						<Grid gap={2}>
+							<Controls />
+							<FeedbackList />
+						</Grid>
+					</Columns>
+				)}
 			</LoadQuery>
 		</Container>
 	);
@@ -51,13 +48,11 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const Container = styled.div`
-	display: grid;
-`;
+const Container = styled.div``;
 
 const Columns = styled.div`
 	display: grid;
-	gap: 2rem;
+	gap: 3rem;
 	align-items: flex-start;
 
 	@media ${Breakpoints.desktopUp} {
@@ -66,22 +61,16 @@ const Columns = styled.div`
 `;
 
 const Cards = styled(Grid)`
+	align-content: flex-start;
 	@media ${Breakpoints.desktopDown} {
 		grid-template-columns: repeat(3, 1fr);
 	}
 `;
 
-interface LogoCardProps {
-	bg: string;
-}
-
-const LogoCard = styled.div<LogoCardProps>`
+const LogoCard = styled(Card)`
 	display: grid;
 	align-items: flex-end;
-	background: url(${(p) => p.bg});
-	background-size: cover;
-	border-radius: var(--radius-400);
-	padding: 2rem;
+	background: var(--gradient);
 `;
 
 const StyledLogo = styled(Logo)`

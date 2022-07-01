@@ -3,7 +3,7 @@ import Spinner from './styled-components/Spinner';
 
 interface Props {
 	query: UseQueryResult;
-	children: (data: any) => JSX.Element;
+	children: (data?: any) => JSX.Element;
 	ErrorComponent?: JSX.Element;
 }
 

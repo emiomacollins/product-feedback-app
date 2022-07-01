@@ -22,6 +22,13 @@ export default function Dropdown({ label, options, setValue }: Props) {
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
 	const [selected, setSelected] = useState(options[0]);
 
+	function handleSetOption(option: DropdownOption) {
+		const { value } = option;
+		setValue(value);
+		setSelected(option);
+		setExpanded(false);
+	}
+
 	return (
 		<Container ref={ref}>
 			<Toggle onClick={toggle} expanded={expanded}>
@@ -35,16 +42,8 @@ export default function Dropdown({ label, options, setValue }: Props) {
 				{options.map((option) => {
 					const { label, value } = option;
 					return (
-						<Option
-							key={label}
-							onClick={() => {
-								setValue(value);
-								setSelected(option);
-								setExpanded(false);
-							}}
-						>
+						<Option key={label} onClick={() => handleSetOption(option)}>
 							{label}
-
 							<CheckIcon visible={value === selected.value}>
 								<Image src={checkIconPath} alt='' />
 							</CheckIcon>

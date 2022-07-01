@@ -6,7 +6,7 @@ import { flexStyles } from '../../components/styled-components/Flex';
 import { getFeedbackFilter, setFeedbackFilter } from '../../lib/redux/slices/feedback';
 import { FeedbackCategory } from '../../types/feedback';
 
-export default function FeedbackFilters() {
+export default function Filters() {
 	const filter = useSelector(getFeedbackFilter);
 	const dispatch = useDispatch();
 

@@ -52,6 +52,7 @@ body {
 	background: var(--light);
 	overflow-x: hidden !important;
 	min-height: 100vh;
+	color: var(--blue-dark);
 }
 
 h1,
@@ -62,21 +63,21 @@ h4 {
 }
 
 h1 {
-	font-size: var(--800);
+	font-size: var(--size-800);
 }
 h2 {
-	font-size: var(--700);
+	font-size: var(--size-700);
 }
 h3 {
-	font-size: var(--600);
+	font-size: var(--size-600);
 }
 h4 {
-	font-size: var(--400);
+	font-size: var(--size-400);
 }
 
 a {
-	color: inherit;
-	text-decoration: none;
+	color: var(--blue);
+	font-weight: 600 !important;
 }
 
 button {

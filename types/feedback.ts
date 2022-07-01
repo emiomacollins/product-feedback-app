@@ -21,6 +21,7 @@ export enum FeedbackStatus {
 }
 
 export interface Feedback {
+	id: string;
 	category: FeedbackCategory;
 	details: string;
 	status: FeedbackStatus;

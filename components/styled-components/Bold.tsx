@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
-export const Bold = styled.span`
-	font-weight: 600;
+interface Props {
+	weight?: number;
+}
+
+export const Bold = styled.span<Props>`
+	font-weight: ${(p) => p.weight || 600};
 `;
