@@ -68,10 +68,6 @@ const Toggle = styled.button<ExpandedProps>`
 	color: var(--white);
 	padding-block: 1rem;
 
-	&:focus {
-		outline: 0;
-	}
-
 	${(p) =>
 		p.expanded &&
 		css`
@@ -98,6 +94,7 @@ const Options = styled.div<ExpandedProps>`
 	pointer-events: none;
 	opacity: 0;
 	transition: transform 0.2s, opacity 0.1s;
+	z-index: 99;
 
 	${(p) =>
 		p.expanded &&

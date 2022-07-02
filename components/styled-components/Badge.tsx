@@ -14,7 +14,8 @@ export const Badge = styled.button<Props>`
 	font-weight: 600;
 	transition: all 0.2s;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		background: var(--blue-light-300);
 	}
 

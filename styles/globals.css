@@ -95,6 +95,7 @@ input {
 a:focus,
 button:focus,
 input:focus {
+	outline-offset: 2px;
 	outline-style: dashed;
 	outline-width: 2px;
 	outline-color: var(--white);

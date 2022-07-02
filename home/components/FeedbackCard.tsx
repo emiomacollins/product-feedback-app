@@ -64,6 +64,10 @@ const Container = styled(Card)`
 			color: var(--blue);
 		}
 	}
+
+	&:focus {
+		outline-color: var(--blue);
+	}
 `;
 
 const Info = styled(Grid)`
