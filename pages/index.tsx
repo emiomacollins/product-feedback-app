@@ -35,10 +35,10 @@ const Home: NextPage = () => {
 							</Cards>
 						</Show>
 
-						<Grid gap={2}>
+						<RightColumn>
 							<Controls />
 							<FeedbackList />
-						</Grid>
+						</RightColumn>
 					</Columns>
 				)}
 			</LoadQuery>
@@ -48,15 +48,18 @@ const Home: NextPage = () => {
 
 export default Home;
 
-const Container = styled.div``;
+const Container = styled.div`
+	display: grid;
+`;
 
 const Columns = styled.div`
 	display: grid;
-	gap: 3rem;
+	gap: 5rem;
 	align-items: flex-start;
 
 	@media ${Breakpoints.desktopUp} {
 		grid-template-columns: 300px 1fr;
+		gap: 3rem;
 	}
 `;
 
@@ -75,4 +78,11 @@ const LogoCard = styled(Card)`
 
 const StyledLogo = styled(Logo)`
 	margin-top: 2em;
+`;
+
+const RightColumn = styled(Grid)`
+	gap: 2rem;
+	@media ${Breakpoints.tabletUp} {
+		gap: 2.5rem;
+	}
 `;

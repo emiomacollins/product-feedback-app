@@ -1,13 +1,14 @@
 import styled, { css } from 'styled-components';
 
 interface Props {
-	active: boolean;
+	active?: boolean;
+	plain?: boolean;
 }
 
 export const Badge = styled.button<Props>`
 	background: var(--light);
 	text-transform: capitalize;
-	border-radius: var(--radius-500);
+	border-radius: var(--radius-400);
 	padding: 0.5rem 1.5rem;
 	color: var(--blue);
 	font-weight: 600;
@@ -16,6 +17,20 @@ export const Badge = styled.button<Props>`
 	&:hover {
 		background: var(--blue-light-300);
 	}
+
+	${(p) =>
+		p.plain &&
+		css`
+			cursor: default;
+
+			&:hover {
+				background: var(--light);
+			}
+
+			&:focus {
+				outline: 0;
+			}
+		`}
 
 	${(p) =>
 		p.active &&

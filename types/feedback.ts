@@ -26,4 +26,6 @@ export interface Feedback {
 	details: string;
 	status: FeedbackStatus;
 	title: string;
+	comments: string[];
+	upVotes: string[];
 }

@@ -6,12 +6,17 @@ import { flexStyles } from '../../components/styled-components/Flex';
 import { getFeedbackFilter, setFeedbackFilter } from '../../lib/redux/slices/feedback';
 import { FeedbackCategory } from '../../types/feedback';
 
-export default function Filters() {
+interface Props {
+	onClick?: () => void;
+}
+
+export default function Filters({ onClick }: Props) {
 	const filter = useSelector(getFeedbackFilter);
 	const dispatch = useDispatch();
 
 	function handleSetFilter(filter: FeedbackCategory | null) {
 		dispatch(setFeedbackFilter(filter));
+		onClick?.();
 	}
 
 	return (

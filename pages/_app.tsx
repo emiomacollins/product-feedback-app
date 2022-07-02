@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<QueryClientProvider client={queryClient}>
 				<Head>
 					<title>Feedback App</title>
-					<link rel='icon' href='/favicon.ico' />
+					<link rel='icon' href='/favicon_.ico' />
 				</Head>
 				<Layout>
 					<Component {...pageProps} />

@@ -29,7 +29,7 @@ export default function RoadmapCard() {
 			<RoadmapRow>
 				<Heading>Roadmap</Heading>
 				<Link href={routes.roadmap} passHref>
-					<a>View</a>
+					<BoldLink>View</BoldLink>
 				</Link>
 			</RoadmapRow>
 
@@ -79,4 +79,8 @@ const Dot = styled.span<DotProps>`
 	aspect-ratio: 1;
 	border-radius: 100%;
 	background: var(--${(p) => p.color || 'purple'});
+`;
+
+const BoldLink = styled.a`
+	font-weight: 600;
 `;

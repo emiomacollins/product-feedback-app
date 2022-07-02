@@ -6,7 +6,9 @@ import hamburgerIconPath from '../../assets/svgs/icon-hamburger.svg';
 import { contentStyles } from '../../components/styled-components/Content';
 import { Overlay } from '../../components/styled-components/Overlay';
 import useToggle from '../../hooks/useToggle';
+import Filters from './Filters';
 import Logo from './Logo';
+import RoadmapCard from './RoadmapCard';
 
 export default function Nav() {
 	const { expanded, toggle, setExpanded } = useToggle();
@@ -45,7 +47,10 @@ export default function Nav() {
 
 			<StyledOverlay expanded={expanded} onClick={handleClose} />
 
-			<Sidebar expanded={expanded}></Sidebar>
+			<Sidebar expanded={expanded}>
+				<Filters onClick={handleClose} />
+				<RoadmapCard />
+			</Sidebar>
 		</Container>
 	);
 }
@@ -88,7 +93,7 @@ interface ExpandedProps {
 	expanded: boolean;
 }
 
-const fixedStyles = css<ExpandedProps>`
+const absoluteStyles = css<ExpandedProps>`
 	position: absolute;
 	top: var(--nav-height);
 	height: calc(100vh - var(--nav-height));
@@ -102,14 +107,18 @@ const fixedStyles = css<ExpandedProps>`
 `;
 
 const Sidebar = styled.div<ExpandedProps>`
-	${fixedStyles}
+	${absoluteStyles}
 	right: 0;
+	padding: 2rem;
+	width: clamp(300px, 70%, 350px);
 	background: var(--light);
-	width: clamp(300px, 70%, 400px);
+	display: grid;
+	gap: 2rem;
+	align-content: flex-start;
 `;
 
 const StyledOverlay = styled(Overlay)`
-	${fixedStyles}
+	${absoluteStyles}
 	left: 0;
 	width: 100%;
 `;
