@@ -27,5 +27,6 @@ export interface Feedback {
 	status: FeedbackStatus;
 	title: string;
 	comments: string[];
-	upVotes: string[];
+	upVotes: { [userId: string]: boolean };
+	creator: string;
 }

@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled, { css } from 'styled-components';
 import { Color } from '../types/colors';
 
 interface StyleProps {
-	color?: Color;
+	$color?: Color;
 }
 
-interface Props extends StyleProps {
+interface Props extends StyleProps, ButtonHTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
 }
 
@@ -32,7 +32,11 @@ export const Container = styled.button<StyleProps>`
 		transform: scale(0.97);
 	}
 
-	${({ color }) => css`
+	&:disabled {
+		opacity: 0.6;
+	}
+
+	${({ $color: color }) => css`
 		background: var(--${color});
 	`}
 `;

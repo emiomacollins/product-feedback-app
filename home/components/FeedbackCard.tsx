@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
 import commentsIconPath from '../../assets/svgs/icon-comments.svg';
@@ -9,6 +10,8 @@ import { Flex } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
+import { useAuth } from '../../hooks/AuthProvider';
+import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../../types/feedback';
 
 interface Props {
@@ -17,29 +20,48 @@ interface Props {
 
 export default function FeedbackCard({ feedback }: Props) {
 	const { title, upVotes, comments, category, details, id } = feedback;
+	const { user } = useAuth();
 
-	function handleToggleUpvote() {}
+	const upVoted = upVotes[user?.uid || ''];
+	const upVoteCount = useMemo(() => {
+		return Object.keys(upVotes).length;
+	}, [upVotes]);
+
+	const {
+		query: { isLoading: loadingFeedbacks },
+		toggleUpvoteMutation: { mutate: toggleUpvoteMutation, isLoading: togglingUpvote },
+	} = useFeedbacks();
+
+	const handleToggleUpvote = () => {
+		toggleUpvoteMutation(feedback);
+	};
 
 	return (
-		<Link passHref href={`${routes.feedback}/${id}`}>
-			<Container as={'a'}>
+		<Container>
+			<Link href={`${routes.feedback}/${id}`}>
 				<Info>
 					<Title>{title}</Title>
 					<p>{details}</p>
-					<Badge plain>{category}</Badge>
+					<Badge $plain as={'div'}>
+						{category}
+					</Badge>
 				</Info>
+			</Link>
 
-				<Upvote>
-					<UpvoteIcon color='blue' />
-					<h4>{upVotes.length}</h4>
-				</Upvote>
+			<Upvote
+				onClick={handleToggleUpvote}
+				disabled={togglingUpvote || loadingFeedbacks}
+				$active={upVoted}
+			>
+				<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
+				<h4>{upVoteCount}</h4>
+			</Upvote>
 
-				<Comments>
-					<Image src={commentsIconPath} alt='' />
-					<h4>{comments.length}</h4>
-				</Comments>
-			</Container>
-		</Link>
+			<Comments>
+				<Image src={commentsIconPath} alt='' />
+				<h4>{comments.length}</h4>
+			</Comments>
+		</Container>
 	);
 }
 
@@ -74,6 +96,8 @@ const Info = styled(Grid)`
 	justify-items: left;
 	order: 1;
 	grid-column: 1/-1;
+	cursor: pointer;
+
 	@media ${Breakpoints.tabletUp} {
 		order: 2;
 		grid-column: unset;
@@ -87,7 +111,7 @@ const UpvoteIcon = styled(ArrowDownIcon)`
 const Upvote = styled(Badge)`
 	width: 5rem;
 	min-width: max-content;
-	color: var(--blue-dark);
+	color: var(--${(p) => (p.$active ? 'white' : 'blue-dark')});
 	justify-items: center;
 	gap: 0.8rem;
 	padding: 1rem;

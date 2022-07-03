@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import styled from 'styled-components';
 import { contentStyles } from '../components/styled-components/Content';
 import { Breakpoints } from '../constants/breakpoints';
+import { AuthProvider } from '../hooks/AuthProvider';
 import { store } from '../lib/redux/store';
 import '../styles/globals.css';
 
@@ -20,13 +21,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<Provider store={store}>
 			<QueryClientProvider client={queryClient}>
-				<Head>
-					<title>Feedback App</title>
-					<link rel='icon' href='/favicon_.ico' />
-				</Head>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<AuthProvider>
+					<Head>
+						<title>Feedback App</title>
+						<link rel='icon' href='/favicon_.ico' />
+					</Head>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</AuthProvider>
 			</QueryClientProvider>
 		</Provider>
 	);
@@ -36,7 +39,7 @@ export default MyApp;
 
 const Layout = styled.div`
 	@media ${Breakpoints.tabletUp} {
-		padding-block: 5rem;
+		padding-block: var(--app-padding);
 		${contentStyles}
 	}
 `;

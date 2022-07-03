@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 interface Props {
-	active?: boolean;
-	plain?: boolean;
+	$active?: boolean;
+	$plain?: boolean;
 }
 
 export const Badge = styled.button<Props>`
@@ -19,8 +19,12 @@ export const Badge = styled.button<Props>`
 		background: var(--blue-light-300);
 	}
 
+	&:disabled {
+		opacity: 0.4;
+	}
+
 	${(p) =>
-		p.plain &&
+		p.$plain &&
 		css`
 			cursor: default;
 
@@ -34,9 +38,9 @@ export const Badge = styled.button<Props>`
 		`}
 
 	${(p) =>
-		p.active &&
+		p.$active &&
 		css`
-			background: var(--blue);
+			background: var(--blue) !important;
 			color: var(--white);
 
 			&:hover {

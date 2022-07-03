@@ -21,14 +21,14 @@ export default function Filters({ onClick }: Props) {
 
 	return (
 		<Container>
-			<Badge active={!filter} onClick={() => handleSetFilter(null)}>
+			<Badge $active={!filter} onClick={() => handleSetFilter(null)}>
 				All
 			</Badge>
 
 			{Object.values(FeedbackCategory).map((category) => (
 				<Badge
 					key={category}
-					active={filter === category}
+					$active={filter === category}
 					onClick={() => handleSetFilter(category)}
 				>
 					{category}

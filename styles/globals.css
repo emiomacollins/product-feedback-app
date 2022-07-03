@@ -10,6 +10,9 @@
 
 :root {
 	font-size: 62.5%;
+
+	--app-padding: 5rem;
+
 	--size-300: clamp(1.2rem, 1.1vw, 1.4rem);
 	--size-350: clamp(1.3rem, 1.25vw, 1.6rem);
 	--size-400: clamp(1.4rem, 1.5vw, 1.8rem);
@@ -78,6 +81,11 @@ h4 {
 
 a {
 	color: var(--blue);
+}
+
+img,
+svg {
+	max-width: 100%;
 }
 
 button {
