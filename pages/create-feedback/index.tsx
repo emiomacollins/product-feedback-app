@@ -62,7 +62,7 @@ const Form = styled.form`
 	padding: 2rem 2.5rem;
 
 	@media ${Breakpoints.tabletUp} {
-		padding: 4rem;
+		padding: 4rem 3rem;
 	}
 `;
 

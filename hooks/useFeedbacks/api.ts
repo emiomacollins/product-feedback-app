@@ -5,7 +5,14 @@ import { Feedback } from '../../types/feedback';
 async function fetchFeedbacks() {
 	const ref = collection(db, `feedbacks`);
 	const snapshot = await getDocs(ref);
-	const feedbacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+	const feedbacks = snapshot.docs.map((doc) => {
+		const data = doc.data();
+		return {
+			id: doc.id,
+			...data,
+			dateAdded: new Date(data.dateAdded.toDate()).toISOString(),
+		};
+	});
 	return feedbacks as Feedback[];
 }
 

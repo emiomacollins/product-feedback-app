@@ -9,7 +9,7 @@ interface State {
 
 const initialState: State = {
 	categoryFilter: null,
-	sort: FeedbackSortBy.mostUpvotes,
+	sort: Object.values(FeedbackSortBy)[0],
 };
 
 const feedbacks = createSlice({

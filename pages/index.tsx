@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import LoadQuery from '../components/LoadQuery';
 import Show from '../components/Show';
 import { Card } from '../components/styled-components/Card';
 import { Grid } from '../components/styled-components/Grid';
@@ -19,7 +18,7 @@ interface Props {
 }
 
 const Home = ({ initialFeedbacks }: Props) => {
-	const { query } = useFeedbacks(initialFeedbacks);
+	useFeedbacks(initialFeedbacks);
 
 	return (
 		<Container>
@@ -27,26 +26,22 @@ const Home = ({ initialFeedbacks }: Props) => {
 				<Nav />
 			</Show>
 
-			<LoadQuery query={query}>
-				{() => (
-					<Columns>
-						<Show on={Breakpoints.tabletUp}>
-							<Cards gap={2.5}>
-								<LogoCard>
-									<StyledLogo />
-								</LogoCard>
-								<Filters />
-								<RoadmapCard />
-							</Cards>
-						</Show>
+			<Columns>
+				<Show on={Breakpoints.tabletUp}>
+					<Cards gap={2.5}>
+						<LogoCard>
+							<StyledLogo />
+						</LogoCard>
+						<Filters />
+						<RoadmapCard />
+					</Cards>
+				</Show>
 
-						<RightColumn>
-							<Controls />
-							<FeedbackList />
-						</RightColumn>
-					</Columns>
-				)}
-			</LoadQuery>
+				<RightColumn>
+					<Controls />
+					<FeedbackList />
+				</RightColumn>
+			</Columns>
 		</Container>
 	);
 };

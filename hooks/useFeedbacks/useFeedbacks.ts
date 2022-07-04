@@ -24,6 +24,13 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 		if (!feedbacks) return null;
 
 		type Order = 'asc' | 'desc';
+		type sortCallback = (a: Feedback, b: Feedback) => number;
+
+		const sortByMostRecent: sortCallback = (a, b) => {
+			const dateA = new Date(a.dateAdded);
+			const dateB = new Date(b.dateAdded);
+			return dateA > dateB ? -1 : 1;
+		};
 
 		const sortByUpVotes = (order: Order, a: Feedback, b: Feedback) => {
 			const oneGreater =
@@ -40,9 +47,8 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 			return 1;
 		};
 
-		type sortCallback = (a: Feedback, b: Feedback) => number;
-
 		const sortByFunctionMappings: { [FeedbackSortBy: string]: sortCallback } = {
+			[FeedbackSortBy.mostRecent]: sortByMostRecent,
 			[FeedbackSortBy.mostUpvotes]: (...args) => sortByUpVotes('asc', ...args),
 			[FeedbackSortBy.leastUpvotes]: (...args) => sortByUpVotes('desc', ...args),
 			[FeedbackSortBy.mostComments]: (...args) => sortByComments('asc', ...args),
