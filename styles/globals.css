@@ -41,7 +41,7 @@
 		#28a7ed 100%
 	);
 
-	--shadow-400: 0 0 30px 1px var(--black-transparent-100);
+	--shadow-400: 0 0 30px 10px var(--black-transparent-100);
 
 	--radius-300: 0.4em;
 	--radius-400: 0.6em;

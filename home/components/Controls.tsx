@@ -72,6 +72,7 @@ const Container = styled.div`
 const Content = styled.div`
 	${flexStyles}
 	justify-content: space-between;
+	justify-items: left;
 	flex-wrap: wrap;
 	gap: 1rem;
 	padding-block: 1rem;
@@ -86,12 +87,6 @@ const Content = styled.div`
 		grid-template-columns: auto 1fr auto;
 		gap: 1rem 4rem;
 	}
-`;
-
-const Icon = styled.div`
-	width: 1.5rem;
-	aspect-ratio: 1;
-	display: flex;
 `;
 
 const Count = styled.div`

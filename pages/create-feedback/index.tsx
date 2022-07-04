@@ -8,6 +8,7 @@ import { contentStyles } from '../../components/styled-components/Content';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import Textbox from '../../components/Textbox';
+import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 
 export default function CreateFeedback() {
@@ -50,6 +51,10 @@ const Container = styled.div`
 	max-width: 600px;
 	display: grid;
 	gap: 4rem;
+
+	@media ${Breakpoints.tabletDown} {
+		padding-top: var(--app-padding);
+	}
 `;
 
 const StyledArrowIcon = styled(ArrowDownIcon)`
@@ -58,7 +63,11 @@ const StyledArrowIcon = styled(ArrowDownIcon)`
 
 const Form = styled.form`
 	${cardStyles}
-	padding-block: 4rem;
+	padding: 2rem 2.5rem;
+
+	@media ${Breakpoints.tabletUp} {
+		padding: 4rem;
+	}
 `;
 
 const Heading = styled.h2`
