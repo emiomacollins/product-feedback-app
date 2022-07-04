@@ -61,6 +61,7 @@ interface NavHeightProps {
 
 const Container = styled.div<NavHeightProps>`
 	--nav-height: ${(p) => p.navHeight}px;
+	margin-top: calc(-1 * var(--app-padding));
 	background: var(--gradient);
 	color: var(--white);
 	position: relative;

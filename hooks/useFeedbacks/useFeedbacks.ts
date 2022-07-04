@@ -6,16 +6,17 @@ import {
 	getFeedbackSort,
 } from '../../lib/redux/slices/feedback';
 import { Feedback, FeedbackSortBy } from '../../types/feedback';
-import api from './api';
+import feedbacksApi from './api';
 
-export function useFeedbacks() {
+export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 	const queryClient = useQueryClient();
 	const fetchFeedbacksKey = 'fetchFeedbacks';
 	const sortBy = useSelector(getFeedbackSort);
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
 
-	const query = useQuery(fetchFeedbacksKey, api.fetchFeedbacks, {
+	const query = useQuery(fetchFeedbacksKey, feedbacksApi.fetchFeedbacks, {
 		cacheTime: Infinity,
+		initialData: initialFeedbacks,
 	});
 
 	const processedFeedbacks = useMemo(() => {
@@ -56,7 +57,7 @@ export function useFeedbacks() {
 		return filteredFeedbacks;
 	}, [sortBy, categoryFilter, query]);
 
-	const toggleUpvoteMutation = useMutation('toggleUpvote', api.toggleUpvote, {
+	const toggleUpvoteMutation = useMutation('toggleUpvote', feedbacksApi.toggleUpvote, {
 		onSuccess() {
 			queryClient.invalidateQueries(fetchFeedbacksKey);
 		},

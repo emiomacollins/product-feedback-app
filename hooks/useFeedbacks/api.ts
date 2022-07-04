@@ -30,9 +30,9 @@ async function toggleUpvote(feedbackId: string) {
 	});
 }
 
-const api = {
+const feedbacksApi = {
 	fetchFeedbacks,
 	toggleUpvote,
 };
 
-export default api;
+export default feedbacksApi;

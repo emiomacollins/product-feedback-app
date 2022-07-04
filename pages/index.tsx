@@ -1,4 +1,3 @@
-import type { NextPage } from 'next';
 import styled from 'styled-components';
 import LoadQuery from '../components/LoadQuery';
 import Show from '../components/Show';
@@ -11,10 +10,16 @@ import Filters from '../home/components/Filters';
 import Logo from '../home/components/Logo';
 import Nav from '../home/components/Nav';
 import RoadmapCard from '../home/components/RoadmapCard';
+import feedbacksApi from '../hooks/useFeedbacks/api';
 import { useFeedbacks } from '../hooks/useFeedbacks/useFeedbacks';
+import { Feedback } from '../types/feedback';
 
-const Home: NextPage = () => {
-	const { query } = useFeedbacks();
+interface Props {
+	initialFeedbacks: Feedback[];
+}
+
+const Home = ({ initialFeedbacks }: Props) => {
+	const { query } = useFeedbacks(initialFeedbacks);
 
 	return (
 		<Container>
@@ -74,6 +79,7 @@ const LogoCard = styled(Card)`
 	display: grid;
 	align-items: flex-end;
 	background: var(--gradient);
+	min-height: 160px;
 `;
 
 const StyledLogo = styled(Logo)`
@@ -82,7 +88,16 @@ const StyledLogo = styled(Logo)`
 
 const RightColumn = styled(Grid)`
 	gap: 2rem;
+
 	@media ${Breakpoints.tabletUp} {
 		gap: 2.5rem;
 	}
 `;
+
+export async function getServerSideProps() {
+	return {
+		props: {
+			initialFeedbacks: await feedbacksApi.fetchFeedbacks(),
+		},
+	};
+}

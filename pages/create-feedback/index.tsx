@@ -34,7 +34,7 @@ export default function CreateFeedback() {
 					</Grid>
 
 					<Buttons>
-						{/* For edition add delete here */}
+						{/* For editing add delete here */}
 						<Flex>
 							<Button $color='blue-dark'>Cancel</Button>
 							<Button>Add Feedback</Button>
@@ -51,10 +51,6 @@ const Container = styled.div`
 	max-width: 600px;
 	display: grid;
 	gap: 4rem;
-
-	@media ${Breakpoints.tabletDown} {
-		padding-top: var(--app-padding);
-	}
 `;
 
 const StyledArrowIcon = styled(ArrowDownIcon)`
