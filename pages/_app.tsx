@@ -38,6 +38,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 export default MyApp;
 
 const Layout = styled.div`
+	padding-bottom: var(--app-padding);
+
 	@media ${Breakpoints.tabletUp} {
 		padding-block: var(--app-padding);
 		${contentStyles}
