@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Bold } from '../../components/styled-components/Bold';
+import { BoldLink } from '../../components/styled-components/BoldLink';
 import { Card } from '../../components/styled-components/Card';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
@@ -10,12 +11,14 @@ import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { Color } from '../../types/colors';
 import { FeedbackStatus } from '../../types/feedback';
 
+type StatusCounts = { [status: string]: number };
+
 export default function RoadmapCard() {
 	const { query } = useFeedbacks();
 	const { data: feedbacks } = query;
 
 	const statusCounts = useMemo(() => {
-		return feedbacks?.reduce((obj: { [status: string]: number }, feedback) => {
+		return feedbacks?.reduce((obj: StatusCounts, feedback) => {
 			const currentCount = obj[feedback.status];
 			return {
 				...obj,
@@ -79,8 +82,4 @@ const Dot = styled.span<DotProps>`
 	aspect-ratio: 1;
 	border-radius: 100%;
 	background: var(--${(p) => p.color || 'purple'});
-`;
-
-const BoldLink = styled.a`
-	font-weight: 600;
 `;

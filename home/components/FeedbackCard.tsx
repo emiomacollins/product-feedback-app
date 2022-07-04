@@ -7,7 +7,7 @@ import commentsIconPath from '../../assets/svgs/icon-comments.svg';
 import { Badge } from '../../components/styled-components/Badge';
 import { Card } from '../../components/styled-components/Card';
 import { Flex } from '../../components/styled-components/Flex';
-import { Grid } from '../../components/styled-components/Grid';
+import { gridStyles } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 import { useAuth } from '../../hooks/AuthProvider';
@@ -19,10 +19,10 @@ interface Props {
 }
 
 export default function FeedbackCard({ feedback }: Props) {
-	const { title, upVotes, comments, category, details, id } = feedback;
 	const { user } = useAuth();
+	const { title, upVotes, comments, category, details, id } = feedback;
+	const upVoted = user?.uid ? upVotes[user?.uid] : false;
 
-	const upVoted = upVotes[user?.uid || ''];
 	const upVoteCount = useMemo(() => {
 		return Object.keys(upVotes).length;
 	}, [upVotes]);
@@ -32,24 +32,20 @@ export default function FeedbackCard({ feedback }: Props) {
 		toggleUpvoteMutation: { mutate: toggleUpvoteMutation, isLoading: togglingUpvote },
 	} = useFeedbacks();
 
-	const handleToggleUpvote = () => {
-		toggleUpvoteMutation(feedback);
-	};
-
 	return (
 		<Container>
-			<Link href={`${routes.feedback}/${id}`}>
+			<Link href={`${routes.feedback}/${id}`} passHref>
 				<Info>
 					<Title>{title}</Title>
 					<p>{details}</p>
-					<Badge $plain as={'div'}>
+					<Badge plain as={'div'}>
 						{category}
 					</Badge>
 				</Info>
 			</Link>
 
 			<Upvote
-				onClick={handleToggleUpvote}
+				onClick={() => toggleUpvoteMutation(id)}
 				disabled={togglingUpvote || loadingFeedbacks}
 				$active={upVoted}
 			>
@@ -65,21 +61,29 @@ export default function FeedbackCard({ feedback }: Props) {
 	);
 }
 
-const Title = styled.h3`
-	color: var(--blue-dark);
-	transition: all 0.2s;
-`;
-
 const Container = styled(Card)`
 	display: grid;
 	color: var(--gray);
 	gap: 2rem 4rem;
 	grid-template-columns: 1fr auto;
-	text-decoration: none;
 
 	@media ${Breakpoints.tabletUp} {
 		grid-template-columns: auto 1fr auto;
 	}
+`;
+
+const Title = styled.h3`
+	color: var(--blue-dark);
+	transition: all 0.2s;
+`;
+
+const Info = styled.a`
+	${gridStyles}
+	justify-items: left;
+	order: 1;
+	grid-column: 1/-1;
+	text-decoration: none;
+	color: var(--gray);
 
 	&:hover {
 		${Title} {
@@ -90,13 +94,6 @@ const Container = styled(Card)`
 	&:focus {
 		outline-color: var(--blue);
 	}
-`;
-
-const Info = styled(Grid)`
-	justify-items: left;
-	order: 1;
-	grid-column: 1/-1;
-	cursor: pointer;
 
 	@media ${Breakpoints.tabletUp} {
 		order: 2;

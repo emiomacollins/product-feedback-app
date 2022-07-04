@@ -39,7 +39,7 @@ export default function Login() {
 
 	return (
 		<Container>
-			<Flex $wrap>
+			<Flex wrap>
 				<Button
 					$color='blue'
 					onClick={() => signInWithGoogleMutation()}

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import plusIconPath from '../../assets/svgs/icon-plus.svg';
@@ -9,9 +10,10 @@ import Show from '../../components/Show';
 import { contentStyles } from '../../components/styled-components/Content';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Breakpoints } from '../../constants/breakpoints';
+import { routes } from '../../constants/routes';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { setFeedbackSort } from '../../lib/redux/slices/feedback';
-import { FeedbackSort } from '../../types/feedback';
+import { FeedbackSortBy } from '../../types/feedback';
 
 export default function Controls() {
 	const dispatch = useDispatch();
@@ -19,7 +21,7 @@ export default function Controls() {
 	const { data: feedbacks } = query;
 	const count = feedbacks?.length;
 
-	function handleSetSort(value: FeedbackSort) {
+	function handleSetSort(value: FeedbackSortBy) {
 		dispatch(setFeedbackSort(value));
 	}
 
@@ -40,21 +42,21 @@ export default function Controls() {
 
 				<Dropdown
 					label='Sort-by'
-					options={Object.values(FeedbackSort).map((sort) => ({
+					options={Object.values(FeedbackSortBy).map((sort) => ({
 						label: sort,
 						value: sort,
 					}))}
 					setValue={handleSetSort}
 				/>
 
-				<Button>
-					<Flex gap={0.5}>
-						<Icon>
-							<Image src={plusIconPath} alt='' />
-						</Icon>{' '}
-						<span>Add Feedback</span>
-					</Flex>
-				</Button>
+				<Link href={routes.createFeedback}>
+					<Button>
+						<Flex gap={0.5}>
+							<Image src={plusIconPath} alt='' width={20} height={20} />
+							<span>Add Feedback</span>
+						</Flex>
+					</Button>
+				</Link>
 			</Content>
 		</Container>
 	);
@@ -72,7 +74,7 @@ const Content = styled.div`
 	${flexStyles}
 	justify-content: space-between;
 	flex-wrap: wrap;
-	gap: 1rem 2rem;
+	gap: 1rem;
 	padding-block: 1rem;
 
 	@media ${Breakpoints.tabletDown} {

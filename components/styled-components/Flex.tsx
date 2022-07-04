@@ -2,11 +2,11 @@ import styled, { css } from 'styled-components';
 
 interface Props {
 	gap?: number;
-	$wrap?: boolean;
+	wrap?: boolean;
 }
 
 export const flexStyles = css<Props>`
-	${({ gap, $wrap: wrap }) => css`
+	${({ gap, wrap: wrap }) => css`
 		display: flex;
 		align-items: center;
 		gap: ${gap ?? 1}rem;

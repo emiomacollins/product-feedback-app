@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import { Badge } from '../../components/styled-components/Badge';
 import { Card } from '../../components/styled-components/Card';
 import { flexStyles } from '../../components/styled-components/Flex';
-import { getFeedbackFilter, setFeedbackFilter } from '../../lib/redux/slices/feedback';
+import {
+	getFeedbackCategoryFilter,
+	setFeedbackCategoryFilter,
+} from '../../lib/redux/slices/feedback';
 import { FeedbackCategory } from '../../types/feedback';
 
 interface Props {
@@ -11,11 +14,11 @@ interface Props {
 }
 
 export default function Filters({ onClick }: Props) {
-	const filter = useSelector(getFeedbackFilter);
+	const filter = useSelector(getFeedbackCategoryFilter);
 	const dispatch = useDispatch();
 
 	function handleSetFilter(filter: FeedbackCategory | null) {
-		dispatch(setFeedbackFilter(filter));
+		dispatch(setFeedbackCategoryFilter(filter));
 		onClick?.();
 	}
 

@@ -1,35 +1,46 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FeedbackCategory, FeedbackSort } from '../../../types/feedback';
+import { FeedbackCategory, FeedbackSortBy } from '../../../types/feedback';
 import { Store } from '../store';
 
 interface State {
-	filter: FeedbackCategory | null;
-	sort: FeedbackSort;
+	categoryFilter: FeedbackCategory | null;
+	sort: FeedbackSortBy;
 }
 
 const initialState: State = {
-	filter: null,
-	sort: FeedbackSort.mostUpvotes,
+	categoryFilter: null,
+	sort: FeedbackSortBy.mostUpvotes,
 };
 
 const feedbacks = createSlice({
 	name: 'feedback',
 	initialState,
 	reducers: {
-		setFeedbackFilter(state, { payload }: PayloadAction<FeedbackCategory | null>) {
-			state.filter = payload;
+		setFeedbackCategoryFilter(
+			state,
+			{ payload }: PayloadAction<FeedbackCategory | null>
+		) {
+			state.categoryFilter = payload;
 		},
-		setFeedbackSort(state, { payload }: PayloadAction<FeedbackSort>) {
+		setFeedbackSort(state, { payload }: PayloadAction<FeedbackSortBy>) {
 			state.sort = payload;
 		},
 	},
 });
 
-export const { setFeedbackFilter, setFeedbackSort } = feedbacks.actions;
+export const { setFeedbackCategoryFilter, setFeedbackSort } = feedbacks.actions;
 
 const feedbackReducer = feedbacks.reducer;
 export default feedbackReducer;
 
 const getState = (store: Store) => store.feedback;
-export const getFeedbackFilter = createSelector(getState, ({ filter }) => filter);
-export const getFeedbackSort = createSelector(getState, ({ sort }): FeedbackSort => sort);
+
+export const getFeedbackCategoryFilter = createSelector(
+	getState,
+	({ categoryFilter: filter }) => filter
+);
+
+export const getFeedbackSort = createSelector(
+	getState,
+	({ sort }): FeedbackSortBy => sort
+);

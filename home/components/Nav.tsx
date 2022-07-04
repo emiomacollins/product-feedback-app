@@ -45,7 +45,7 @@ export default function Nav() {
 				</Button>
 			</Content>
 
-			<StyledOverlay $expanded={expanded} onClick={handleClose} />
+			<StyledOverlay expanded={expanded} onClick={handleClose} />
 
 			<Sidebar expanded={expanded}>
 				<Filters onClick={handleClose} />

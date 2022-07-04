@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 interface Props {
 	$active?: boolean;
-	$plain?: boolean;
+	plain?: boolean;
 }
 
 export const Badge = styled.button<Props>`
@@ -19,21 +19,21 @@ export const Badge = styled.button<Props>`
 		background: var(--blue-light-300);
 	}
 
+	&:focus {
+		outline: 0;
+	}
+
 	&:disabled {
 		opacity: 0.4;
 	}
 
 	${(p) =>
-		p.$plain &&
+		p.plain &&
 		css`
 			cursor: default;
 
 			&:hover {
 				background: var(--light);
-			}
-
-			&:focus {
-				outline: 0;
 			}
 		`}
 

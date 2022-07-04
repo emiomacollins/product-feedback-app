@@ -42,7 +42,12 @@ export default function Dropdown({ label, options, setValue }: Props) {
 				{options.map((option) => {
 					const { label, value } = option;
 					return (
-						<Option key={label} onClick={() => handleSetOption(option)}>
+						<Option
+							key={label}
+							onClick={() => handleSetOption(option)}
+							// make un-focusable when dropdown is not expanded
+							{...(expanded ? {} : { tabIndex: -1 })}
+						>
 							{label}
 							<CheckIcon visible={value === selected.value}>
 								<Image src={checkIconPath} alt='' />

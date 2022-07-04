@@ -1,4 +1,4 @@
-export enum FeedbackSort {
+export enum FeedbackSortBy {
 	mostUpvotes = 'Most Upvotes',
 	leastUpvotes = 'Least Upvotes',
 	mostComments = 'Most Comments',
@@ -22,11 +22,11 @@ export enum FeedbackStatus {
 
 export interface Feedback {
 	id: string;
-	category: FeedbackCategory;
-	details: string;
-	status: FeedbackStatus;
 	title: string;
-	comments: string[];
-	upVotes: { [userId: string]: boolean };
 	creator: string;
+	details: string;
+	comments: string[];
+	status: FeedbackStatus;
+	category: FeedbackCategory;
+	upVotes: { [userId: string]: boolean };
 }

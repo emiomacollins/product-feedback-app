@@ -43,6 +43,7 @@
 
 	--shadow-400: 0 0 30px 1px var(--black-transparent-100);
 
+	--radius-300: 0.4em;
 	--radius-400: 0.6em;
 	--radius-500: 0.8em;
 }
@@ -77,10 +78,6 @@ h3 {
 }
 h4 {
 	font-size: var(--size-400);
-}
-
-a {
-	color: var(--blue);
 }
 
 img,

@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, forwardRef, ReactNode, Ref } from 'react';
 import styled, { css } from 'styled-components';
 import { Color } from '../types/colors';
 
@@ -10,9 +10,16 @@ interface Props extends StyleProps, ButtonHTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
 }
 
-export default function Button({ children, ...styleProps }: Props) {
-	return <Container {...styleProps}>{children}</Container>;
-}
+export default forwardRef(function Button(
+	{ children, ...styleAndElementProps }: Props,
+	ref: Ref<Element>
+) {
+	return (
+		<Container ref={ref as any} {...styleAndElementProps}>
+			{children}
+		</Container>
+	);
+});
 
 export const Container = styled.button<StyleProps>`
 	padding: 1rem 2rem;
