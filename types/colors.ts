@@ -1,1 +1,9 @@
-export type Color = 'purple' | 'blue' | 'blue-dark' | 'red' | 'white' | 'orange' | 'gray';
+export type Color =
+	| 'NONE'
+	| 'purple'
+	| 'blue'
+	| 'blue-dark'
+	| 'red'
+	| 'white'
+	| 'orange'
+	| 'gray';

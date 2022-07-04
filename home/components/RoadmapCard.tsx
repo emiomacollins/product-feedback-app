@@ -38,14 +38,20 @@ export default function RoadmapCard() {
 
 			<Grid>
 				{Object.values(FeedbackStatus).map((status, i) => {
-					// ignore suggestion status
-					if (i === 0) return null;
-					const colors: Color[] = ['orange', 'purple', 'blue'];
+					if (status === FeedbackStatus.suggestion) return null;
+
+					type Colors = { [status: string]: Color };
+					const colors: Colors = {
+						[FeedbackStatus.suggestion]: 'NONE',
+						[FeedbackStatus.planned]: 'orange',
+						[FeedbackStatus.inProgress]: 'purple',
+						[FeedbackStatus.live]: 'blue',
+					};
 
 					return (
 						<RoadmapRow key={`roadmap-${status}`}>
 							<Flex gap={2}>
-								<Dot color={colors[i - 1]} />
+								<Dot color={colors[status]} />
 								{status}
 							</Flex>
 							<Bold weight={800}>{statusCounts?.[status] || 0}</Bold>

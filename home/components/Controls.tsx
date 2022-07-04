@@ -17,9 +17,8 @@ import { FeedbackSortBy } from '../../types/feedback';
 
 export default function Controls() {
 	const dispatch = useDispatch();
-	const { query } = useFeedbacks();
-	const { data: feedbacks } = query;
-	const count = feedbacks?.length;
+	const { processedFeedbacks } = useFeedbacks();
+	const count = processedFeedbacks?.length;
 
 	function handleSetSort(value: FeedbackSortBy) {
 		dispatch(setFeedbackSort(value));

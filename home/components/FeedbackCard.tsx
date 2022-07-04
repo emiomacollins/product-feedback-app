@@ -85,13 +85,11 @@ const Info = styled.a`
 	text-decoration: none;
 	color: var(--gray);
 
-	&:hover {
+	&:hover,
+	&:focus {
 		${Title} {
 			color: var(--blue);
 		}
-	}
-
-	&:focus {
 		outline-color: var(--blue);
 	}
 
