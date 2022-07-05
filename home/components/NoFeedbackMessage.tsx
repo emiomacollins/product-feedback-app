@@ -1,14 +1,10 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import styled from 'styled-components';
-import PlusIconPath from '../../assets/svgs/icon-plus.svg';
 import EmptyIconPath from '../../assets/svgs/illustration-empty.svg';
-import Button from '../../components/Button';
+import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
 import { contentStyles } from '../../components/styled-components/Content';
-import { Flex } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
-import { routes } from '../../constants/routes';
 
 export default function NoFeedbackMessage() {
 	return (
@@ -23,14 +19,7 @@ export default function NoFeedbackMessage() {
 					hearing about new ideas to improve our app.
 				</Text>
 			</Grid>
-			<Link href={routes.createFeedback}>
-				<Button>
-					<Flex gap={0.5}>
-						<Image src={PlusIconPath} alt='' width={20} height={20} />
-						<span>Add Feedback</span>
-					</Flex>
-				</Button>
-			</Link>
+			<AddFeedbackButton />
 		</Container>
 	);
 }

@@ -6,19 +6,17 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import styled, { css } from 'styled-components';
 import * as yup from 'yup';
-import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
 import editFeedbackIconPath from '../../assets/svgs/icon-edit-feedback.svg';
 import newFeedbackIconPath from '../../assets/svgs/icon-new-feedback.svg';
 import Button from '../../components/Button';
+import GoBackLink from '../../components/curried/GoBackLink';
 import Select from '../../components/formik/Select';
 import TextArea from '../../components/formik/TextArea';
 import Textbox from '../../components/formik/Textbox';
 import FormInput from '../../components/FormInput';
-import { BoldLink } from '../../components/styled-components/BoldLink';
 import { cardStyles } from '../../components/styled-components/Card';
 import { contentStyles } from '../../components/styled-components/Content';
 import { ErrorMessage } from '../../components/styled-components/ErrorMessage';
-import { Flex } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
@@ -69,13 +67,7 @@ export default function CreateFeedback({ editing }: Props) {
 
 	return (
 		<Container success={success}>
-			<Link href={routes.home} passHref>
-				<StyledLink color='gray'>
-					<Flex>
-						<StyledArrowIcon color='gray' /> <span>Go back</span>
-					</Flex>
-				</StyledLink>
-			</Link>
+			<GoBackLink />
 
 			<Formik
 				initialValues={{
@@ -112,7 +104,7 @@ export default function CreateFeedback({ editing }: Props) {
 							/>
 						</Icon>
 
-						<Grid gap={4}>
+						<Grid gap={5}>
 							<Heading>
 								{editing
 									? `Editing '${editing.title}'`
@@ -235,27 +227,17 @@ const Container = styled.div<ContainerProps>`
 	}
 `;
 
-const StyledLink = styled(BoldLink)`
-	padding-block: 1rem;
-	text-decoration: none;
-	justify-self: left;
-`;
-
-const StyledArrowIcon = styled(ArrowDownIcon)`
-	transform: rotate(90deg);
-`;
-
 const StyledForm = styled(Form)`
 	${cardStyles}
 	padding: 5rem 2.5rem;
 	position: relative;
 
 	@media ${Breakpoints.tabletUp} {
-		padding-inline: 3rem;
+		padding-inline: 4rem;
 	}
 `;
 
-const Heading = styled.h2`
+const Heading = styled.h1`
 	color: var(--blue-dark);
 `;
 

@@ -1,16 +1,13 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import plusIconPath from '../../assets/svgs/icon-plus.svg';
 import bellIconPath from '../../assets/svgs/icon-suggestions.svg';
-import Button from '../../components/Button';
+import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
 import Dropdown from '../../components/Dropdown';
 import Show from '../../components/Show';
 import { contentStyles } from '../../components/styled-components/Content';
-import { Flex, flexStyles } from '../../components/styled-components/Flex';
+import { flexStyles } from '../../components/styled-components/Flex';
 import { Breakpoints } from '../../constants/breakpoints';
-import { routes } from '../../constants/routes';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { setFeedbackSort } from '../../lib/redux/slices/feedback';
 import { FeedbackSortBy } from '../../types/feedback';
@@ -48,14 +45,7 @@ export default function Controls() {
 					}))}
 				/>
 
-				<Link href={routes.createFeedback}>
-					<Button>
-						<Flex gap={0.5}>
-							<Image src={plusIconPath} alt='' width={20} height={20} />
-							<span>Add Feedback</span>
-						</Flex>
-					</Button>
-				</Link>
+				<AddFeedbackButton />
 			</Content>
 		</Container>
 	);

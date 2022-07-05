@@ -15,7 +15,7 @@ export default function TextArea(props: Props) {
 
 	return (
 		<Container>
-			<StyledTextArea {...fields} {...props} isError={isError} rows={7} />
+			<StyledTextArea {...fields} {...props} isError={isError} rows={5} />
 			{isError && <ErrorMessage>{meta.error}</ErrorMessage>}
 		</Container>
 	);

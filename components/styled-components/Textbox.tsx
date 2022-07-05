@@ -5,7 +5,7 @@ export interface TextboxStyleProps {
 }
 
 export const textboxStyles = css<TextboxStyleProps>`
-	padding: 1.5rem;
+	padding: 1.5rem 2rem;
 	background: var(--light);
 	border: 0;
 	border-radius: var(--radius-300);
