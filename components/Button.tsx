@@ -1,39 +1,32 @@
-import { ButtonHTMLAttributes, ReactNode, useEffect, useRef, useState } from 'react';
+import { ButtonHTMLAttributes, forwardRef, ReactNode, Ref } from 'react';
 import styled, { css } from 'styled-components';
 import { Color } from '../types/colors';
 import Spinner from './styled-components/Spinner';
 
-interface Size {
-	width: number;
-	height: number;
-}
 interface StyleProps {
 	$color?: Color;
-	size?: Size | null;
 }
 
-interface Props extends StyleProps, ButtonHTMLAttributes<HTMLButtonElement> {
-	children: ReactNode;
+interface LoadingProps {
 	isLoading?: boolean;
 }
+interface Props
+	extends StyleProps,
+		ButtonHTMLAttributes<HTMLButtonElement>,
+		LoadingProps {
+	children: ReactNode;
+}
 
-function Button({ children, isLoading, ...props }: Props) {
-	const [size, setSize] = useState<Size | null>(null);
-	const ref = useRef<Element>();
-
-	useEffect(() => {
-		const { clientHeight = 0, clientWidth = 0 } = ref.current || {};
-		setSize({ width: clientWidth, height: clientHeight });
-	}, []);
-
+function Button({ children, isLoading, ...props }: Props, ref: Ref<Element>) {
 	return (
-		<Container ref={ref as any} {...props} size={size}>
-			{isLoading ? <StyledSpinner color='white' /> : children}
+		<Container ref={ref as any} {...props}>
+			{isLoading && <StyledSpinner color='white' />}
+			<Children isLoading={isLoading}>{children}</Children>
 		</Container>
 	);
 }
 
-export default Button;
+export default forwardRef(Button);
 
 export const Container = styled.button<StyleProps>`
 	padding: 1rem 2rem;
@@ -43,6 +36,7 @@ export const Container = styled.button<StyleProps>`
 	border-radius: var(--radius-400);
 	white-space: nowrap;
 	transition: all 0.2s;
+	position: relative;
 
 	&:hover,
 	&:active {
@@ -57,14 +51,13 @@ export const Container = styled.button<StyleProps>`
 		opacity: 0.6;
 	}
 
-	${({ $color: color, size }) => css`
+	${({ $color: color }) => css`
 		background: var(--${color});
-		${size &&
-		css`
-			min-width: ${size.width}px;
-			min-height: ${size.height}px;
-		`}
 	`}
+`;
+
+const Children = styled.div<LoadingProps>`
+	opacity: ${(p) => (p.isLoading ? 0 : 1)};
 `;
 
 const StyledSpinner = styled(Spinner)`
