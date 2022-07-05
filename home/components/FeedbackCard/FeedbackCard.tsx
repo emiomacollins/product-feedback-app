@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import ArrowDownIcon from '../../../assets/svgs/custom/ArrowDownIcon';
+import commentsIconPath from '../../../assets/svgs/icon-comments.svg';
 import { Badge } from '../../../components/styled-components/Badge';
 import { Card } from '../../../components/styled-components/Card';
 import { Flex } from '../../../components/styled-components/Flex';
@@ -16,7 +17,6 @@ import {
 	useFeedbacks,
 } from '../../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../../../types/feedback';
-import commentsIconPath from '../../assets/svgs/icon-comments.svg';
 import toggleUpvote from './api';
 
 interface Props {

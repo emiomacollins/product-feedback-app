@@ -9,7 +9,7 @@ import Filters from '../home/components/Filters';
 import Logo from '../home/components/Logo';
 import Nav from '../home/components/Nav';
 import RoadmapCard from '../home/components/RoadmapCard';
-import feedbacksApi from '../hooks/useFeedbacks/api';
+import fetchFeedbacks from '../hooks/useFeedbacks/api/fetchFeedbacks';
 import { useFeedbacks } from '../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../types/feedback';
 
@@ -92,7 +92,7 @@ const RightColumn = styled(Grid)`
 export async function getServerSideProps() {
 	return {
 		props: {
-			initialFeedbacks: await feedbacksApi.fetchFeedbacks(),
+			initialFeedbacks: await fetchFeedbacks(),
 		},
 	};
 }

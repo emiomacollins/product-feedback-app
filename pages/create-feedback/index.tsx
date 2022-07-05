@@ -13,13 +13,15 @@ import FormInput from '../../components/FormInput';
 import { BoldLink } from '../../components/styled-components/BoldLink';
 import { cardStyles } from '../../components/styled-components/Card';
 import { contentStyles } from '../../components/styled-components/Content';
+import { ErrorMessage } from '../../components/styled-components/ErrorMessage';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 import { fetchFeedbacksKey } from '../../hooks/useFeedbacks/useFeedbacks';
-import { Feedback, FeedbackCategory } from '../../types/feedback';
-import createFeedback from './api';
+import { Feedback, FeedbackCategory, FeedbackStatus } from '../../types/feedback';
+import updateFeedback from '../edit-feedback/api/updateFeedback';
+import createFeedback, { CreateFeedbackProps } from './api';
 
 interface Props {
 	editing?: Feedback;
@@ -29,9 +31,16 @@ export default function CreateFeedback({ editing }: Props) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
 
-	const { mutate: createFeedbackMutation, isLoading: creatingFeedback } = useMutation(
-		'createFeedback',
-		createFeedback,
+	const {
+		mutate: submitMutation,
+		isLoading: submittingFeedback,
+		error,
+	} = useMutation<void, Error, Feedback | CreateFeedbackProps>(
+		'create/update Feedback',
+		(props) =>
+			editing
+				? updateFeedback(props as Feedback)
+				: createFeedback(props as CreateFeedbackProps),
 		{
 			onSuccess() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
@@ -52,24 +61,38 @@ export default function CreateFeedback({ editing }: Props) {
 
 			<Formik
 				initialValues={{
-					title: '',
-					category: FeedbackCategory.feature,
-					details: '',
-				}}
-				validateOnMount={true}
-				onSubmit={(values) => {
-					createFeedbackMutation(values);
+					title: editing?.title || '',
+					details: editing?.details || '',
+					category: editing?.category || FeedbackCategory.feature,
+					...(editing
+						? {
+								status: editing.status,
+						  }
+						: {}),
 				}}
 				validationSchema={yup.object({
 					title: yup.string().required('Can’t be empty'),
 					details: yup.string().required('Can’t be empty'),
 					category: yup.string().oneOf(Object.values(FeedbackCategory)),
+					...(editing
+						? {
+								status: yup.string().oneOf(Object.values(FeedbackStatus)),
+						  }
+						: {}),
 				})}
+				validateOnMount={true}
+				onSubmit={(values) => {
+					submitMutation(editing ? { ...editing, ...values } : values);
+				}}
 			>
 				{({ isValid }) => (
 					<StyledForm>
 						<Grid gap={5}>
-							<Heading>Create New Feedback</Heading>
+							<Heading>
+								{editing
+									? `Editing '${editing.title}'`
+									: `Create New Feedback`}
+							</Heading>
 
 							<Grid gap={3}>
 								<FormInput
@@ -98,12 +121,35 @@ export default function CreateFeedback({ editing }: Props) {
 									/>
 								</FormInput>
 
+								{editing && (
+									<FormInput
+										label='Update Status'
+										description='Change feedback state'
+									>
+										<Select
+											name='status'
+											initialValue={{
+												label: editing.status,
+												value: editing.status,
+											}}
+											options={Object.values(FeedbackStatus).map(
+												(status) => ({
+													label: status,
+													value: status,
+												})
+											)}
+										/>
+									</FormInput>
+								)}
+
 								<FormInput
 									label='Feedback Detail'
 									description='Include any specific comments on what should be improved, added, etc.'
 								>
 									<TextArea name='details' />
 								</FormInput>
+
+								{error && <ErrorMessage>{error.message}</ErrorMessage>}
 							</Grid>
 
 							<Buttons>
@@ -115,12 +161,12 @@ export default function CreateFeedback({ editing }: Props) {
 
 									<Button
 										type='submit'
-										isLoading={creatingFeedback}
+										isLoading={submittingFeedback}
 										disabled={
-											!isValid || creatingFeedback ? true : false
+											!isValid || submittingFeedback ? true : false
 										}
 									>
-										Add Feedback
+										{editing ? 'Save Changes' : 'Add Feedback'}
 									</Button>
 								</Flex>
 							</Buttons>

@@ -49,6 +49,7 @@ export const Container = styled.button<StyleProps>`
 
 	&:disabled {
 		opacity: 0.6;
+		cursor: default;
 	}
 
 	${({ $color: color }) => css`

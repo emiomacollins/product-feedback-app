@@ -17,7 +17,7 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 	const fetchFeedbacksQuery = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
 		cacheTime: Infinity,
 		initialData: initialFeedbacks,
-		refetchOnMount: false, //TODO: test
+		refetchOnMount: false,
 	});
 
 	const processedFeedbacks = useMemo(() => {
