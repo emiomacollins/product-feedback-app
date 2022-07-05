@@ -249,4 +249,5 @@ const Heading = styled.h2`
 const Buttons = styled.div`
 	${flexStyles}
 	justify-content: space-between;
+	flex-wrap: wrap;
 `;
