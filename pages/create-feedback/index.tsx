@@ -1,5 +1,7 @@
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import * as yup from 'yup';
 import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
@@ -15,13 +17,28 @@ import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
-import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
-import { FeedbackCategory } from '../../types/feedback';
+import { fetchFeedbacksKey } from '../../hooks/useFeedbacks/useFeedbacks';
+import { Feedback, FeedbackCategory } from '../../types/feedback';
+import addFeedback from './api';
 
-export default function CreateFeedback() {
-	const {
-		addFeedbackMutation: { mutate: addFeedbackMutation, isLoading: addingFeedback },
-	} = useFeedbacks();
+interface Props {
+	editing?: Feedback;
+}
+
+export default function CreateFeedback({ editing }: Props) {
+	const queryClient = useQueryClient();
+	const router = useRouter();
+
+	const { mutate: addFeedbackMutation, isLoading: addingFeedback } = useMutation(
+		'addFeedback',
+		addFeedback,
+		{
+			onSuccess() {
+				queryClient.invalidateQueries(fetchFeedbacksKey);
+				router.push(routes.home);
+			},
+		}
+	);
 
 	return (
 		<Container>

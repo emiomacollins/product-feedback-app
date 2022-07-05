@@ -1,18 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
-import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
+import ArrowDownIcon from '../../../assets/svgs/custom/ArrowDownIcon';
+import { Badge } from '../../../components/styled-components/Badge';
+import { Card } from '../../../components/styled-components/Card';
+import { Flex } from '../../../components/styled-components/Flex';
+import { gridStyles } from '../../../components/styled-components/Grid';
+import { Breakpoints } from '../../../constants/breakpoints';
+import { routes } from '../../../constants/routes';
+import { useAuth } from '../../../hooks/AuthProvider';
+import {
+	fetchFeedbacksKey,
+	useFeedbacks,
+} from '../../../hooks/useFeedbacks/useFeedbacks';
+import { Feedback } from '../../../types/feedback';
 import commentsIconPath from '../../assets/svgs/icon-comments.svg';
-import { Badge } from '../../components/styled-components/Badge';
-import { Card } from '../../components/styled-components/Card';
-import { Flex } from '../../components/styled-components/Flex';
-import { gridStyles } from '../../components/styled-components/Grid';
-import { Breakpoints } from '../../constants/breakpoints';
-import { routes } from '../../constants/routes';
-import { useAuth } from '../../hooks/AuthProvider';
-import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
-import { Feedback } from '../../types/feedback';
+import toggleUpvote from './api';
 
 interface Props {
 	feedback: Feedback;
@@ -20,6 +25,7 @@ interface Props {
 
 export default function FeedbackCard({ feedback }: Props) {
 	const { user } = useAuth();
+	const queryClient = useQueryClient();
 	const { title, upVotes, comments, category, details, id } = feedback;
 	const upVoted = user?.uid ? upVotes[user?.uid] : false;
 
@@ -28,9 +34,18 @@ export default function FeedbackCard({ feedback }: Props) {
 	}, [upVotes]);
 
 	const {
-		query: { isLoading: loadingFeedbacks },
-		toggleUpvoteMutation: { mutate: toggleUpvoteMutation, isLoading: togglingUpvote },
+		fetchFeedbacksQuery: { isLoading: loadingFeedbacks },
 	} = useFeedbacks();
+
+	const { mutate: toggleUpvoteMutation, isLoading: togglingUpvote } = useMutation(
+		'toggleUpvote',
+		toggleUpvote,
+		{
+			onSuccess() {
+				queryClient.invalidateQueries(fetchFeedbacksKey);
+			},
+		}
+	);
 
 	return (
 		<Container>

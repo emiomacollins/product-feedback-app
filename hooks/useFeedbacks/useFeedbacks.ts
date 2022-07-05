@@ -1,30 +1,27 @@
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { routes } from '../../constants/routes';
 import {
 	getFeedbackCategoryFilter,
 	getFeedbackSort,
 } from '../../lib/redux/slices/feedback';
 import { Feedback, FeedbackSortBy } from '../../types/feedback';
-import feedbacksApi from './api';
+import fetchFeedbacks from './api/fetchFeedbacks';
+
+export const fetchFeedbacksKey = 'fetchFeedbacks';
 
 export function useFeedbacks(initialFeedbacks?: Feedback[]) {
-	const queryClient = useQueryClient();
-	const fetchFeedbacksKey = 'fetchFeedbacks';
 	const sortBy = useSelector(getFeedbackSort);
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
-	const router = useRouter();
 
-	const query = useQuery(fetchFeedbacksKey, feedbacksApi.fetchFeedbacks, {
+	const fetchFeedbacksQuery = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
 		cacheTime: Infinity,
 		initialData: initialFeedbacks,
 		refetchOnMount: false, //TODO: test
 	});
 
 	const processedFeedbacks = useMemo(() => {
-		const { data: feedbacks } = query;
+		const { data: feedbacks } = fetchFeedbacksQuery;
 		if (!feedbacks) return null;
 
 		type Order = 'asc' | 'desc';
@@ -65,25 +62,10 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 		});
 
 		return filteredFeedbacks;
-	}, [sortBy, categoryFilter, query]);
-
-	const toggleUpvoteMutation = useMutation('toggleUpvote', feedbacksApi.toggleUpvote, {
-		onSuccess() {
-			queryClient.invalidateQueries(fetchFeedbacksKey);
-		},
-	});
-
-	const addFeedbackMutation = useMutation('addFeedback', feedbacksApi.addFeedback, {
-		onSuccess() {
-			queryClient.invalidateQueries(fetchFeedbacksKey);
-			router.push(routes.home);
-		},
-	});
+	}, [sortBy, categoryFilter, fetchFeedbacksQuery]);
 
 	return {
-		query,
+		fetchFeedbacksQuery,
 		processedFeedbacks,
-		toggleUpvoteMutation,
-		addFeedbackMutation,
 	};
 }

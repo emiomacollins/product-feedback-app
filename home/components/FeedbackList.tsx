@@ -3,7 +3,7 @@ import { contentStyles } from '../../components/styled-components/Content';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
-import FeedbackCard from './FeedbackCard';
+import FeedbackCard from './FeedbackCard/FeedbackCard';
 import NoFeedbackMessage from './NoFeedbackMessage';
 
 export default function FeedbackList() {

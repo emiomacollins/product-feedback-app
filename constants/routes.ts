@@ -4,4 +4,5 @@ export const routes = {
 	feedback: '/feedback',
 	login: '/login',
 	createFeedback: '/create-feedback',
+	editFeedback: '/edit-feedback',
 };

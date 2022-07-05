@@ -14,7 +14,7 @@ import { FeedbackStatus } from '../../types/feedback';
 type StatusCounts = { [status: string]: number };
 
 export default function RoadmapCard() {
-	const { query } = useFeedbacks();
+	const { fetchFeedbacksQuery: query } = useFeedbacks();
 	const { data: feedbacks } = query;
 
 	const statusCounts = useMemo(() => {
