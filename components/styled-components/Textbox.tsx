@@ -11,6 +11,7 @@ export const textboxStyles = css<TextboxStyleProps>`
 	border-radius: var(--radius-300);
 	border: 1px solid ${(p) => (p.isError ? 'var(--red)' : 'transparent')};
 	transition: all 0.2s;
+	color: var(--blue-dark);
 
 	&:focus {
 		border-color: var(--blue);
