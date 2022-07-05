@@ -15,9 +15,8 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
 
 	const fetchFeedbacksQuery = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
-		cacheTime: Infinity,
+		staleTime: Infinity,
 		initialData: initialFeedbacks,
-		refetchOnMount: false,
 	});
 
 	const processedFeedbacks = useMemo(() => {

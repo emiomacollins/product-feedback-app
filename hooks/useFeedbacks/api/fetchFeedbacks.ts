@@ -10,6 +10,7 @@ export default async function fetchFeedbacks() {
 		return {
 			id: doc.id,
 			...data,
+			// needs to be serializable
 			dateAdded: new Date(data.dateAdded.toDate()).toISOString(),
 		};
 	});

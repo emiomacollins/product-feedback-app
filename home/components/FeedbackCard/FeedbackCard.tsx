@@ -49,7 +49,7 @@ export default function FeedbackCard({ feedback }: Props) {
 
 	return (
 		<Container>
-			<Link href={`${routes.feedback}/${id}`} passHref>
+			<Link href={`${routes.editFeedback}/${id}`} passHref>
 				<Info>
 					<Title>{title}</Title>
 					<p>{details}</p>

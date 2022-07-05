@@ -1,6 +1,7 @@
 import { Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import styled from 'styled-components';
 import * as yup from 'yup';
@@ -20,6 +21,7 @@ import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 import { fetchFeedbacksKey } from '../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback, FeedbackCategory, FeedbackStatus } from '../../types/feedback';
+import deleteFeedback from '../edit-feedback/api/deleteFeedback';
 import updateFeedback from '../edit-feedback/api/updateFeedback';
 import createFeedback, { CreateFeedbackProps } from './api';
 
@@ -30,11 +32,12 @@ interface Props {
 export default function CreateFeedback({ editing }: Props) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
+	const [success, setSuccess] = useState(false);
 
 	const {
 		mutate: submitMutation,
 		isLoading: submittingFeedback,
-		error,
+		error: submitError,
 	} = useMutation<void, Error, Feedback | CreateFeedbackProps>(
 		'create/update Feedback',
 		(props) =>
@@ -44,13 +47,26 @@ export default function CreateFeedback({ editing }: Props) {
 		{
 			onSuccess() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
+				setSuccess(true);
 				router.push(routes.home);
 			},
 		}
 	);
 
+	const {
+		mutate: deleteMutation,
+		isLoading: deletingFeedback,
+		error: deleteError,
+	} = useMutation<void, Error, string>('deleteFeedback', deleteFeedback, {
+		onSuccess() {
+			queryClient.invalidateQueries(fetchFeedbacksKey);
+			setSuccess(true);
+			router.push(routes.home);
+		},
+	});
+
 	return (
-		<Container>
+		<Container success={success}>
 			<Link href={routes.home} passHref>
 				<StyledLink color='gray'>
 					<Flex>
@@ -149,22 +165,36 @@ export default function CreateFeedback({ editing }: Props) {
 									<TextArea name='details' />
 								</FormInput>
 
-								{error && <ErrorMessage>{error.message}</ErrorMessage>}
+								{submitError && (
+									<ErrorMessage>{submitError.message}</ErrorMessage>
+								)}
+								{deleteError && (
+									<ErrorMessage>{deleteError.message}</ErrorMessage>
+								)}
 							</Grid>
 
 							<Buttons>
-								{/* For editing add delete here */}
+								{editing && (
+									<Button
+										$color='red'
+										type='button'
+										isLoading={deletingFeedback}
+										onClick={() => deleteMutation(editing.id)}
+									>
+										Delete
+									</Button>
+								)}
 								<Flex>
 									<Link href={routes.home}>
-										<Button $color='blue-dark'>Cancel</Button>
+										<Button $color='blue-dark' type='button'>
+											Cancel
+										</Button>
 									</Link>
 
 									<Button
 										type='submit'
 										isLoading={submittingFeedback}
-										disabled={
-											!isValid || submittingFeedback ? true : false
-										}
+										disabled={!isValid ? true : false}
 									>
 										{editing ? 'Save Changes' : 'Add Feedback'}
 									</Button>
@@ -178,13 +208,19 @@ export default function CreateFeedback({ editing }: Props) {
 	);
 }
 
-const Container = styled.div`
+interface ContainerProps {
+	success: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
 	${contentStyles}
 	max-width: 600px;
 	display: grid;
 	gap: 4rem;
 	min-height: 100vh;
 	align-content: flex-start;
+	opacity: ${(p) => (p.success ? 0 : 1)};
+	transition: all 0.2s;
 `;
 
 const StyledLink = styled(BoldLink)`
@@ -212,6 +248,5 @@ const Heading = styled.h2`
 
 const Buttons = styled.div`
 	${flexStyles}
-	justify-self: right;
 	justify-content: space-between;
 `;

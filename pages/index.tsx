@@ -90,9 +90,10 @@ const RightColumn = styled(Grid)`
 `;
 
 export async function getServerSideProps() {
+	const initialFeedbacks = await fetchFeedbacks();
 	return {
 		props: {
-			initialFeedbacks: await fetchFeedbacks(),
+			initialFeedbacks,
 		},
 	};
 }

@@ -43,7 +43,7 @@ const Container = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
-	height: 0.3rem;
+	height: 0.4rem;
 	z-index: 100;
 `;
 
