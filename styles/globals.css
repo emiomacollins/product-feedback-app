@@ -24,14 +24,13 @@
 	--purple: #ad1fea;
 	--red: #d73737;
 	--white: #fff;
-	--light: #f2f4ff;
+	--light: #f7f8fd;
 	--blue: #4661e6;
 	--blue-light: #62bcfa;
 	--blue-light-300: #cfd7ff;
 	--blue-dark: #373f68;
 	--orange: #f49f85;
 	--gray: #647196;
-	--gray-light: #f2f4ff;
 	--black: #000;
 	--black-transparent-100: rgba(0, 0, 0, 0.05);
 	--gradient: radial-gradient(
@@ -57,6 +56,14 @@ body {
 	overflow-x: hidden !important;
 	min-height: 100vh;
 	color: var(--gray);
+}
+
+::-webkit-scrollbar {
+	width: 0.6rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--blue-dark);
 }
 
 h1,
@@ -93,7 +100,8 @@ button {
 
 a,
 button,
-input {
+input,
+textarea {
 	font: inherit;
 }
 

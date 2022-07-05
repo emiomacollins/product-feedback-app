@@ -1,47 +1,108 @@
+import { Form, Formik } from 'formik';
 import Link from 'next/link';
 import styled from 'styled-components';
+import * as yup from 'yup';
 import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
 import Button from '../../components/Button';
+import Select from '../../components/formik/Select';
+import TextArea from '../../components/formik/TextArea';
+import Textbox from '../../components/formik/Textbox';
+import FormInput from '../../components/FormInput';
 import { BoldLink } from '../../components/styled-components/BoldLink';
 import { cardStyles } from '../../components/styled-components/Card';
 import { contentStyles } from '../../components/styled-components/Content';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
-import Textbox from '../../components/Textbox';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
+import { FeedbackCategory } from '../../types/feedback';
 
 export default function CreateFeedback() {
 	return (
 		<Container>
-			<Link href={routes.home}>
-				<BoldLink color='gray'>
+			<Link href={routes.home} passHref>
+				<StyledLink color='gray'>
 					<Flex>
 						<StyledArrowIcon color='gray' /> <span>Go back</span>
 					</Flex>
-				</BoldLink>
+				</StyledLink>
 			</Link>
 
-			<Form>
-				<Grid gap={5}>
-					<Heading>Create New Feedback</Heading>
+			<Formik
+				initialValues={{
+					title: '',
+					category: FeedbackCategory.feature,
+					detail: '',
+				}}
+				validateOnMount={true}
+				onSubmit={(values) => {
+					console.log(values);
+				}}
+				validationSchema={yup.object({
+					title: yup.string().required('Can’t be empty'),
+					detail: yup.string().required('Can’t be empty'),
+					category: yup.string().oneOf(Object.values(FeedbackCategory)),
+				})}
+			>
+				{({ isValid }) => (
+					<StyledForm>
+						<Grid gap={5}>
+							<Heading>Create New Feedback</Heading>
 
-					<Grid>
-						<Textbox
-							label='Feedback Title'
-							description='Add a short, descriptive headline'
-						/>
-					</Grid>
+							<Grid gap={3}>
+								<FormInput
+									label='Feedback Title'
+									description='Add a short, descriptive headline'
+								>
+									<Textbox name='title' type='text' />
+								</FormInput>
 
-					<Buttons>
-						{/* For editing add delete here */}
-						<Flex>
-							<Button $color='blue-dark'>Cancel</Button>
-							<Button>Add Feedback</Button>
-						</Flex>
-					</Buttons>
-				</Grid>
-			</Form>
+								<FormInput
+									label='Category'
+									description='Choose a category for your feedback'
+								>
+									<Select
+										name='category'
+										initialValue={{
+											label: FeedbackCategory.feature,
+											value: FeedbackCategory.feature,
+										}}
+										options={Object.values(FeedbackCategory).map(
+											(category) => ({
+												label: category,
+												value: category,
+											})
+										)}
+									/>
+								</FormInput>
+
+								<FormInput
+									label='Feedback Detail'
+									description='Include any specific comments on what should be improved, added, etc.'
+								>
+									<TextArea name='detail' />
+								</FormInput>
+							</Grid>
+
+							<Buttons>
+								{/* For editing add delete here */}
+								<Flex>
+									<Link href={routes.home}>
+										<Button $color='blue-dark'>Cancel</Button>
+									</Link>
+
+									<Button
+										type='submit'
+										disabled={isValid ? false : true}
+									>
+										Add Feedback
+									</Button>
+								</Flex>
+							</Buttons>
+						</Grid>
+					</StyledForm>
+				)}
+			</Formik>
 		</Container>
 	);
 }
@@ -51,13 +112,21 @@ const Container = styled.div`
 	max-width: 600px;
 	display: grid;
 	gap: 4rem;
+	min-height: 100vh;
+	align-content: flex-start;
+`;
+
+const StyledLink = styled(BoldLink)`
+	padding-block: 1rem;
+	text-decoration: none;
+	justify-self: left;
 `;
 
 const StyledArrowIcon = styled(ArrowDownIcon)`
 	transform: rotate(90deg);
 `;
 
-const Form = styled.form`
+const StyledForm = styled(Form)`
 	${cardStyles}
 	padding: 2rem 2.5rem;
 

@@ -41,11 +41,11 @@ export default function Controls() {
 
 				<Dropdown
 					label='Sort-by'
+					setValue={handleSetSort}
 					options={Object.values(FeedbackSortBy).map((sort) => ({
 						label: sort,
 						value: sort,
 					}))}
-					setValue={handleSetSort}
 				/>
 
 				<Link href={routes.createFeedback}>

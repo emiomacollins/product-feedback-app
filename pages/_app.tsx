@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Provider } from 'react-redux';
 import styled from 'styled-components';
+import ProgressBar from '../components/ProgressBar';
 import { contentStyles } from '../components/styled-components/Content';
 import { Breakpoints } from '../constants/breakpoints';
 import { AuthProvider } from '../hooks/AuthProvider';
@@ -26,6 +27,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 						<title>Feedback App</title>
 						<link rel='icon' href='/favicon_.ico' />
 					</Head>
+					<ProgressBar />
 					<Layout>
 						<Component {...pageProps} />
 					</Layout>

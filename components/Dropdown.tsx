@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { ButtonHTMLAttributes, useState } from 'react';
 import styled, { css } from 'styled-components';
 import ArrowDownIcon from '../assets/svgs/custom/ArrowDownIcon';
 import checkIconPath from '../assets/svgs/icon-check.svg';
@@ -12,28 +12,30 @@ export interface DropdownOption {
 	value: unknown;
 }
 
-interface Props {
-	label: string;
+export interface DropdownProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+	label?: string;
 	options: DropdownOption[];
-	setValue: (value: any) => void;
+	initialValue?: DropdownOption;
+	setValue?: (value: any) => any;
 }
 
-export default function Dropdown({ label, options, setValue }: Props) {
+export default function Dropdown(props: DropdownProps) {
+	const { label, options, setValue, initialValue, ...restProps } = props;
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
-	const [selected, setSelected] = useState(options[0]);
+	const [selected, setSelected] = useState(initialValue || options[0]);
 
 	function handleSetOption(option: DropdownOption) {
 		const { value } = option;
-		setValue(value);
+		setValue?.(value);
 		setSelected(option);
 		setExpanded(false);
 	}
 
 	return (
 		<Container ref={ref}>
-			<Toggle onClick={toggle} expanded={expanded}>
+			<Toggle onClick={toggle} expanded={expanded} {...restProps}>
 				<p>
-					{label}: <Bold>{selected.label}</Bold>
+					{label ? `${label}:` : ''} <Bold>{selected.label}</Bold>
 				</p>
 				<StyledArrowIcon expanded={expanded} />
 			</Toggle>
@@ -45,6 +47,7 @@ export default function Dropdown({ label, options, setValue }: Props) {
 						<Option
 							key={label}
 							onClick={() => handleSetOption(option)}
+							type='button'
 							// make un-focusable when dropdown is not expanded
 							{...(expanded ? {} : { tabIndex: -1 })}
 						>
@@ -66,12 +69,14 @@ interface ExpandedProps {
 
 const Container = styled.div`
 	position: relative;
+	display: grid;
 `;
 
 const Toggle = styled.button<ExpandedProps>`
 	${flexStyles}
 	color: var(--white);
 	padding-block: 1rem;
+	justify-content: space-between;
 
 	${(p) =>
 		p.expanded &&
@@ -92,7 +97,7 @@ const Options = styled.div<ExpandedProps>`
 	position: absolute;
 	top: calc(100% + 2rem);
 	left: 0;
-	min-width: max-content;
+	min-width: 100%;
 	overflow: hidden;
 	border-radius: var(--radius-400);
 	transform: scale(0);
@@ -117,6 +122,7 @@ const Option = styled.button`
 	padding: 1.2rem 2rem;
 	color: var(--gray);
 	text-align: left;
+	min-width: max-content;
 	transition: all 0.1s;
 
 	&:hover,
