@@ -73,7 +73,7 @@ const Content = styled.div`
 	${flexStyles}
 	justify-content: space-between;
 	justify-items: left;
-	flex-wrap: wrap;
+	/* flex-wrap: wrap; */
 	gap: 1rem;
 	padding-block: 1rem;
 
