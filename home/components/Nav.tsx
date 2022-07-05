@@ -116,6 +116,7 @@ const Sidebar = styled.div<ExpandedProps>`
 	display: grid;
 	gap: 2rem;
 	align-content: flex-start;
+	overflow-y: auto;
 `;
 
 const StyledOverlay = styled(Overlay)`

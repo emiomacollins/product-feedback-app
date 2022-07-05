@@ -1,11 +1,14 @@
 import { Form, Formik } from 'formik';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as yup from 'yup';
 import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
+import editFeedbackIconPath from '../../assets/svgs/icon-edit-feedback.svg';
+import newFeedbackIconPath from '../../assets/svgs/icon-new-feedback.svg';
 import Button from '../../components/Button';
 import Select from '../../components/formik/Select';
 import TextArea from '../../components/formik/TextArea';
@@ -15,7 +18,7 @@ import { BoldLink } from '../../components/styled-components/BoldLink';
 import { cardStyles } from '../../components/styled-components/Card';
 import { contentStyles } from '../../components/styled-components/Content';
 import { ErrorMessage } from '../../components/styled-components/ErrorMessage';
-import { Flex, flexStyles } from '../../components/styled-components/Flex';
+import { Flex } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
@@ -24,7 +27,6 @@ import { Feedback, FeedbackCategory, FeedbackStatus } from '../../types/feedback
 import deleteFeedback from '../edit-feedback/api/deleteFeedback';
 import updateFeedback from '../edit-feedback/api/updateFeedback';
 import createFeedback, { CreateFeedbackProps } from './api';
-
 interface Props {
 	editing?: Feedback;
 }
@@ -103,7 +105,14 @@ export default function CreateFeedback({ editing }: Props) {
 			>
 				{({ isValid }) => (
 					<StyledForm>
-						<Grid gap={5}>
+						<Icon>
+							<Image
+								src={editing ? editFeedbackIconPath : newFeedbackIconPath}
+								alt=''
+							/>
+						</Icon>
+
+						<Grid gap={4}>
 							<Heading>
 								{editing
 									? `Editing '${editing.title}'`
@@ -173,7 +182,7 @@ export default function CreateFeedback({ editing }: Props) {
 								)}
 							</Grid>
 
-							<Buttons>
+							<Buttons editing={editing ? true : false}>
 								{editing && (
 									<Button
 										$color='red'
@@ -184,21 +193,20 @@ export default function CreateFeedback({ editing }: Props) {
 										Delete
 									</Button>
 								)}
-								<Flex>
-									<Link href={routes.home}>
-										<Button $color='blue-dark' type='button'>
-											Cancel
-										</Button>
-									</Link>
 
-									<Button
-										type='submit'
-										isLoading={submittingFeedback}
-										disabled={!isValid ? true : false}
-									>
-										{editing ? 'Save Changes' : 'Add Feedback'}
+								<Link href={routes.home}>
+									<Button $color='blue-dark' type='button'>
+										Cancel
 									</Button>
-								</Flex>
+								</Link>
+
+								<Button
+									type='submit'
+									isLoading={submittingFeedback}
+									disabled={!isValid ? true : false}
+								>
+									{editing ? 'Save Changes' : 'Add Feedback'}
+								</Button>
 							</Buttons>
 						</Grid>
 					</StyledForm>
@@ -214,13 +222,17 @@ interface ContainerProps {
 
 const Container = styled.div<ContainerProps>`
 	${contentStyles}
-	max-width: 600px;
+	max-width: 450px;
 	display: grid;
 	gap: 4rem;
 	min-height: 100vh;
 	align-content: flex-start;
 	opacity: ${(p) => (p.success ? 0 : 1)};
 	transition: all 0.2s;
+
+	@media ${Breakpoints.tabletUp} {
+		max-width: 600px;
+	}
 `;
 
 const StyledLink = styled(BoldLink)`
@@ -235,10 +247,11 @@ const StyledArrowIcon = styled(ArrowDownIcon)`
 
 const StyledForm = styled(Form)`
 	${cardStyles}
-	padding: 2rem 2.5rem;
+	padding: 5rem 2.5rem;
+	position: relative;
 
 	@media ${Breakpoints.tabletUp} {
-		padding: 4rem 3rem;
+		padding-inline: 3rem;
 	}
 `;
 
@@ -246,8 +259,31 @@ const Heading = styled.h2`
 	color: var(--blue-dark);
 `;
 
-const Buttons = styled.div`
-	${flexStyles}
-	justify-content: space-between;
-	flex-wrap: wrap;
+interface IsEditingProps {
+	editing: boolean;
+}
+
+const Buttons = styled.div<IsEditingProps>`
+	display: grid;
+	gap: 1rem 2rem;
+
+	@media ${Breakpoints.tabletUp} {
+		grid-template-columns: auto auto;
+		justify-content: right;
+
+		${(p) =>
+			p.editing &&
+			css`
+				grid-template-columns: 1fr auto auto;
+				justify-items: left;
+			`};
+	}
+`;
+
+const Icon = styled.div`
+	position: absolute;
+	top: 0;
+	left: 5%;
+	width: clamp(3.5rem, 3vw, 5rem);
+	transform: translateY(-40%);
 `;

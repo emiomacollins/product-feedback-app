@@ -22,7 +22,7 @@ export default function FormInput({ label, description, children }: Props) {
 
 export const Container = styled.div`
 	display: grid;
-	gap: 1.2rem;
+	gap: 1rem;
 	font-size: var(--size-350);
 `;
 

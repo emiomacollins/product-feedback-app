@@ -19,6 +19,7 @@ const queryClient = new QueryClient({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+	// todo: add protect route for some routes i.e create-feedback, also add login popup on button click
 	return (
 		<Provider store={store}>
 			<QueryClientProvider client={queryClient}>
