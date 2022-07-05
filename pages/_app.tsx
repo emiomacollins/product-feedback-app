@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import ProgressBar from '../components/ProgressBar';
 import { contentStyles } from '../components/styled-components/Content';
 import { Breakpoints } from '../constants/breakpoints';
-import { AuthProvider } from '../hooks/AuthProvider';
+import { AuthProvider } from '../hooks/useAuth';
 import { store } from '../lib/redux/store';
 import '../styles/globals.css';
 

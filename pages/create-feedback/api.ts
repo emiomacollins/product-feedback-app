@@ -8,7 +8,7 @@ export interface Props {
 	category: FeedbackCategory;
 }
 
-export default async function addFeedback(props: Props) {
+export default async function createFeedback(props: Props) {
 	const feedbacksRef = collection(db, `feedbacks`);
 	await addDoc(feedbacksRef, {
 		...props,

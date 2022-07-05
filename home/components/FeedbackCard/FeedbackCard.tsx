@@ -10,7 +10,7 @@ import { Flex } from '../../../components/styled-components/Flex';
 import { gridStyles } from '../../../components/styled-components/Grid';
 import { Breakpoints } from '../../../constants/breakpoints';
 import { routes } from '../../../constants/routes';
-import { useAuth } from '../../../hooks/AuthProvider';
+import { useAuth } from '../../../hooks/useAuth';
 import {
 	fetchFeedbacksKey,
 	useFeedbacks,

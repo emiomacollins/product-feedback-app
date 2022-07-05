@@ -19,7 +19,7 @@ import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 import { fetchFeedbacksKey } from '../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback, FeedbackCategory } from '../../types/feedback';
-import addFeedback from './api';
+import createFeedback from './api';
 
 interface Props {
 	editing?: Feedback;
@@ -29,9 +29,9 @@ export default function CreateFeedback({ editing }: Props) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
 
-	const { mutate: addFeedbackMutation, isLoading: addingFeedback } = useMutation(
-		'addFeedback',
-		addFeedback,
+	const { mutate: createFeedbackMutation, isLoading: creatingFeedback } = useMutation(
+		'createFeedback',
+		createFeedback,
 		{
 			onSuccess() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
@@ -58,7 +58,7 @@ export default function CreateFeedback({ editing }: Props) {
 				}}
 				validateOnMount={true}
 				onSubmit={(values) => {
-					addFeedbackMutation(values);
+					createFeedbackMutation(values);
 				}}
 				validationSchema={yup.object({
 					title: yup.string().required('Can’t be empty'),
@@ -115,9 +115,9 @@ export default function CreateFeedback({ editing }: Props) {
 
 									<Button
 										type='submit'
-										isLoading={addingFeedback}
+										isLoading={creatingFeedback}
 										disabled={
-											!isValid || addingFeedback ? true : false
+											!isValid || creatingFeedback ? true : false
 										}
 									>
 										Add Feedback

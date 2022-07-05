@@ -1,6 +1,6 @@
 import { doc, updateDoc } from 'firebase/firestore';
-import { fetchFeedback } from '../../../hooks/useFeedbacks/api/fetchFeedback';
 import { auth, db } from '../../../lib/firebase';
+import { fetchFeedback } from '../../../pages/edit-feedback/api/fetchFeedback';
 
 /* TODO: 
     A better way would be to use a cloudfunction to implement the Upvote & Comment functionality

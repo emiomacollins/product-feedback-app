@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import LoadQuery from '../../components/LoadQuery';
-import { fetchFeedback } from '../../hooks/useFeedbacks/api/fetchFeedback';
+import { fetchFeedback } from './api/fetchFeedback';
 import { Feedback } from '../../types/feedback';
 import CreateFeedback from '../create-feedback';
 
