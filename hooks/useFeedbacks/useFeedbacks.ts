@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import { routes } from '../../constants/routes';
 import {
 	getFeedbackCategoryFilter,
 	getFeedbackSort,
@@ -13,6 +15,7 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 	const fetchFeedbacksKey = 'fetchFeedbacks';
 	const sortBy = useSelector(getFeedbackSort);
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
+	const router = useRouter();
 
 	const query = useQuery(fetchFeedbacksKey, feedbacksApi.fetchFeedbacks, {
 		cacheTime: Infinity,
@@ -70,9 +73,17 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 		},
 	});
 
+	const addFeedbackMutation = useMutation('addFeedback', feedbacksApi.addFeedback, {
+		onSuccess() {
+			queryClient.invalidateQueries(fetchFeedbacksKey);
+			router.push(routes.home);
+		},
+	});
+
 	return {
 		query,
 		processedFeedbacks,
 		toggleUpvoteMutation,
+		addFeedbackMutation,
 	};
 }

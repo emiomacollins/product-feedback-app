@@ -18,7 +18,6 @@ export default Spinner;
 const Container = styled.div`
 	display: grid;
 	place-content: center;
-	padding-top: 2rem;
 `;
 
 const Icon = styled.div<Props>`

@@ -15,9 +15,14 @@ import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
+import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { FeedbackCategory } from '../../types/feedback';
 
 export default function CreateFeedback() {
+	const {
+		addFeedbackMutation: { mutate: addFeedbackMutation, isLoading: addingFeedback },
+	} = useFeedbacks();
+
 	return (
 		<Container>
 			<Link href={routes.home} passHref>
@@ -32,15 +37,15 @@ export default function CreateFeedback() {
 				initialValues={{
 					title: '',
 					category: FeedbackCategory.feature,
-					detail: '',
+					details: '',
 				}}
 				validateOnMount={true}
 				onSubmit={(values) => {
-					console.log(values);
+					addFeedbackMutation(values);
 				}}
 				validationSchema={yup.object({
 					title: yup.string().required('Can’t be empty'),
-					detail: yup.string().required('Can’t be empty'),
+					details: yup.string().required('Can’t be empty'),
 					category: yup.string().oneOf(Object.values(FeedbackCategory)),
 				})}
 			>
@@ -80,7 +85,7 @@ export default function CreateFeedback() {
 									label='Feedback Detail'
 									description='Include any specific comments on what should be improved, added, etc.'
 								>
-									<TextArea name='detail' />
+									<TextArea name='details' />
 								</FormInput>
 							</Grid>
 
@@ -93,7 +98,10 @@ export default function CreateFeedback() {
 
 									<Button
 										type='submit'
-										disabled={isValid ? false : true}
+										isLoading={addingFeedback}
+										disabled={
+											!isValid || addingFeedback ? true : false
+										}
 									>
 										Add Feedback
 									</Button>

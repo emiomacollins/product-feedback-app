@@ -1,6 +1,14 @@
-import { collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import {
+	addDoc,
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	Timestamp,
+	updateDoc,
+} from 'firebase/firestore';
 import { auth, db } from '../../lib/firebase';
-import { Feedback } from '../../types/feedback';
+import { Feedback, FeedbackCategory, FeedbackStatus } from '../../types/feedback';
 
 async function fetchFeedbacks() {
 	const ref = collection(db, `feedbacks`);
@@ -37,9 +45,28 @@ async function toggleUpvote(feedbackId: string) {
 	});
 }
 
+interface AddFeefbackProps {
+	title: string;
+	details: string;
+	category: FeedbackCategory;
+}
+
+async function addFeedback(props: AddFeefbackProps) {
+	const feedbacksRef = collection(db, `feedbacks`);
+	await addDoc(feedbacksRef, {
+		...props,
+		creator: auth.currentUser?.uid,
+		comments: [],
+		upVotes: {},
+		dateAdded: Timestamp.now(),
+		status: FeedbackStatus.suggestion,
+	});
+}
+
 const feedbacksApi = {
 	fetchFeedbacks,
 	toggleUpvote,
+	addFeedback,
 };
 
 export default feedbacksApi;
