@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import LoadQuery from '../../components/LoadQuery';
 import { Feedback } from '../../types/feedback';
 import CreateFeedback from '../create-feedback';
-import { fetchFeedback } from './api/fetchFeedback';
+import fetchFeedback from './api/fetchFeedback';
 
 export default function EditFeedback() {
 	const router = useRouter();
