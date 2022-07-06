@@ -13,8 +13,8 @@ import { Breakpoints } from '../../../constants/breakpoints';
 import { routes } from '../../../constants/routes';
 import { useAuth } from '../../../hooks/useAuth';
 import {
-	fetchFeedbacksKey,
-	useFeedbacks,
+    fetchFeedbacksKey,
+    useFeedbacks
 } from '../../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../../../types/feedback';
 import toggleUpvote from './api';
@@ -26,7 +26,7 @@ interface Props {
 export default function FeedbackCard({ feedback }: Props) {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
-	const { title, upVotes, comments, category, details, id } = feedback;
+	const { title, upVotes, commentIds, category, details, id } = feedback;
 	const upVoted = user?.uid ? upVotes[user?.uid] : false;
 
 	const upVoteCount = useMemo(() => {
@@ -70,7 +70,7 @@ export default function FeedbackCard({ feedback }: Props) {
 
 			<Comments>
 				<Image src={commentsIconPath} alt='' />
-				<h4>{comments.length}</h4>
+				<h4>{commentIds.length}</h4>
 			</Comments>
 		</Container>
 	);

@@ -7,6 +7,11 @@ export default async function fetchFeedback(feedbackId: string) {
 	const snapshot = await getDoc(feedbackRef);
 
 	if (!snapshot.exists()) throw new Error('Failed to fetch feedback');
+	const data = snapshot.data();
 
-	return { id: snapshot.id, ...snapshot.data() } as Feedback;
+	return {
+		id: snapshot.id,
+		...data,
+		dateAdded: new Date(data.dateAdded.toDate()).toISOString(),
+	} as Feedback;
 }
