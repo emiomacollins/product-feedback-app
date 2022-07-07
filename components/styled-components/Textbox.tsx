@@ -13,6 +13,11 @@ export const textboxStyles = css<TextboxStyleProps>`
 	transition: all 0.2s;
 	color: var(--blue-dark);
 
+	&::placeholder {
+		color: inherit;
+		opacity: 0.5;
+	}
+
 	&:focus {
 		border-color: var(--blue);
 		outline: 0;

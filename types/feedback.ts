@@ -21,14 +21,21 @@ export enum FeedbackStatus {
 	live = 'Live',
 }
 
-export interface FeedbackComment {}
+export interface FeedbackComment {
+	id: string;
+	text: string;
+	user: {
+		name: string;
+		picture: string;
+	};
+}
 
 export interface Feedback {
 	id: string;
 	title: string;
 	creator: string;
 	details: string;
-	commentIds: string[];
+	commentCount: number;
 	dateAdded: string;
 	status: FeedbackStatus;
 	category: FeedbackCategory;

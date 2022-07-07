@@ -1,26 +1,40 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import GoBackLink from '../../components/curried/GoBackLink';
-import { Card, cardStyles } from '../../components/styled-components/Card';
+import { Card } from '../../components/styled-components/Card';
 import { contentStyles } from '../../components/styled-components/Content';
 import { flexStyles } from '../../components/styled-components/Flex';
 import { routes } from '../../constants/routes';
 import FeedbackCard from '../../home/components/FeedbackCard/FeedbackCard';
-import { db } from '../../lib/firebase';
+import fetchFeedback from '../../hooks/useFeedback/api/fetchFeedback';
+import { useFeedback } from '../../hooks/useFeedback/useFeedback';
+import { fetchFeedbackComments } from '../../hooks/useFeedbackComments/api/fetchFeedbackComments';
+import { useFeedbackComments } from '../../hooks/useFeedbackComments/useFeedbackComments';
 import { Feedback as FeedbackType, FeedbackComment } from '../../types/feedback';
-import fetchFeedback from '../edit-feedback/api/fetchFeedback';
-
+import AddComment from './components/AddComment';
+import Comment from './components/Comment';
 interface Props {
 	feedback: FeedbackType;
 	comments: FeedbackComment[];
 }
 
-export default function Feedback({ feedback, comments }: Props) {
-	const { id } = feedback;
-	// add useQuery for fetchFeedback to invalidate on upvote toggle
+export default function Feedback({
+	feedback: initialFeedback,
+	comments: initialComments,
+}: Props) {
+	const { id } = initialFeedback;
+
+	const { data: feedback } = useFeedback({ id, initialValue: initialFeedback });
+
+	const { data: comments } = useFeedbackComments({
+		feedbackId: feedback.id,
+		initialValue: initialComments,
+	});
+	const commentCount = comments?.length || 0;
+
+	console.log(comments);
 
 	return (
 		<Container>
@@ -32,13 +46,26 @@ export default function Feedback({ feedback, comments }: Props) {
 			</Header>
 
 			<FeedbackCard feedback={feedback} />
+
+			{commentCount > 0 && (
+				<Comments>
+					<Heading>
+						{commentCount} Comment{commentCount !== 1 && 's'}
+					</Heading>
+					{comments?.map((comment) => (
+						<Comment key={comment.id} comment={comment} />
+					))}
+				</Comments>
+			)}
+
+			<AddComment feedback={feedback} />
 		</Container>
 	);
 }
 
 const Container = styled.div`
 	${contentStyles}
-	max-width: 800px;
+	max-width: 700px;
 	display: grid;
 	gap: 3rem;
 `;
@@ -48,10 +75,14 @@ const Header = styled.div`
 	justify-content: space-between;
 `;
 
-const Comments = styled(Card)``;
+const Comments = styled(Card)`
+	padding-block: 2.5rem;
+	display: grid;
+	gap: 1rem;
+`;
 
-const AddCommentForm = styled.form`
-	${cardStyles}
+const Heading = styled.h3`
+	color: var(--blue-dark);
 `;
 
 export async function getServerSideProps(props: GetServerSidePropsContext) {
@@ -59,14 +90,7 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
 	const { id } = pathQuery;
 
 	const feedback = await fetchFeedback(id as string);
-	const { commentIds } = feedback;
-
-	const commentsRef = collection(db, `comments`);
-	const commentsQuery = commentIds.length
-		? query(commentsRef, where('id', 'in', commentIds))
-		: commentsRef;
-
-	const comments = await (await getDocs(commentsQuery)).docs.map((doc) => doc.data());
+	const comments = await fetchFeedbackComments(feedback.id);
 
 	return {
 		props: {

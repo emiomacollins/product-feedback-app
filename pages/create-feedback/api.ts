@@ -13,7 +13,7 @@ export default async function createFeedback(props: CreateFeedbackProps) {
 	await addDoc(feedbacksRef, {
 		...props,
 		creator: auth.currentUser?.uid,
-		comments: [],
+		commentIds: [],
 		upVotes: {},
 		dateAdded: Timestamp.now(),
 		status: FeedbackStatus.suggestion,

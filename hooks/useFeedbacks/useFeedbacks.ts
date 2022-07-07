@@ -41,7 +41,7 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 		};
 
 		const sortByComments = (order: Order, a: Feedback, b: Feedback) => {
-			const oneGreater = a.commentIds.length > b.commentIds.length;
+			const oneGreater = a.commentCount.length > b.commentCount.length;
 			if (order === 'asc') return oneGreater ? -1 : 1;
 			if (order === 'desc') return oneGreater ? 1 : -1;
 			return 1;

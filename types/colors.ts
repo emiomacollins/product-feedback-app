@@ -6,4 +6,5 @@ export type Color =
 	| 'red'
 	| 'white'
 	| 'orange'
-	| 'gray';
+	| 'gray'
+	| 'transparent';

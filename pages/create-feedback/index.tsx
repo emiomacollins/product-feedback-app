@@ -65,6 +65,8 @@ export default function CreateFeedback({ editing }: Props) {
 		},
 	});
 
+	// todo: add popup for delete feedback btn
+
 	return (
 		<Container success={success}>
 			<GoBackLink />
@@ -169,6 +171,7 @@ export default function CreateFeedback({ editing }: Props) {
 								{submitError && (
 									<ErrorMessage>{submitError.message}</ErrorMessage>
 								)}
+
 								{deleteError && (
 									<ErrorMessage>{deleteError.message}</ErrorMessage>
 								)}

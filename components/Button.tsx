@@ -32,7 +32,7 @@ export const Container = styled.button<StyleProps>`
 	padding: 1rem 2rem;
 	color: var(--white);
 	font-weight: 600;
-	background: var(--purple);
+	background: var(--${(p) => p.$color || 'purple'});
 	border-radius: var(--radius-400);
 	white-space: nowrap;
 	transition: all 0.2s;
@@ -52,8 +52,11 @@ export const Container = styled.button<StyleProps>`
 		cursor: default;
 	}
 
-	${({ $color: color }) => css`
-		background: var(--${color});
+	${({ $color }) => css`
+		${$color === 'transparent' &&
+		css`
+			color: var(--blue);
+		`}
 	`}
 `;
 
