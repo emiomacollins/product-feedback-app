@@ -25,16 +25,13 @@ export default function Feedback({
 	comments: initialComments,
 }: Props) {
 	const { id } = initialFeedback;
-
 	const { data: feedback } = useFeedback({ id, initialValue: initialFeedback });
 
 	const { data: comments } = useFeedbackComments({
 		feedbackId: feedback.id,
 		initialValue: initialComments,
 	});
-	const commentCount = comments?.length || 0;
-
-	console.log(comments);
+	const commentCount = comments.length;
 
 	return (
 		<Container>
@@ -53,7 +50,7 @@ export default function Feedback({
 						{commentCount} Comment{commentCount !== 1 && 's'}
 					</Heading>
 					{comments?.map((comment) => (
-						<Comment key={comment.id} comment={comment} />
+						<Comment key={comment.text} comment={comment} />
 					))}
 				</Comments>
 			)}
@@ -90,7 +87,7 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
 	const { id } = pathQuery;
 
 	const feedback = await fetchFeedback(id as string);
-	const comments = await fetchFeedbackComments(feedback.id);
+	const comments = await fetchFeedbackComments(id as string);
 
 	return {
 		props: {

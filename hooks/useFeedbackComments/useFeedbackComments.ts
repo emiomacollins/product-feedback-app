@@ -17,7 +17,7 @@ export function useFeedbackComments({ feedbackId, initialValue }: Props) {
 		queryClient.invalidateQueries(fetchFeedbackCommentsKey);
 	}, [feedbackId, queryClient]);
 
-	return useQuery(
+	const query = useQuery(
 		[fetchFeedbackCommentsKey, feedbackId],
 		({ queryKey }) => {
 			const feedbackId = queryKey[1];
@@ -27,4 +27,6 @@ export function useFeedbackComments({ feedbackId, initialValue }: Props) {
 			initialData: initialValue,
 		}
 	);
+
+	return { ...query, data: query.data as FeedbackComment[] };
 }

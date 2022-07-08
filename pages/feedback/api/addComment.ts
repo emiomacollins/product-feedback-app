@@ -1,5 +1,5 @@
-import { doc } from 'firebase/firestore';
-import { db } from '../../../lib/firebase';
+import { httpsCallable } from 'firebase/functions';
+import { auth, functions } from '../../../lib/firebase';
 
 export interface AddCommentProps {
 	text: string;
@@ -7,14 +7,13 @@ export interface AddCommentProps {
 }
 
 export async function addComment({ text, feedbackId }: AddCommentProps) {
-	const commentsRef = doc(db, `comments/${feedbackId}`);
-
-	// todo: cloud function
-	// const commentDoc = await addDoc(commentsRef, {
-	// 	text,
-	// 	user: {
-	// 		name: auth.currentUser?.displayName,
-	// 		picture: auth.currentUser?.photoURL,
-	// 	},
-	// });
+	const callable = httpsCallable(functions, 'addComment');
+	const { data } = await callable({
+		text,
+		user: {
+			name: auth.currentUser?.displayName,
+			picture: auth.currentUser?.photoURL,
+		},
+	});
+	console.log(data);
 }

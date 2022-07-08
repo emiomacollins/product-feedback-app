@@ -22,7 +22,6 @@ export enum FeedbackStatus {
 }
 
 export interface FeedbackComment {
-	id: string;
 	text: string;
 	user: {
 		name: string;

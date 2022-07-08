@@ -4,6 +4,7 @@ import { FeedbackComment } from '../../../types/feedback';
 
 export async function fetchFeedbackComments(feedbackId: string) {
 	const commentsRef = doc(db, `comments/${feedbackId}`);
-	const comments = await (await getDoc(commentsRef)).data();
+	const snapshot = await getDoc(commentsRef);
+	const comments = snapshot.exists() ? snapshot.data().comments : [];
 	return comments as FeedbackComment[];
 }
