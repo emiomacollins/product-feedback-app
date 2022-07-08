@@ -1,6 +1,3 @@
-import * as functions from 'firebase-functions';
+import addComment from './comments/restful/addComment';
 
-exports.addComment = functions.https.onCall((data, context) => {
-	if (!context.auth) throw new Error('Un-authenticated');
-	return data;
-});
+exports.addComment = addComment;
