@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyBLttaqkr1nQ3BsU1g5xZtXyZNkwiO_4iA',
@@ -23,3 +23,5 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const GoogleProvider = new GoogleAuthProvider();
 export const functions = getFunctions(app);
+// TODO: remove for prod
+connectFunctionsEmulator(functions, '127.0.0.1', 5001);
