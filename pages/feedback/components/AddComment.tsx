@@ -9,6 +9,7 @@ import { ErrorMessage } from '../../../components/styled-components/ErrorMessage
 import { flexStyles } from '../../../components/styled-components/Flex';
 import { Grid } from '../../../components/styled-components/Grid';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
+import { fetchFeedbackCommentsKey } from '../../../hooks/useFeedbackComments/useFeedbackComments';
 import { Feedback } from '../../../types/feedback';
 import { addComment, AddCommentProps } from '../api/addComment';
 
@@ -26,6 +27,7 @@ export default function AddComment({ feedback }: Props) {
 	} = useMutation<void, Error, AddCommentProps>('addComment', addComment, {
 		onSuccess() {
 			queryClient.invalidateQueries(fetchFeedbackKey);
+			queryClient.invalidateQueries(fetchFeedbackCommentsKey);
 		},
 	});
 

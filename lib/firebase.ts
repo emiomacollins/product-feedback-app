@@ -24,4 +24,4 @@ export const auth = getAuth(app);
 export const GoogleProvider = new GoogleAuthProvider();
 export const functions = getFunctions(app);
 // TODO: remove for prod
-connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+// connectFunctionsEmulator(functions, '127.0.0.1', 5001);
