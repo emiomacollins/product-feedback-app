@@ -33,4 +33,4 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-cloud-functions/functions/src/config/serviceAccount.ts
+cloud-functions
