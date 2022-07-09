@@ -16,5 +16,4 @@ export async function addComment({ text, feedbackId }: AddCommentProps) {
 			picture: auth.currentUser?.photoURL,
 		},
 	});
-	console.log(data);
 }

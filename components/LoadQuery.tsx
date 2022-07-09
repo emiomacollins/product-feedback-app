@@ -2,7 +2,7 @@ import { UseQueryResult } from 'react-query';
 import Spinner from './styled-components/Spinner';
 
 interface Props {
-	query: UseQueryResult;
+	query: any;
 	children: (data?: any) => JSX.Element;
 	ErrorComponent?: JSX.Element;
 }

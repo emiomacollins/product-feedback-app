@@ -13,7 +13,7 @@ import { useFeedback } from '../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackComments } from '../../hooks/useFeedbackComments/api/fetchFeedbackComments';
 import { useFeedbackComments } from '../../hooks/useFeedbackComments/useFeedbackComments';
 import { Feedback as FeedbackType, FeedbackComment } from '../../types/feedback';
-import AddComment from './components/AddComment';
+import AddComment from './components/AddCommentForm';
 import Comment from './components/Comment';
 interface Props {
 	feedback: FeedbackType;
