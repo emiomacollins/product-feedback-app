@@ -21,6 +21,7 @@ export default function FeedbackList() {
 }
 
 const Container = styled(Grid)`
+	margin-bottom: 2rem;
 	@media ${Breakpoints.tabletDown} {
 		${contentStyles}
 	}

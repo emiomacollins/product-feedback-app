@@ -12,6 +12,7 @@
 	font-size: 62.5%;
 
 	--app-padding: 5rem;
+	--disabled-opacity: 0.4;
 
 	--size-300: clamp(1.2rem, 1.1vw, 1.4rem);
 	--size-350: clamp(1.3rem, 1.25vw, 1.6rem);
@@ -48,6 +49,12 @@
 	--radius-300: 0.4em;
 	--radius-400: 0.6em;
 	--radius-500: 0.8em;
+}
+
+@media (max-width: 800px) {
+	:root {
+		--app-padding: 3rem;
+	}
 }
 
 html,

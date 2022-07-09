@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
+import gradientPath from '../../assets/images/gradient-mobile.png';
 import closeIconPath from '../../assets/svgs/icon-close.svg';
 import hamburgerIconPath from '../../assets/svgs/icon-hamburger.svg';
 import { contentStyles } from '../../components/styled-components/Content';
@@ -62,7 +63,9 @@ interface NavHeightProps {
 const Container = styled.div<NavHeightProps>`
 	--nav-height: ${(p) => p.navHeight}px;
 	margin-top: calc(-1 * var(--app-padding));
-	background: var(--gradient);
+	background: url(${gradientPath.src});
+	background-repeat: no-repeat;
+	background-size: cover;
 	color: var(--white);
 	position: relative;
 	z-index: 99;
@@ -117,6 +120,14 @@ const Sidebar = styled.div<ExpandedProps>`
 	gap: 2rem;
 	align-content: flex-start;
 	overflow-y: auto;
+	transform: translateX(100%);
+	transition: all 0.2s;
+
+	${(p) =>
+		p.expanded &&
+		css`
+			transform: translateX(0);
+		`}
 `;
 
 const StyledOverlay = styled(Overlay)`

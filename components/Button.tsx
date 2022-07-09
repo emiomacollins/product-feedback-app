@@ -48,8 +48,12 @@ export const Container = styled.button<StyleProps>`
 	}
 
 	&:disabled {
-		opacity: 0.6;
+		opacity: var(--disabled-opacity);
 		cursor: default;
+
+		&:active {
+			transform: scale(1);
+		}
 	}
 
 	${({ $color }) => css`

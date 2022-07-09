@@ -97,7 +97,7 @@ export default function CreateFeedback({ editing }: Props) {
 					submitMutation(editing ? { ...editing, ...values } : values);
 				}}
 			>
-				{({ isValid }) => (
+				{() => (
 					<StyledForm>
 						<Icon>
 							<Image
@@ -195,11 +195,7 @@ export default function CreateFeedback({ editing }: Props) {
 									</Button>
 								</Link>
 
-								<Button
-									type='submit'
-									isLoading={submittingFeedback}
-									disabled={!isValid ? true : false}
-								>
+								<Button type='submit' isLoading={submittingFeedback}>
 									{editing ? 'Save Changes' : 'Add Feedback'}
 								</Button>
 							</Buttons>

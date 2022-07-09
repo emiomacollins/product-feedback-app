@@ -24,7 +24,7 @@ export const Badge = styled.button<Props>`
 	}
 
 	&:disabled {
-		opacity: 0.4;
+		opacity: var(--disabled-opacity);
 	}
 
 	${(p) =>
