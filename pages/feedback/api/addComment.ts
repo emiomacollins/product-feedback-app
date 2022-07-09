@@ -6,7 +6,7 @@ export interface AddCommentProps {
 	feedbackId: string;
 }
 
-export async function addComment({ text, feedbackId }: AddCommentProps) {
+export default async function addComment({ text, feedbackId }: AddCommentProps) {
 	const callable = httpsCallable(functions, 'addComment');
 	const { data } = await callable({
 		feedbackId,
