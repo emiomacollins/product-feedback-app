@@ -11,7 +11,7 @@ import { Grid } from '../../../components/styled-components/Grid';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackCommentsKey } from '../../../hooks/useFeedbackComments/useFeedbackComments';
 import { Feedback } from '../../../types/feedback';
-import { addComment, AddCommentProps } from '../api/addComment';
+import addComment, { AddCommentProps } from '../api/addComment';
 
 interface Props {
 	feedback: Feedback;
