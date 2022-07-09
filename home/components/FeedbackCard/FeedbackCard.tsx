@@ -35,14 +35,60 @@ export default function FeedbackCard({ feedback }: Props) {
 	}, [upVotes]);
 
 	const {
-		fetchFeedbacksQuery: { isLoading: loadingFeedbacks },
+		fetchFeedbacksQuery: { isLoading: loadingFeedbacks, data: feedbacks },
 	} = useFeedbacks();
 
 	const { mutate: toggleUpvoteMutation, isLoading: togglingUpvote } = useMutation(
 		'toggleUpvote',
 		toggleUpvote,
 		{
-			onSuccess() {
+			// optimistic updates to hide cold start
+			onMutate() {
+				const { uid } = user || {};
+				if (!uid) return;
+				const prevUpvotes = feedback.upVotes;
+				const { [uid]: userUpvote, ...withoutUserUpvotes } = prevUpvotes;
+
+				queryClient.setQueriesData(fetchFeedbackKey, {
+					...feedback,
+					upVotes: {
+						...withoutUserUpvotes,
+						...(userUpvote ? {} : { [uid]: true }),
+					},
+				});
+
+				queryClient.setQueriesData(
+					fetchFeedbacksKey,
+					feedbacks?.map((feedback) => {
+						if (feedback.id === id)
+							return {
+								...feedback,
+								upVotes: {
+									...withoutUserUpvotes,
+									...(userUpvote ? {} : { [uid]: true }),
+								},
+							};
+						return feedback;
+					})
+				);
+
+				return {
+					prevUpvotes,
+				};
+			},
+			onError(_, feedbackId, context) {
+				const { prevUpvotes } = context || {};
+				queryClient.setQueriesData(fetchFeedbackKey, prevUpvotes);
+				queryClient.setQueriesData(
+					fetchFeedbacksKey,
+					feedbacks?.map((feedback) => {
+						if (feedback.id === feedbackId)
+							return { ...feedback, upVotes: prevUpvotes };
+						return feedback;
+					})
+				);
+			},
+			onSettled() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
 				queryClient.invalidateQueries(fetchFeedbackKey);
 			},
@@ -63,7 +109,7 @@ export default function FeedbackCard({ feedback }: Props) {
 
 			<Upvote
 				onClick={() => toggleUpvoteMutation(id)}
-				disabled={togglingUpvote || loadingFeedbacks}
+				// disabled={togglingUpvote || loadingFeedbacks}
 				$active={upVoted}
 			>
 				<UpvoteIcon color={upVoted ? 'white' : 'blue'} />

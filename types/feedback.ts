@@ -29,6 +29,10 @@ export interface FeedbackComment {
 	};
 }
 
+export interface FeedbackUpvotes {
+	[userId: string]: boolean;
+}
+
 export interface Feedback {
 	id: string;
 	title: string;
@@ -38,5 +42,5 @@ export interface Feedback {
 	dateAdded: string;
 	status: FeedbackStatus;
 	category: FeedbackCategory;
-	upVotes: { [userId: string]: boolean };
+	upVotes: FeedbackUpvotes;
 }
