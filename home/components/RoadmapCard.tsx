@@ -42,7 +42,6 @@ export default function RoadmapCard() {
 
 					type Colors = { [status: string]: Color };
 					const colors: Colors = {
-						[FeedbackStatus.suggestion]: 'NONE',
 						[FeedbackStatus.planned]: 'orange',
 						[FeedbackStatus.inProgress]: 'purple',
 						[FeedbackStatus.live]: 'blue',

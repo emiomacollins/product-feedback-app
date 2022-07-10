@@ -1,5 +1,4 @@
 export type Color =
-	| 'NONE'
 	| 'purple'
 	| 'blue'
 	| 'blue-dark'
