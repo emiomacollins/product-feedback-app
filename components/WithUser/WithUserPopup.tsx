@@ -20,7 +20,7 @@ export default function WithUserPopup() {
 	};
 
 	useEffect(() => {
-		document.documentElement.style.position = expanded ? 'fixed' : 'unset';
+		document.documentElement.style.overflowY = expanded ? 'hidden' : 'unset';
 	}, [expanded]);
 
 	return (
@@ -28,7 +28,7 @@ export default function WithUserPopup() {
 			<Container onClick={(e) => e.stopPropagation()}>
 				<Heading>{withUserPopup?.message || <br />}</Heading>
 				<Link href={routes.login}>
-					<Button $color='blue' {...canFocus}>
+					<Button $color='blue' {...canFocus} onClick={handleClose}>
 						Sign in
 					</Button>
 				</Link>
