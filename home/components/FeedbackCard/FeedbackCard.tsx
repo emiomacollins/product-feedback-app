@@ -9,6 +9,7 @@ import { Badge } from '../../../components/styled-components/Badge';
 import { Card } from '../../../components/styled-components/Card';
 import { Flex } from '../../../components/styled-components/Flex';
 import { gridStyles } from '../../../components/styled-components/Grid';
+import WithUser from '../../../components/WithUser';
 import { Breakpoints } from '../../../constants/breakpoints';
 import { routes } from '../../../constants/routes';
 import { useAuth } from '../../../hooks/useAuth';
@@ -44,6 +45,10 @@ export default function FeedbackCard({ feedback }: Props) {
 		{
 			// optimistic updates to hide cold start
 			onMutate() {
+				// clear query refetches in progress
+				queryClient.cancelQueries(fetchFeedbackKey);
+				queryClient.cancelQueries(fetchFeedbacksKey);
+
 				const { uid } = user || {};
 				if (!uid) return;
 				const prevUpvotes = feedback.upVotes;
@@ -107,14 +112,18 @@ export default function FeedbackCard({ feedback }: Props) {
 				</Info>
 			</Link>
 
-			<Upvote
+			<UpvoteContainer
+				message='Sign in to Upvote'
 				onClick={() => toggleUpvoteMutation(id)}
-				// disabled={togglingUpvote || loadingFeedbacks}
-				$active={upVoted}
 			>
-				<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
-				<h4>{upVoteCount}</h4>
-			</Upvote>
+				<Upvote
+					// disabled={togglingUpvote || loadingFeedbacks}
+					$active={upVoted}
+				>
+					<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
+					<h4>{upVoteCount}</h4>
+				</Upvote>
+			</UpvoteContainer>
 
 			<Comments>
 				<Image src={commentsIconPath} alt='' />
@@ -166,6 +175,15 @@ const UpvoteIcon = styled(ArrowDownIcon)`
 	transform: rotate(180deg);
 `;
 
+const UpvoteContainer = styled(WithUser)`
+	order: 2;
+
+	@media ${Breakpoints.tabletUp} {
+		order: 1;
+		align-self: flex-start;
+	}
+`;
+
 const Upvote = styled(Badge)`
 	width: 5rem;
 	min-width: max-content;
@@ -173,14 +191,11 @@ const Upvote = styled(Badge)`
 	justify-items: center;
 	gap: 0.8rem;
 	padding: 1rem;
-	order: 2;
 	display: flex;
 	align-items: center;
 
 	@media ${Breakpoints.tabletUp} {
-		order: 1;
 		display: grid;
-		align-self: flex-start;
 		padding: 1.5rem 1rem;
 	}
 `;

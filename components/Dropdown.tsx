@@ -23,6 +23,8 @@ export default function Dropdown(props: DropdownProps) {
 	const { label, options, setValue, initialValue, ...restProps } = props;
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
 	const [selected, setSelected] = useState(initialValue || options[0]);
+	// make un-focusable when dropdown is not expanded
+	const canFocus = expanded ? {} : { tabIndex: -1 };
 
 	function handleSetOption(option: DropdownOption) {
 		const { value } = option;
@@ -54,8 +56,7 @@ export default function Dropdown(props: DropdownProps) {
 							key={label}
 							onClick={() => handleSetOption(option)}
 							type='button'
-							// make un-focusable when dropdown is not expanded
-							{...(expanded ? {} : { tabIndex: -1 })}
+							{...canFocus}
 						>
 							{label}
 							<CheckIcon visible={value === selected.value}>
