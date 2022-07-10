@@ -1,10 +1,11 @@
 import Link from 'next/link';
-import { MouseEventHandler, ReactNode, useState } from 'react';
+import { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { routes } from '../constants/routes';
 import { useAuth } from '../hooks/useAuth';
 import Button from './Button';
 import { cardStyles } from './styled-components/Card';
+import { contentStyles } from './styled-components/Content';
 import { overlayStyles } from './styled-components/Overlay';
 
 interface Props {
@@ -18,26 +19,34 @@ export default function WithUser({ children, onClick, message, ...props }: Props
 	const [expanded, setExpanded] = useState(false);
 	const canFocus = expanded ? {} : { tabIndex: -1 };
 
-	const handleShowPopup = () => {
+	const handleClick = () => {
 		if (user) return onClick();
 		setExpanded(true);
 	};
 
-	const handleClosePopup: MouseEventHandler<HTMLDivElement> = (e) => {
+	const handleClose: MouseEventHandler<HTMLDivElement> = (e) => {
 		e.stopPropagation();
 		setExpanded(false);
 	};
 
+	useEffect(() => {
+		document.documentElement.style.overflow = expanded ? 'hidden' : 'unset';
+	}, [expanded]);
+
 	return (
-		<Container onClick={handleShowPopup} {...props}>
-			<Overlay expanded={expanded} onClick={handleClosePopup}>
+		<Container onClick={handleClick} {...props}>
+			<Overlay expanded={expanded} onClick={handleClose}>
 				<Popup onClick={(e) => e.stopPropagation()}>
 					<Heading>{message}</Heading>
+
 					<Link href={routes.login}>
-						<Button {...canFocus}>Sign in</Button>
+						<Button $color='blue' {...canFocus}>
+							Sign in
+						</Button>
 					</Link>
 				</Popup>
 			</Overlay>
+
 			{children}
 		</Container>
 	);
@@ -51,7 +60,7 @@ const Container = styled.div`
 const Overlay = styled.div`
 	${overlayStyles}
 	display: grid;
-	place-content: center;
+	align-content: center;
 	background: rgba(0, 0, 0, 0.7);
 	z-index: 99;
 	padding-bottom: 10rem;
@@ -59,10 +68,11 @@ const Overlay = styled.div`
 
 const Popup = styled.div`
 	${cardStyles}
+	${contentStyles}
+    max-width: 350px;
 	display: grid;
-	gap: 3rem;
+	gap: 2rem;
 	padding: 3rem;
-	min-width: 300px;
 	text-align: center;
 `;
 

@@ -16,14 +16,11 @@ import { Feedback as FeedbackType, FeedbackComment } from '../../types/feedback'
 import AddComment from './components/AddCommentForm';
 import Comment from './components/Comment';
 interface Props {
-	feedback: FeedbackType;
-	comments: FeedbackComment[];
+	initialFeedback: FeedbackType;
+	initialComments: FeedbackComment[];
 }
 
-export default function Feedback({
-	feedback: initialFeedback,
-	comments: initialComments,
-}: Props) {
+export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const { id } = initialFeedback;
 	const { data: feedback } = useFeedback({ id, initialValue: initialFeedback });
 
@@ -86,13 +83,13 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
 	const { query: pathQuery } = props;
 	const { id } = pathQuery;
 
-	const feedback = await fetchFeedback(id as string);
-	const comments = await fetchFeedbackComments(id as string);
+	const initialFeedback = await fetchFeedback(id as string);
+	const initialComments = await fetchFeedbackComments(id as string);
 
 	return {
 		props: {
-			feedback,
-			comments,
+			initialFeedback,
+			initialComments,
 		},
 	};
 }

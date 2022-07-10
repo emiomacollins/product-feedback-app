@@ -36,7 +36,7 @@ export default function FeedbackCard({ feedback }: Props) {
 	}, [upVotes]);
 
 	const {
-		fetchFeedbacksQuery: { isLoading: loadingFeedbacks, data: feedbacks },
+		query: { isLoading: loadingFeedbacks, data: feedbacks },
 	} = useFeedbacks();
 
 	const { mutate: toggleUpvoteMutation, isLoading: togglingUpvote } = useMutation(

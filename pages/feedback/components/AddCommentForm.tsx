@@ -8,6 +8,7 @@ import { cardStyles } from '../../../components/styled-components/Card';
 import { ErrorMessage } from '../../../components/styled-components/ErrorMessage';
 import { flexStyles } from '../../../components/styled-components/Flex';
 import { Grid } from '../../../components/styled-components/Grid';
+import WithUser from '../../../components/WithUser';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackCommentsKey } from '../../../hooks/useFeedbackComments/useFeedbackComments';
 import { fetchFeedbacksKey } from '../../../hooks/useFeedbacks/useFeedbacks';
@@ -46,7 +47,7 @@ export default function AddComment({ feedback }: Props) {
 				resetForm();
 			}}
 		>
-			{({ values: { text } }) => {
+			{({ values: { text }, submitForm }) => {
 				const charactersLeft = 250 - text.length;
 				return (
 					<Container>
@@ -63,18 +64,23 @@ export default function AddComment({ feedback }: Props) {
 								<ErrorMessage>{addCommentError.message}</ErrorMessage>
 							)}
 
-							<StyledFlex>
+							<StyledFlex $wrap>
 								<p>
 									{charactersLeft < 0 ? 0 : charactersLeft} Character
 									{charactersLeft !== 1 && 's'} left
 								</p>
-								<Button
-									type='submit'
-									disabled={addingComment}
-									isLoading={addingComment}
+								<WithUser
+									onClick={submitForm}
+									message='Sign in to post a Comment'
 								>
-									Post Comment
-								</Button>
+									<Button
+										type='button'
+										disabled={addingComment}
+										isLoading={addingComment}
+									>
+										Post Comment
+									</Button>
+								</WithUser>
 							</StyledFlex>
 						</Grid>
 					</Container>

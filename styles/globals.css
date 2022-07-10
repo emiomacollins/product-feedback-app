@@ -36,6 +36,7 @@
 	--transparent: transparent;
 
 	--black-transparent-100: rgba(0, 0, 0, 0.06);
+	--black-transparent-200: rgba(0, 0, 0, 0.1);
 
 	--gradient: radial-gradient(
 		128.88% 128.88% at 103.9% -10.39%,
@@ -45,6 +46,7 @@
 	);
 
 	--shadow-400: 0 0 30px 5px var(--black-transparent-100);
+	--shadow-500: 0 0 30px 5px var(--black-transparent-200);
 
 	--radius-300: 0.4em;
 	--radius-400: 0.6em;

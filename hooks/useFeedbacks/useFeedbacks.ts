@@ -10,17 +10,21 @@ import fetchFeedbacks from './api/fetchFeedbacks';
 
 export const fetchFeedbacksKey = 'fetchFeedbacks';
 
-export function useFeedbacks(initialFeedbacks?: Feedback[]) {
+interface Props {
+	initialValue?: Feedback[];
+}
+
+export function useFeedbacks({ initialValue }: Props = {}) {
 	const sortBy = useSelector(getFeedbackSort);
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
 
-	const fetchFeedbacksQuery = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
+	const query = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
 		staleTime: Infinity,
-		initialData: initialFeedbacks,
+		initialData: initialValue,
 	});
 
 	const processedFeedbacks = useMemo(() => {
-		const { data: feedbacks } = fetchFeedbacksQuery;
+		const { data: feedbacks } = query;
 		if (!feedbacks) return null;
 
 		type Order = 'asc' | 'desc';
@@ -61,10 +65,10 @@ export function useFeedbacks(initialFeedbacks?: Feedback[]) {
 		});
 
 		return filteredFeedbacks;
-	}, [sortBy, categoryFilter, fetchFeedbacksQuery]);
+	}, [sortBy, categoryFilter, query]);
 
 	return {
-		fetchFeedbacksQuery,
+		query,
 		processedFeedbacks,
 	};
 }

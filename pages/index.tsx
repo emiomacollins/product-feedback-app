@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Show from '../components/Show';
 import { Card } from '../components/styled-components/Card';
+import { Flex } from '../components/styled-components/Flex';
 import { Grid } from '../components/styled-components/Grid';
 import { Breakpoints } from '../constants/breakpoints';
 import Controls from '../home/components/Controls';
@@ -8,6 +9,7 @@ import FeedbackList from '../home/components/FeedbackList';
 import Filters from '../home/components/Filters';
 import Logo from '../home/components/Logo';
 import Nav from '../home/components/Nav';
+import ProfileDropdown from '../home/components/ProfileDropdown';
 import RoadmapCard from '../home/components/RoadmapCard';
 import fetchFeedbacks from '../hooks/useFeedbacks/api/fetchFeedbacks';
 import { useFeedbacks } from '../hooks/useFeedbacks/useFeedbacks';
@@ -18,7 +20,7 @@ interface Props {
 }
 
 const Home = ({ initialFeedbacks }: Props) => {
-	useFeedbacks(initialFeedbacks);
+	useFeedbacks({ initialValue: initialFeedbacks });
 
 	return (
 		<Container>
@@ -26,22 +28,27 @@ const Home = ({ initialFeedbacks }: Props) => {
 				<Nav />
 			</Show>
 
-			<Columns>
+			<Content>
 				<Show on={Breakpoints.tabletUp}>
 					<Cards gap={2.5}>
 						<LogoCard>
-							<StyledLogo />
+							<Flex spaceBetween>
+								<Logo />
+								<ProfileDropdown />
+							</Flex>
 						</LogoCard>
+
 						<Filters />
+
 						<RoadmapCard />
 					</Cards>
 				</Show>
 
-				<RightColumn>
+				<StyledGrid>
 					<Controls />
 					<FeedbackList />
-				</RightColumn>
-			</Columns>
+				</StyledGrid>
+			</Content>
 		</Container>
 	);
 };
@@ -52,7 +59,7 @@ const Container = styled.div`
 	display: grid;
 `;
 
-const Columns = styled.div`
+const Content = styled.div`
 	display: grid;
 	gap: 5rem;
 	align-items: flex-start;
@@ -77,11 +84,7 @@ const LogoCard = styled(Card)`
 	min-height: 160px;
 `;
 
-const StyledLogo = styled(Logo)`
-	margin-top: 2em;
-`;
-
-const RightColumn = styled(Grid)`
+const StyledGrid = styled(Grid)`
 	gap: 2rem;
 
 	@media ${Breakpoints.tabletUp} {
