@@ -8,7 +8,7 @@ import { cardStyles } from '../../../components/styled-components/Card';
 import { ErrorMessage } from '../../../components/styled-components/ErrorMessage';
 import { flexStyles } from '../../../components/styled-components/Flex';
 import { Grid } from '../../../components/styled-components/Grid';
-import WithUser from '../../../components/WithUser';
+import WithUser from '../../../components/WithUser/WithUser';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackCommentsKey } from '../../../hooks/useFeedbackComments/useFeedbackComments';
 import { fetchFeedbacksKey } from '../../../hooks/useFeedbacks/useFeedbacks';

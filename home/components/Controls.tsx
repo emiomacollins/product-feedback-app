@@ -7,7 +7,7 @@ import Dropdown from '../../components/Dropdown';
 import Show from '../../components/Show';
 import { contentStyles } from '../../components/styled-components/Content';
 import { flexStyles } from '../../components/styled-components/Flex';
-import WithUser from '../../components/WithUser';
+import WithUser from '../../components/WithUser/WithUser';
 import { Breakpoints } from '../../constants/breakpoints';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import { setFeedbackSort } from '../../lib/redux/slices/feedback';

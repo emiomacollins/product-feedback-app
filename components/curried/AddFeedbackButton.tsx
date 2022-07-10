@@ -4,7 +4,7 @@ import PlusIconPath from '../../assets/svgs/icon-plus.svg';
 import { routes } from '../../constants/routes';
 import Button from '../Button';
 import { Flex } from '../styled-components/Flex';
-import WithUser from '../WithUser';
+import WithUser from '../WithUser/WithUser';
 
 export default function AddFeedbackButton() {
 	const router = useRouter();

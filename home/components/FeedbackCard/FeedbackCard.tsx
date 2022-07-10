@@ -9,7 +9,7 @@ import { Badge } from '../../../components/styled-components/Badge';
 import { Card } from '../../../components/styled-components/Card';
 import { Flex } from '../../../components/styled-components/Flex';
 import { gridStyles } from '../../../components/styled-components/Grid';
-import WithUser from '../../../components/WithUser';
+import WithUser from '../../../components/WithUser/WithUser';
 import { Breakpoints } from '../../../constants/breakpoints';
 import { routes } from '../../../constants/routes';
 import { useAuth } from '../../../hooks/useAuth';
@@ -112,18 +112,15 @@ export default function FeedbackCard({ feedback }: Props) {
 				</Info>
 			</Link>
 
-			<UpvoteContainer
+			<WithUser
 				message='Sign in to Upvote'
 				onClick={() => toggleUpvoteMutation(id)}
 			>
-				<Upvote
-					// disabled={togglingUpvote || loadingFeedbacks}
-					$active={upVoted}
-				>
+				<Upvote $active={upVoted}>
 					<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
 					<h4>{upVoteCount}</h4>
 				</Upvote>
-			</UpvoteContainer>
+			</WithUser>
 
 			<Comments>
 				<Image src={commentsIconPath} alt='' />
@@ -151,9 +148,9 @@ const Title = styled.h3`
 
 const Info = styled.a`
 	${gridStyles}
-	justify-items: left;
-	order: 1;
 	grid-column: 1/-1;
+	order: 1;
+	justify-items: left;
 	text-decoration: none;
 	color: var(--gray);
 
@@ -175,15 +172,6 @@ const UpvoteIcon = styled(ArrowDownIcon)`
 	transform: rotate(180deg);
 `;
 
-const UpvoteContainer = styled(WithUser)`
-	order: 2;
-
-	@media ${Breakpoints.tabletUp} {
-		order: 1;
-		align-self: flex-start;
-	}
-`;
-
 const Upvote = styled(Badge)`
 	width: 5rem;
 	min-width: max-content;
@@ -193,8 +181,11 @@ const Upvote = styled(Badge)`
 	padding: 1rem;
 	display: flex;
 	align-items: center;
+	order: 2;
 
 	@media ${Breakpoints.tabletUp} {
+		order: 1;
+		align-self: flex-start;
 		display: grid;
 		padding: 1.5rem 1rem;
 	}

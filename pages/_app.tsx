@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import styled from 'styled-components';
 import ProgressBar from '../components/ProgressBar';
 import { contentStyles } from '../components/styled-components/Content';
+import WithUserPopup from '../components/WithUser/WithUserPopup';
 import { Breakpoints } from '../constants/breakpoints';
 import { AuthProvider } from '../hooks/useAuth';
 import { store } from '../lib/redux/store';
@@ -29,6 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 						<link rel='icon' href='/favicon_.ico' />
 					</Head>
 					<ProgressBar />
+					<WithUserPopup />
 					<Layout>
 						<Component {...pageProps} />
 					</Layout>
