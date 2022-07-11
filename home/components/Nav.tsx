@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import gradientPath from '../../assets/images/gradient-mobile.png';
 import closeIconPath from '../../assets/svgs/icon-close.svg';
@@ -59,12 +59,17 @@ export default function Nav() {
 			<Sidebar expanded={expanded}>
 				<Grid gap={1}>
 					<Flex>
-						{user && <StyledProfileDropdown withDropdown={false} />}
-						<Grid gap={0}>
-							<DisplayName>{fullName}</DisplayName>
-							<Username>@{username}</Username>
-						</Grid>
+						{user && (
+							<Fragment>
+								<StyledProfileDropdown withDropdown={false} />
+								<Grid gap={0}>
+									<DisplayName>{fullName}</DisplayName>
+									<Username>@{username}</Username>
+								</Grid>
+							</Fragment>
+						)}
 					</Flex>
+
 					<Link href={routes.auth}>
 						<Button $color='blue' onClick={handleClose}>
 							Sign {user ? 'Out' : 'In'}
