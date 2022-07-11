@@ -4,21 +4,21 @@ import { FeedbackComment } from '../../types/feedback';
 import { fetchFeedbackComments } from './api/fetchFeedbackComments';
 
 interface Props {
-	feedbackId: string;
+	id: string;
 	initialValue?: FeedbackComment[];
 }
 
 export const fetchFeedbackCommentsKey = `fetchFeedbackComments`;
 
-export function useFeedbackComments({ feedbackId, initialValue }: Props) {
+export function useFeedbackComments({ id, initialValue }: Props) {
 	const queryClient = useQueryClient();
 
 	useEffect(() => {
 		queryClient.invalidateQueries(fetchFeedbackCommentsKey);
-	}, [feedbackId, queryClient]);
+	}, [id, queryClient]);
 
 	const query = useQuery(
-		[fetchFeedbackCommentsKey, feedbackId],
+		[fetchFeedbackCommentsKey, id],
 		({ queryKey }) => {
 			const feedbackId = queryKey[1];
 			return fetchFeedbackComments(feedbackId);
@@ -28,5 +28,5 @@ export function useFeedbackComments({ feedbackId, initialValue }: Props) {
 		}
 	);
 
-	return { ...query, data: query.data as FeedbackComment[] };
+	return query;
 }

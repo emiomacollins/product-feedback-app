@@ -31,14 +31,14 @@ interface FormikValues {
 }
 
 enum AuthType {
-	signIn = 'Login',
+	login = 'Login',
 	signuUp = 'Sign Up',
 }
 
-export default function Login() {
+export default function Auth() {
 	const router = useRouter();
 	const { type } = router.query;
-	const [authType, setAuthType] = useState((type as AuthType) || AuthType.signIn);
+	const [authType, setAuthType] = useState((type as AuthType) || AuthType.login);
 	const isSignUp = authType === AuthType.signuUp;
 	const photoUrls = new Array(5).fill('').map((_, i) => ({
 		label: `Photo ${i + 1}`,
@@ -134,16 +134,16 @@ export default function Login() {
 
 						<Grid gap={2}>
 							<FormInput label='Email'>
-								<Textbox name='email' />
+								<Textbox name='email' placeholder='example@email.com' />
 							</FormInput>
 
 							{isSignUp && (
 								<Fragment>
 									<FormInput label='Full Name'>
-										<Textbox name='fullName' />
+										<Textbox name='fullName' placeholder='John Doe' />
 									</FormInput>
 									<FormInput label='Username'>
-										<Textbox name='username' />
+										<Textbox name='username' placeholder='john22' />
 									</FormInput>
 									<FormInput
 										label='Photo Url'
@@ -153,6 +153,7 @@ export default function Login() {
 											<Textbox
 												name='photoUrl.url'
 												value={values.photoUrl?.label}
+												placeholder='https://images.com/john.png'
 												onChange={(e) =>
 													setFieldValue('photoUrl', {
 														label: e.target.value,
@@ -192,7 +193,11 @@ export default function Login() {
 							)}
 
 							<FormInput label='Password'>
-								<Textbox name='password' type='password' />
+								<Textbox
+									name='password'
+									type='password'
+									placeholder='******'
+								/>
 							</FormInput>
 						</Grid>
 

@@ -6,20 +6,26 @@ import { contentStyles } from '../../components/styled-components/Content';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 
-export default function NoFeedbackMessage() {
+interface Props {
+	message?: string;
+	CustomButton?: JSX.Element;
+	details?: string;
+}
+
+export default function NoFeedbackMessage({ message, CustomButton, details }: Props) {
 	return (
 		<Container>
 			<Icon>
 				<Image src={EmptyIconPath} alt='' />
 			</Icon>
 			<Grid>
-				<Heading>There is no feedback yet</Heading>
+				<Heading>{message || 'There is no feedback yet'}</Heading>
 				<Text>
-					Got a suggestion? Found a bug that needs to be squashed? We love
-					hearing about new ideas to improve our app.
+					{details ||
+						'Got a suggestion? Found a bug that needs to be squashed? We lovehearing about new ideas to improve our app.'}
 				</Text>
 			</Grid>
-			<AddFeedbackButton />
+			{CustomButton || <AddFeedbackButton />}
 		</Container>
 	);
 }

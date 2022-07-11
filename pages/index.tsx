@@ -65,7 +65,7 @@ const Content = styled.div`
 	align-items: flex-start;
 
 	@media ${Breakpoints.desktopUp} {
-		grid-template-columns: 300px 1fr;
+		grid-template-columns: 280px 1fr;
 		gap: 3rem;
 	}
 `;

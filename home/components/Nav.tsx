@@ -19,7 +19,7 @@ import ProfileDropdown from './ProfileDropdown';
 import RoadmapCard from './RoadmapCard';
 
 export default function Nav() {
-	const { user } = useAuth();
+	const { user, fullName, username } = useAuth();
 	const { expanded, toggle, setExpanded } = useToggle();
 	const navRef = useRef<HTMLDivElement>(null);
 	const [navHeight, setNavHeight] = useState(0);
@@ -60,7 +60,10 @@ export default function Nav() {
 				<Grid gap={1}>
 					<Flex>
 						{user && <StyledProfileDropdown withDropdown={false} />}
-						<DisplayName>{user?.displayName}</DisplayName>
+						<Grid gap={0}>
+							<DisplayName>{fullName}</DisplayName>
+							<Username>@{username}</Username>
+						</Grid>
 					</Flex>
 					<Link href={routes.auth}>
 						<Button $color='blue' onClick={handleClose}>
@@ -163,4 +166,10 @@ const StyledProfileDropdown = styled(ProfileDropdown)`
 const DisplayName = styled.p`
 	color: var(--blue-dark);
 	font-weight: 500;
+`;
+
+const Username = styled.p`
+	color: var(--gray);
+	font-size: var(--size-350);
+	line-height: 1;
 `;

@@ -1,5 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import GoBackLink from '../../components/curried/GoBackLink';
@@ -8,6 +10,7 @@ import { contentStyles } from '../../components/styled-components/Content';
 import { flexStyles } from '../../components/styled-components/Flex';
 import { routes } from '../../constants/routes';
 import FeedbackCard from '../../home/components/FeedbackCard/FeedbackCard';
+import NoFeedbackMessage from '../../home/components/NoFeedbackMessage';
 import fetchFeedback from '../../hooks/useFeedback/api/fetchFeedback';
 import { useFeedback } from '../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackComments } from '../../hooks/useFeedbackComments/api/fetchFeedbackComments';
@@ -16,19 +19,24 @@ import { Feedback as FeedbackType, FeedbackComment } from '../../types/feedback'
 import AddComment from './components/AddCommentForm';
 import Comment from './components/Comment';
 interface Props {
-	initialFeedback: FeedbackType;
+	initialFeedback: FeedbackType | null;
 	initialComments: FeedbackComment[];
 }
 
 export default function Feedback({ initialFeedback, initialComments }: Props) {
-	const { id } = initialFeedback;
-	const { data: feedback } = useFeedback({ id, initialValue: initialFeedback });
+	const router = useRouter();
+	const { id } = router.query;
+	const { data: feedback } = useFeedback({
+		id: id as string,
+		initialValue: initialFeedback,
+	});
 
 	const { data: comments } = useFeedbackComments({
-		feedbackId: feedback.id,
+		id: id as string,
 		initialValue: initialComments,
 	});
-	const commentCount = comments.length;
+
+	const commentCount = comments?.length || 0;
 
 	return (
 		<Container>
@@ -39,20 +47,34 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 				</Link>
 			</Header>
 
-			<FeedbackCard feedback={feedback} />
+			{feedback ? (
+				<Fragment>
+					<FeedbackCard feedback={feedback} />
 
-			{commentCount > 0 && (
-				<Comments>
-					<Heading>
-						{commentCount} Comment{commentCount !== 1 && 's'}
-					</Heading>
-					{comments?.map((comment) => (
-						<Comment key={comment.text} comment={comment} />
-					))}
-				</Comments>
+					{commentCount > 0 && (
+						<Comments>
+							<Heading>
+								{commentCount} Comment{commentCount !== 1 && 's'}
+							</Heading>
+							{comments?.map((comment) => (
+								<Comment key={comment.text} comment={comment} />
+							))}
+						</Comments>
+					)}
+
+					<AddComment feedback={feedback} />
+				</Fragment>
+			) : (
+				<NoFeedbackMessage
+					message='Feedback Not Found'
+					details='The Feedback you are looking for does not exist.'
+					CustomButton={
+						<Link href={routes.home}>
+							<Button>Go to Homepage</Button>
+						</Link>
+					}
+				/>
 			)}
-
-			<AddComment feedback={feedback} />
 		</Container>
 	);
 }
@@ -83,13 +105,22 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
 	const { query: pathQuery } = props;
 	const { id } = pathQuery;
 
-	const initialFeedback = await fetchFeedback(id as string);
-	const initialComments = await fetchFeedbackComments(id as string);
+	try {
+		const initialFeedback = await fetchFeedback(id as string);
+		const initialComments = await fetchFeedbackComments(id as string);
 
-	return {
-		props: {
-			initialFeedback,
-			initialComments,
-		},
-	};
+		return {
+			props: {
+				initialFeedback,
+				initialComments,
+			},
+		};
+	} catch (error) {
+		return {
+			props: {
+				initialFeedback: null,
+				initialComments: [],
+			},
+		};
+	}
 }

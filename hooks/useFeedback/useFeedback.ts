@@ -6,15 +6,14 @@ export const fetchFeedbackKey = `fetchFeedback`;
 
 interface Props {
 	id: string;
-	initialValue?: Feedback;
+	initialValue?: Feedback | null;
 }
 
 export function useFeedback({ id, initialValue }: Props) {
 	const query = useQuery([fetchFeedbackKey, id], () => fetchFeedback(id), {
-		// for edit-feedback page (background update of the query won't change the form)
-		cacheTime: 0,
+		cacheTime: 0, // for edit-feedback page (background update of the query won't change the form)
 		initialData: initialValue,
 	});
 
-	return { ...query, data: query.data as Feedback };
+	return query;
 }

@@ -9,7 +9,7 @@ export default function Logo(props: Props) {
 	return (
 		<Container gap={0} {...props}>
 			<h2>Your Product</h2>
-			<SubHeading>Feedback Board</SubHeading>
+			<SubHeading>Feedback Forum</SubHeading>
 		</Container>
 	);
 }
