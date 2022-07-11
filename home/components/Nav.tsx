@@ -63,7 +63,9 @@ export default function Nav() {
 						<DisplayName>{user?.displayName}</DisplayName>
 					</Flex>
 					<Link href={routes.auth}>
-						<Button $color='blue'>Sign {user ? 'Out' : 'In'}</Button>
+						<Button $color='blue' onClick={handleClose}>
+							Sign {user ? 'Out' : 'In'}
+						</Button>
 					</Link>
 				</Grid>
 
