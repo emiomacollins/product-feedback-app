@@ -45,7 +45,7 @@ export default function AddComment({ feedback }: Props) {
 			validationSchema={yup.object({
 				text: yup.string().min(5).max(250).required('required'),
 			})}
-			onSubmit={(values, { resetForm }) => {
+			onSubmit={async (values, { resetForm }) => {
 				const { text } = values;
 				addCommentMutation({
 					feedbackId: feedback.id,

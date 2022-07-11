@@ -1,26 +1,41 @@
 import styled from 'styled-components';
 import Button from '../../../components/Button';
 import { Grid } from '../../../components/styled-components/Grid';
+import { Textbox } from '../../../components/styled-components/Textbox';
 import { Breakpoints } from '../../../constants/breakpoints';
+import useToggle from '../../../hooks/useToggle';
 import { FeedbackComment } from '../../../types/feedback';
 
 interface Props {
 	comment: FeedbackComment;
+	isReply?: boolean;
 }
 
-export default function Comment({ comment }: Props) {
+export default function Comment({ comment, isReply }: Props) {
 	const { text, user } = comment;
 	const { fullName, photoUrl, username } = user;
+	const { expanded: replyExpanded, toggle: toggleReplyExpanded } = useToggle();
+	// isReply
 
 	return (
 		<Container>
 			<ProfilePic src={photoUrl} alt='' />
+
 			<Grid gap={0}>
 				<Name>{fullName}</Name>
 				<Username>@{username}</Username>
 			</Grid>
-			<ReplyBtn>Reply</ReplyBtn>
+
+			<ReplyBtn onClick={toggleReplyExpanded}>Reply</ReplyBtn>
+
 			<Text>{text}</Text>
+
+			{replyExpanded && (
+				<ReplyGrid>
+					<Textbox as='textarea' placeholder='Reply...' />
+					<Button>Post Reply</Button>
+				</ReplyGrid>
+			)}
 		</Container>
 	);
 }
@@ -71,5 +86,17 @@ const Text = styled.p`
 
 	@media ${Breakpoints.tabletUp} {
 		grid-column: 2/-2;
+	}
+`;
+
+const ReplyGrid = styled.div`
+	grid-column: 1/-1;
+	display: grid;
+	gap: 2rem;
+	grid-template-columns: 1fr auto;
+	align-items: flex-start;
+
+	@media ${Breakpoints.tabletUp} {
+		grid-column: 2/-1;
 	}
 `;

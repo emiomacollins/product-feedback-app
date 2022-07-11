@@ -8,9 +8,9 @@ interface Props {
 	children: ReactNode;
 }
 
-export default function FormInput({ label, description, children }: Props) {
+export default function FormInput({ label, description, children, ...props }: Props) {
 	return (
-		<Container>
+		<Container {...props}>
 			<Grid gap={0}>
 				{label && <Label htmlFor={label}>{label}</Label>}
 				{description && <Description>{description}</Description>}

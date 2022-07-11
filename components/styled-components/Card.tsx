@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const cardStyles = css`
-	padding: 2rem 2.5rem;
+	padding: 2.5rem;
 	border-radius: var(--radius-400);
 	background: var(--white);
 `;

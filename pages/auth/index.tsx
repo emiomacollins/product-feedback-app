@@ -86,6 +86,7 @@ export default function Auth() {
 						? {
 								fullName: '',
 								username: '',
+								usernameIsValid: false,
 								photoUrl: { label: '', url: '' },
 						  }
 						: {}),
@@ -142,9 +143,11 @@ export default function Auth() {
 									<FormInput label='Full Name'>
 										<Textbox name='fullName' placeholder='John Doe' />
 									</FormInput>
-									<FormInput label='Username'>
+
+									<UsernameFormInput label='Username'>
 										<Textbox name='username' placeholder='john22' />
-									</FormInput>
+									</UsernameFormInput>
+
 									<FormInput
 										label='Photo Url'
 										description='If you have a link to a custom image paste it here or select one of the images below'
@@ -324,4 +327,8 @@ const ProfilePhotoBtn = styled.button<ProfilePhotoProps>`
 const ProfilePhoto = styled.img`
 	width: 4.5rem;
 	aspect-ratio: 1;
+`;
+
+const UsernameFormInput = styled(FormInput)`
+	position: relative;
 `;

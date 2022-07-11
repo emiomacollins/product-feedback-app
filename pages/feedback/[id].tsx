@@ -51,6 +51,8 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 				<Fragment>
 					<FeedbackCard feedback={feedback} />
 
+					<AddComment feedback={feedback} />
+
 					{commentCount > 0 && (
 						<Comments>
 							<Heading>
@@ -61,8 +63,6 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 							))}
 						</Comments>
 					)}
-
-					<AddComment feedback={feedback} />
 				</Fragment>
 			) : (
 				<NoFeedbackMessage
@@ -84,6 +84,7 @@ const Container = styled.div`
 	max-width: 700px;
 	display: grid;
 	gap: 3rem;
+	margin-bottom: 10rem;
 `;
 
 const Header = styled.div`
