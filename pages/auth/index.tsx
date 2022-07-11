@@ -237,7 +237,7 @@ const Submit = styled(Button)`
 
 const Switch = styled.div`
 	display: flex;
-	border-bottom: 2px solid var(--black-transparent-100);
+	border-bottom: 2.5px solid var(--black-transparent-200);
 `;
 
 interface StyledLinkProps {
@@ -256,7 +256,7 @@ const StyledLink = styled.a<StyledLinkProps>`
 	&:after {
 		content: '';
 		width: 100%;
-		height: 2px;
+		height: 2.5px;
 		position: absolute;
 		top: 100%;
 		left: 0;
@@ -289,7 +289,7 @@ interface ProfilePhotoProps {
 const ProfilePhotoBtn = styled.button<ProfilePhotoProps>`
 	--shadow-color: transparent;
 	/* border-radius: 100%; */
-	border-radius: var(--radius-300);
+	border-radius: var(--radius-400);
 	box-shadow: 0 0 0 2.5px var(--shadow-color);
 	overflow: hidden;
 	display: grid;
@@ -317,6 +317,6 @@ const ProfilePhotoBtn = styled.button<ProfilePhotoProps>`
 `;
 
 const ProfilePhoto = styled.img`
-	width: 5rem;
+	width: 4.5rem;
 	aspect-ratio: 1;
 `;
