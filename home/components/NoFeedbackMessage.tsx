@@ -2,7 +2,6 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import EmptyIconPath from '../../assets/svgs/illustration-empty.svg';
 import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
-import { contentStyles } from '../../components/styled-components/Content';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 
@@ -12,9 +11,14 @@ interface Props {
 	details?: string;
 }
 
-export default function NoFeedbackMessage({ message, CustomButton, details }: Props) {
+export default function NoFeedbackMessage({
+	message,
+	CustomButton,
+	details,
+	...props
+}: Props) {
 	return (
-		<Container>
+		<Container {...props}>
 			<Icon>
 				<Image src={EmptyIconPath} alt='' />
 			</Icon>
@@ -41,10 +45,6 @@ const Container = styled.div`
 	gap: 3rem;
 	place-content: center;
 	justify-items: center;
-
-	@media ${Breakpoints.tabletDown} {
-		${contentStyles}
-	}
 `;
 
 const Icon = styled.div`

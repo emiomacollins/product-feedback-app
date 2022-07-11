@@ -9,19 +9,22 @@ import NoFeedbackMessage from './NoFeedbackMessage';
 export default function FeedbackList() {
 	const { processedFeedbacks } = useFeedbacks();
 
-	if (processedFeedbacks?.length === 0) return <NoFeedbackMessage />;
-
 	return (
 		<Container gap={2}>
-			{processedFeedbacks?.map((feedback) => (
-				<FeedbackCard key={feedback.id} feedback={feedback} />
-			))}
+			{processedFeedbacks.length > 0 ? (
+				processedFeedbacks.map((feedback) => (
+					<FeedbackCard key={feedback.id} feedback={feedback} />
+				))
+			) : (
+				<NoFeedbackMessage />
+			)}
 		</Container>
 	);
 }
 
 const Container = styled(Grid)`
 	margin-bottom: 2rem;
+
 	@media ${Breakpoints.tabletDown} {
 		${contentStyles}
 	}
