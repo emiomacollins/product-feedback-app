@@ -37,6 +37,7 @@
 
 	--black-transparent-100: rgba(0, 0, 0, 0.06);
 	--black-transparent-200: rgba(0, 0, 0, 0.1);
+	--purple-transparent: hsla(282, 83%, 52%, 0.4);
 
 	--gradient: radial-gradient(
 		128.88% 128.88% at 103.9% -10.39%,

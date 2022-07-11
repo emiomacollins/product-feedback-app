@@ -113,7 +113,7 @@ export default function FeedbackCard({ feedback }: Props) {
 			</Link>
 
 			<WithUser
-				message='Sign in to Upvote'
+				message='Sign in to Upvote a Feedback'
 				onClick={() => toggleUpvoteMutation(id)}
 			>
 				<Upvote $active={upVoted}>

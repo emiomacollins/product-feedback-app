@@ -11,9 +11,8 @@ interface Props {
 
 export function useFeedback({ id, initialValue }: Props) {
 	const query = useQuery([fetchFeedbackKey, id], () => fetchFeedback(id), {
-		// for edit-feedback page (background updates do not change the form)
+		// for edit-feedback page (background update of the query won't change the form)
 		cacheTime: 0,
-		staleTime: Infinity,
 		initialData: initialValue,
 	});
 

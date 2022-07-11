@@ -26,7 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 			<QueryClientProvider client={queryClient}>
 				<AuthProvider>
 					<Head>
-						<title>Feedback App</title>
+						<title>Feedback Forum</title>
 						<link rel='icon' href='/favicon_.ico' />
 					</Head>
 					<ProgressBar />

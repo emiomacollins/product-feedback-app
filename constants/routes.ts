@@ -2,7 +2,7 @@ export const routes = {
 	home: '/',
 	roadmap: '/roadmap',
 	feedback: '/feedback',
-	login: '/login',
+	auth: '/auth',
 	createFeedback: '/create-feedback',
 	editFeedback: '/edit-feedback',
 };

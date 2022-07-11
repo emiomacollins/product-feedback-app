@@ -1,17 +1,25 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import gradientPath from '../../assets/images/gradient-mobile.png';
 import closeIconPath from '../../assets/svgs/icon-close.svg';
 import hamburgerIconPath from '../../assets/svgs/icon-hamburger.svg';
+import Button from '../../components/Button';
 import { contentStyles } from '../../components/styled-components/Content';
+import { Flex } from '../../components/styled-components/Flex';
+import { Grid } from '../../components/styled-components/Grid';
 import { Overlay } from '../../components/styled-components/Overlay';
+import { routes } from '../../constants/routes';
+import { useAuth } from '../../hooks/useAuth';
 import useToggle from '../../hooks/useToggle';
 import Filters from './Filters';
 import Logo from './Logo';
+import ProfileDropdown from './ProfileDropdown';
 import RoadmapCard from './RoadmapCard';
 
 export default function Nav() {
+	const { user } = useAuth();
 	const { expanded, toggle, setExpanded } = useToggle();
 	const navRef = useRef<HTMLDivElement>(null);
 	const [navHeight, setNavHeight] = useState(0);
@@ -36,19 +44,29 @@ export default function Nav() {
 			<Content ref={navRef as any}>
 				<Logo />
 
-				<Button onClick={toggle}>
+				<Hamburger onClick={toggle}>
 					<Icon visible={expanded}>
 						<Image src={closeIconPath} alt='' />
 					</Icon>
 					<Icon visible={!expanded}>
 						<Image src={hamburgerIconPath} alt='' />
 					</Icon>
-				</Button>
+				</Hamburger>
 			</Content>
 
 			<StyledOverlay expanded={expanded} onClick={handleClose} />
 
 			<Sidebar expanded={expanded}>
+				<Grid gap={1}>
+					<Flex>
+						{user && <StyledProfileDropdown withDropdown={false} />}
+						<DisplayName>{user?.displayName}</DisplayName>
+					</Flex>
+					<Link href={routes.auth}>
+						<Button $color='blue'>Sign {user ? 'Out' : 'In'}</Button>
+					</Link>
+				</Grid>
+
 				<Filters onClick={handleClose} />
 				<RoadmapCard />
 			</Sidebar>
@@ -79,7 +97,7 @@ const Content = styled.div`
 	padding-block: 1.5rem;
 `;
 
-const Button = styled.button`
+const Hamburger = styled.button`
 	padding: 1.25rem;
 	margin-right: -1rem;
 	-webkit-tap-highlight-color: transparent;
@@ -134,4 +152,13 @@ const StyledOverlay = styled(Overlay)`
 	${absoluteStyles}
 	left: 0;
 	width: 100%;
+`;
+
+const StyledProfileDropdown = styled(ProfileDropdown)`
+	justify-self: left;
+`;
+
+const DisplayName = styled.p`
+	color: var(--blue-dark);
+	font-weight: 500;
 `;

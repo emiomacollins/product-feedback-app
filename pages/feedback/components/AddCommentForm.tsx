@@ -9,11 +9,12 @@ import { ErrorMessage } from '../../../components/styled-components/ErrorMessage
 import { flexStyles } from '../../../components/styled-components/Flex';
 import { Grid } from '../../../components/styled-components/Grid';
 import WithUser from '../../../components/WithUser/WithUser';
+import { useAuth } from '../../../hooks/useAuth';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackCommentsKey } from '../../../hooks/useFeedbackComments/useFeedbackComments';
 import { fetchFeedbacksKey } from '../../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../../../types/feedback';
-import addComment, { AddCommentProps } from '../api/addComment';
+import addComment from '../api/addComment';
 
 interface Props {
 	feedback: Feedback;
@@ -21,12 +22,14 @@ interface Props {
 
 export default function AddComment({ feedback }: Props) {
 	const queryClient = useQueryClient();
+	const { fullName, photoUrl, username } = useAuth();
 
 	const {
 		mutate: addCommentMutation,
 		error: addCommentError,
 		isLoading: addingComment,
-	} = useMutation<void, Error, AddCommentProps>('addComment', addComment, {
+	} = useMutation('addComment', addComment, {
+		onError(err: Error) {},
 		onSuccess() {
 			queryClient.invalidateQueries(fetchFeedbackKey);
 			queryClient.invalidateQueries(fetchFeedbacksKey); // initialData does not replace an existing cache data
@@ -43,7 +46,18 @@ export default function AddComment({ feedback }: Props) {
 				text: yup.string().min(5).max(250).required('required'),
 			})}
 			onSubmit={(values, { resetForm }) => {
-				addCommentMutation({ ...values, feedbackId: feedback.id });
+				const { text } = values;
+				addCommentMutation({
+					feedbackId: feedback.id,
+					comment: {
+						text,
+						user: {
+							fullName,
+							photoUrl,
+							username,
+						},
+					},
+				});
 				resetForm();
 			}}
 		>
@@ -54,11 +68,7 @@ export default function AddComment({ feedback }: Props) {
 						<Grid gap={2}>
 							<Heading>Add a comment</Heading>
 
-							<TextArea
-								name='text'
-								rows={3}
-								placeholder='Great feedback!'
-							/>
+							<TextArea name='text' rows={3} placeholder='Nice feedback!' />
 
 							{addCommentError && (
 								<ErrorMessage>{addCommentError.message}</ErrorMessage>

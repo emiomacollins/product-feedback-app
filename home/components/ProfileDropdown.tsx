@@ -1,29 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled, { css } from 'styled-components';
-import userIconPath from '../../assets/svgs/user-icon.svg';
+import noUserIconPath from '../../assets/svgs/user-icon.svg';
 import Button from '../../components/Button';
 import { Card } from '../../components/styled-components/Card';
 import { routes } from '../../constants/routes';
 import { useAuth } from '../../hooks/useAuth';
 import useToggleWithClickAway from '../../hooks/useToggleWithClickAway';
 
-export default function ProfileDropdown() {
-	const { user } = useAuth();
+interface Props {
+	withDropdown?: boolean;
+}
+
+export default function ProfileDropdown({ withDropdown = true, ...props }: Props) {
+	const { user, photoUrl } = useAuth();
 	const { expanded, toggle, ref } = useToggleWithClickAway();
-	const hasImage = user?.photoURL ? true : false;
 
 	return (
-		<Container ref={ref}>
-			<Toggle hasImage={hasImage} onClick={toggle}>
-				<Image src={user?.photoURL || userIconPath} alt='' layout='fill' />
+		<Container ref={ref} {...props}>
+			<Toggle showBorder={user ? true : false} onClick={toggle}>
+				<Image src={photoUrl || noUserIconPath} alt='' layout='fill' />
 			</Toggle>
 
-			<Dropdown expanded={expanded}>
-				<Link href={routes.login}>
-					<Button $color='blue'>{user ? 'Sign out' : 'Sign in'}</Button>
-				</Link>
-			</Dropdown>
+			{withDropdown && (
+				<Dropdown expanded={expanded}>
+					<Link href={routes.auth}>
+						<Button $color='blue'>{user ? 'Sign Out' : 'Sign In'}</Button>
+					</Link>
+				</Dropdown>
+			)}
 		</Container>
 	);
 }
@@ -33,7 +38,7 @@ const Container = styled.div`
 `;
 
 interface ToggleProps {
-	hasImage: boolean;
+	showBorder: boolean;
 }
 
 const Toggle = styled.button<ToggleProps>`
@@ -44,10 +49,11 @@ const Toggle = styled.button<ToggleProps>`
 
 	img {
 		border-radius: 100%;
+		object-fit: cover;
 	}
 
 	${(p) =>
-		p.hasImage &&
+		p.showBorder &&
 		css`
 			border: 2.5px solid var(--light);
 		`}
@@ -68,7 +74,6 @@ const Dropdown = styled(Card)<ExpandedProps>`
 	opacity: 0;
 	transform: scale(var(--scale));
 	transition: all 0.2s;
-	/* background: var(--light); */
 
 	${(p) =>
 		p.expanded &&

@@ -1,19 +1,16 @@
 import { httpsCallable } from 'firebase/functions';
-import { auth, functions } from '../../../lib/firebase';
+import { functions } from '../../../lib/firebase';
+import { FeedbackComment } from '../../../types/feedback';
 
-export interface AddCommentProps {
-	text: string;
+interface Props {
 	feedbackId: string;
+	comment: FeedbackComment;
 }
 
-export default async function addComment({ text, feedbackId }: AddCommentProps) {
+export default async function addComment({ feedbackId, comment }: Props) {
 	const callable = httpsCallable(functions, 'addComment');
 	await callable({
 		feedbackId,
-		text,
-		user: {
-			name: auth.currentUser?.displayName,
-			picture: auth.currentUser?.photoURL,
-		},
+		comment,
 	});
 }

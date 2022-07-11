@@ -24,8 +24,9 @@ export enum FeedbackStatus {
 export interface FeedbackComment {
 	text: string;
 	user: {
-		name: string;
-		picture: string;
+		fullName: string;
+		photoUrl: string;
+		username: string;
 	};
 }
 

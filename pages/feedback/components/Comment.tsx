@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Button from '../../../components/Button';
+import { Grid } from '../../../components/styled-components/Grid';
 import { Breakpoints } from '../../../constants/breakpoints';
 import { FeedbackComment } from '../../../types/feedback';
 
@@ -9,12 +10,15 @@ interface Props {
 
 export default function Comment({ comment }: Props) {
 	const { text, user } = comment;
-	const { name, picture } = user;
+	const { fullName, photoUrl, username } = user;
 
 	return (
 		<Container>
-			<ProfilePic src={picture} alt='' />
-			<Name>{name}</Name>
+			<ProfilePic src={photoUrl} alt='' />
+			<Grid gap={0}>
+				<Name>{fullName}</Name>
+				<Username>@{username}</Username>
+			</Grid>
 			<ReplyBtn>Reply</ReplyBtn>
 			<Text>{text}</Text>
 		</Container>
@@ -23,7 +27,7 @@ export default function Comment({ comment }: Props) {
 
 const Container = styled.div`
 	display: grid;
-	gap: 1rem 2rem;
+	gap: 2rem;
 	grid-template-columns: auto 1fr auto;
 	align-items: center;
 	padding-block: 3rem;
@@ -31,15 +35,16 @@ const Container = styled.div`
 	&:not(:last-child) {
 		border-bottom: 1.5px solid var(--black-transparent-100);
 	}
-
-	@media ${Breakpoints.tabletUp} {
-		gap: 0 2rem;
-	}
 `;
 
 const Name = styled.p`
 	color: var(--blue-dark);
-	font-weight: 600;
+	font-weight: 800;
+`;
+
+const Username = styled.p`
+	font-size: var(--size-350);
+	line-height: 1;
 `;
 
 const ProfilePic = styled.img`

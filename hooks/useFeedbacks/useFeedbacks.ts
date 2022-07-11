@@ -25,7 +25,7 @@ export function useFeedbacks({ initialValue }: Props = {}) {
 
 	const processedFeedbacks = useMemo(() => {
 		const { data: feedbacks } = query;
-		if (!feedbacks) return null;
+		if (!feedbacks) return [];
 
 		type Order = 'asc' | 'desc';
 		type sortCallback = (a: Feedback, b: Feedback) => number;

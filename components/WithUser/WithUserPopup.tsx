@@ -27,9 +27,9 @@ export default function WithUserPopup() {
 		<Overlay expanded={expanded} onClick={handleClose}>
 			<Container onClick={(e) => e.stopPropagation()}>
 				<Heading>{withUserPopup?.message || <br />}</Heading>
-				<Link href={routes.login}>
-					<Button $color='blue' {...canFocus} onClick={handleClose}>
-						Sign in
+				<Link href={routes.auth}>
+					<Button {...canFocus} onClick={handleClose}>
+						Sign In
 					</Button>
 				</Link>
 			</Container>
@@ -42,14 +42,14 @@ const Overlay = styled.div`
 	display: grid;
 	align-content: center;
 	background: rgba(0, 0, 0, 0.7);
-	z-index: 99;
+	z-index: 999;
 	padding-bottom: 10rem;
 `;
 
 const Container = styled.div`
 	${cardStyles}
 	${contentStyles}
-    max-width: 350px;
+    max-width: 370px;
 	display: grid;
 	gap: 2rem;
 	padding: 3rem;
@@ -59,4 +59,5 @@ const Container = styled.div`
 const Heading = styled.h2`
 	color: var(--blue-dark);
 	user-select: none;
+	line-height: 1.3;
 `;
