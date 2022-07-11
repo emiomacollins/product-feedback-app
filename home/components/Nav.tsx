@@ -63,7 +63,7 @@ export default function Nav() {
 							<Fragment>
 								<StyledProfileDropdown withDropdown={false} />
 								<Grid gap={0}>
-									<DisplayName>{fullName}</DisplayName>
+									<FullName>{fullName}</FullName>
 									<Username>@{username}</Username>
 								</Grid>
 							</Fragment>
@@ -168,9 +168,10 @@ const StyledProfileDropdown = styled(ProfileDropdown)`
 	justify-self: left;
 `;
 
-const DisplayName = styled.p`
+const FullName = styled.p`
 	color: var(--blue-dark);
-	font-weight: 500;
+	font-weight: 800;
+	text-transform: capitalize;
 `;
 
 const Username = styled.p`

@@ -40,6 +40,7 @@ const Container = styled.div`
 const Name = styled.p`
 	color: var(--blue-dark);
 	font-weight: 800;
+	text-transform: capitalize;
 `;
 
 const Username = styled.p`
