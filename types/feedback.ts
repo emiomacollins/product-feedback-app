@@ -22,13 +22,17 @@ export enum FeedbackStatus {
 }
 
 export interface FeedbackComment {
+	id: string;
 	text: string;
 	user: {
 		fullName: string;
 		photoUrl: string;
 		username: string;
 	};
+	replies: FeedbackCommentReply[];
 }
+
+export interface FeedbackCommentReply extends Omit<FeedbackComment, 'id' | 'replies'> {}
 
 export interface FeedbackUpvotes {
 	[userId: string]: boolean;

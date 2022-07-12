@@ -21,6 +21,7 @@ import { Grid, gridStyles } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
 import { routes } from '../../constants/routes';
 import { auth, db } from '../../lib/firebase';
+import verifyUsername from './api';
 
 interface FormikValues {
 	email: string;
@@ -45,6 +46,11 @@ export default function Auth() {
 		url: `/images/anonymous${i + 1}.jpg`,
 	}));
 
+	const { data: usernameIsValid, mutate: verifyUsernameMutation } = useMutation(
+		'verifyUsername',
+		verifyUsername
+	);
+
 	const {
 		mutate: submitMutation,
 		error,
@@ -54,7 +60,16 @@ export default function Auth() {
 		async (args: FormikValues) => {
 			const { email, password, fullName, photoUrl, username } = args;
 			if (isSignUp) {
-				// TODO: validate username
+				if (usernameIsValid === undefined) {
+					const isValid = await verifyUsername(username as string);
+					if (!isValid) {
+						throw new Error('Username is taken');
+					}
+				}
+
+				if (!usernameIsValid) {
+					throw new Error('Username is taken');
+				}
 				await createUserWithEmailAndPassword(auth, email, password);
 				const usersRef = doc(db, `users/${auth.currentUser?.uid}`);
 				await setDoc(usersRef, {
@@ -86,7 +101,6 @@ export default function Auth() {
 						? {
 								fullName: '',
 								username: '',
-								usernameIsValid: false,
 								photoUrl: { label: '', url: '' },
 						  }
 						: {}),
@@ -144,9 +158,15 @@ export default function Auth() {
 										<Textbox name='fullName' placeholder='John Doe' />
 									</FormInput>
 
-									<UsernameFormInput label='Username'>
-										<Textbox name='username' placeholder='john22' />
-									</UsernameFormInput>
+									<FormInput label='Username'>
+										<Textbox
+											name='username'
+											placeholder='john22'
+											onBlur={(e) =>
+												verifyUsernameMutation(e.target.value)
+											}
+										/>
+									</FormInput>
 
 									<FormInput
 										label='Photo Url'
@@ -327,8 +347,4 @@ const ProfilePhotoBtn = styled.button<ProfilePhotoProps>`
 const ProfilePhoto = styled.img`
 	width: 4.5rem;
 	aspect-ratio: 1;
-`;
-
-const UsernameFormInput = styled(FormInput)`
-	position: relative;
 `;

@@ -5,7 +5,7 @@ import { Grid } from './styled-components/Grid';
 interface Props {
 	label?: string;
 	description?: string;
-	children: ReactNode;
+	children: ReactNode | ReactNode[];
 }
 
 export default function FormInput({ label, description, children, ...props }: Props) {

@@ -26,8 +26,8 @@ export default function AddComment({ feedback }: Props) {
 
 	const {
 		mutate: addCommentMutation,
-		error: addCommentError,
-		isLoading: addingComment,
+		error,
+		isLoading,
 	} = useMutation('addComment', addComment, {
 		onError(err: Error) {},
 		onSuccess() {
@@ -70,9 +70,7 @@ export default function AddComment({ feedback }: Props) {
 
 							<TextArea name='text' rows={3} placeholder='Nice feedback!' />
 
-							{addCommentError && (
-								<ErrorMessage>{addCommentError.message}</ErrorMessage>
-							)}
+							{error && <ErrorMessage>{error.message}</ErrorMessage>}
 
 							<StyledFlex $wrap>
 								<p>
@@ -85,8 +83,8 @@ export default function AddComment({ feedback }: Props) {
 								>
 									<Button
 										type='button'
-										disabled={addingComment}
-										isLoading={addingComment}
+										disabled={isLoading}
+										isLoading={isLoading}
 									>
 										Post Comment
 									</Button>

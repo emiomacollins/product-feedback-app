@@ -1,5 +1,5 @@
 import { useField } from 'formik';
-import { InputHTMLAttributes } from 'react';
+import { FocusEventHandler, InputHTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { ErrorMessage } from '../styled-components/ErrorMessage';
 import { Textbox as StyledTextbox } from '../styled-components/Textbox';
@@ -9,13 +9,18 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Textbox(props: Props) {
-	const { name, type } = props;
+	const { name, type, onBlur } = props;
 	const [fields, meta] = useField({ name, type });
 	const isError = meta.touched && meta.error ? true : false;
 
+	const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+		fields.onBlur(e);
+		onBlur?.(e);
+	};
+
 	return (
 		<Container>
-			<StyledTextbox {...fields} {...props} isError={isError} />
+			<StyledTextbox {...fields} {...props} isError={isError} onBlur={handleBlur} />
 			{isError && <ErrorMessage>{meta.error}</ErrorMessage>}
 		</Container>
 	);

@@ -37,12 +37,7 @@ export function AuthProvider({ children }: Props) {
 					user,
 					...extraInfo,
 				}));
-			} else {
-				setContext((context) => ({
-					...context,
-					user,
-				}));
-			}
+			} else setContext(initialContextValue);
 			setAuthInitialized(true);
 		});
 		return () => unsubscribe();

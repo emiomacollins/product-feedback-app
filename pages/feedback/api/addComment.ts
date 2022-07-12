@@ -4,7 +4,7 @@ import { FeedbackComment } from '../../../types/feedback';
 
 interface Props {
 	feedbackId: string;
-	comment: FeedbackComment;
+	comment: Omit<FeedbackComment, 'id' | 'replies'>;
 }
 
 export default async function addComment({ feedbackId, comment }: Props) {
