@@ -161,7 +161,7 @@ export default function Auth() {
 									<FormInput label='Username'>
 										<Textbox
 											name='username'
-											placeholder='john22'
+											placeholder='john'
 											onBlur={(e) =>
 												verifyUsernameMutation(e.target.value)
 											}

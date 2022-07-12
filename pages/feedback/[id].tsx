@@ -38,6 +38,8 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 
 	const commentCount = comments?.length || 0;
 
+	// TODO: Ping cloud functions
+
 	return (
 		<Container>
 			<Header>
