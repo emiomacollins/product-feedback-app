@@ -142,7 +142,7 @@ const Sidebar = styled.div<ExpandedProps>`
 	${absoluteStyles}
 	right: 0;
 	padding: 2rem;
-	width: clamp(280px, 70%, 350px);
+	width: clamp(300px, 70%, 350px);
 	background: var(--light);
 	display: grid;
 	gap: 2rem;

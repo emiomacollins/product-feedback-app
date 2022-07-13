@@ -87,6 +87,7 @@ const LogoCard = styled(Card)`
 	align-items: flex-end;
 	background: var(--gradient);
 	min-height: 160px;
+	padding-block: 2.5rem;
 `;
 
 const StyledGrid = styled(Grid)`
