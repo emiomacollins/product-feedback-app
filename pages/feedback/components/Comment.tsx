@@ -46,6 +46,7 @@ export default function Comment(props: Props) {
 		username: currentUserUsername,
 		photoUrl: currentUserPhotoUrl,
 		fullName: currentUserFullname,
+		user: currentUser,
 	} = useAuth();
 
 	const { text, user } = comment || reply || {};
@@ -62,7 +63,6 @@ export default function Comment(props: Props) {
 		onError(err: Error) {},
 		onSuccess() {
 			queryClient.invalidateQueries(fetchFeedbackCommentsKey);
-			setExpanded(false);
 		},
 	});
 
@@ -168,6 +168,7 @@ export default function Comment(props: Props) {
 							reply: {
 								text: `@${username} ${text}`,
 								user: {
+									uid: currentUser?.uid as string,
 									fullName: currentUserFullname,
 									photoUrl: currentUserPhotoUrl,
 									username: currentUserUsername,

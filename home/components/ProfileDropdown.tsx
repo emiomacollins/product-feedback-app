@@ -47,7 +47,11 @@ const Toggle = styled.button<ToggleProps>`
 	${(p) =>
 		p.showBorder &&
 		css`
-			border: 2.5px solid var(--light);
+			box-shadow: 0 0 0 2.5px var(--light);
+
+			&:focus {
+				outline-offset: 0.5rem;
+			}
 		`}
 `;
 

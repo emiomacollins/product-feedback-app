@@ -25,6 +25,7 @@ export interface FeedbackComment {
 	id: string;
 	text: string;
 	user: {
+		uid: string;
 		fullName: string;
 		photoUrl: string;
 		username: string;

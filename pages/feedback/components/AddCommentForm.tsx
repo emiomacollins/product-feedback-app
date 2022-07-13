@@ -22,7 +22,7 @@ interface Props {
 
 export default function AddComment({ feedback }: Props) {
 	const queryClient = useQueryClient();
-	const { fullName, photoUrl, username } = useAuth();
+	const { fullName, photoUrl, username, user } = useAuth();
 
 	const {
 		mutate: addCommentMutation,
@@ -52,6 +52,7 @@ export default function AddComment({ feedback }: Props) {
 					comment: {
 						text,
 						user: {
+							uid: user?.uid as string,
 							fullName,
 							photoUrl,
 							username,

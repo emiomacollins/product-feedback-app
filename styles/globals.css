@@ -67,6 +67,7 @@ body {
 	line-height: 1.5;
 	background: var(--light);
 	color: var(--gray);
+	min-height: 100vh;
 }
 
 /* navbar translate x causes overflow 
