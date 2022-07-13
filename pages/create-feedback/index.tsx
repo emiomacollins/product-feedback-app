@@ -86,7 +86,7 @@ export default function CreateFeedback({ editing }: Props) {
 						: {}),
 				}}
 				validationSchema={yup.object({
-					title: yup.string().required('Can’t be empty'),
+					title: yup.string().min(3).max(25).required('Can’t be empty'),
 					details: yup.string().required('Can’t be empty'),
 					category: yup.string().oneOf(Object.values(FeedbackCategory)),
 					...(editing

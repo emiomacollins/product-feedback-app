@@ -136,3 +136,22 @@ input:focus {
 	outline-width: 2px;
 	outline-color: var(--white);
 }
+
+/* hide extra long words gotten from user input */
+p,
+h1,
+h2,
+h3,
+h4,
+h5 {
+	max-width: 100%;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	padding-block: 0.1em;
+	margin-bottom: -0.1em;
+}
+
+p {
+	padding-block: 0;
+	margin-bottom: 0;
+}

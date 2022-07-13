@@ -128,7 +128,7 @@ export default function Auth() {
 				}}
 			>
 				{({ values, setFieldValue }) => (
-					<StyledForm>
+					<StyledForm noValidate>
 						<Switch>
 							{Object.values(AuthType).map((value) => (
 								<Link
@@ -149,7 +149,11 @@ export default function Auth() {
 
 						<Grid gap={2}>
 							<FormInput label='Email'>
-								<Textbox name='email' placeholder='example@email.com' />
+								<Textbox
+									name='email'
+									type='email'
+									placeholder='example@email.com'
+								/>
 							</FormInput>
 
 							{isSignUp && (

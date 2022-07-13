@@ -71,12 +71,14 @@ const Content = styled.div`
 `;
 
 const Cards = styled(Grid)`
-	position: sticky;
-	top: 2rem;
-	left: 0px;
-
 	@media ${Breakpoints.desktopDown} {
 		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media ${Breakpoints.desktopUp} {
+		position: sticky;
+		top: 2rem;
+		left: 0px;
 	}
 `;
 
