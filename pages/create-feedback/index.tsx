@@ -192,7 +192,13 @@ export default function CreateFeedback({ editing }: Props) {
 									</Button>
 								)}
 
-								<Link href={`${routes.feedback}/${editing?.id}`}>
+								<Link
+									href={
+										editing
+											? `${routes.feedback}/${editing?.id}`
+											: routes.home
+									}
+								>
 									<Button $color='blue-dark' type='button'>
 										Cancel
 									</Button>

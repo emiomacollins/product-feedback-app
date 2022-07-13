@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as yup from 'yup';
 import deleteIconPath from '../../../assets/svgs/delete-icon.svg';
 import Button from '../../../components/Button';
@@ -262,11 +262,17 @@ const ProfilePic = styled.img`
 	object-fit: cover;
 `;
 
+const IconStyles = css`
+	padding: 1rem;
+	margin-top: -1rem;
+`;
+
 const ReplyButton = styled(Button)`
-	padding: 0 1rem;
+	${IconStyles}
 	color: var(--blue);
 	background: var(--transparent);
 	transition: all 0s;
+	font-size: var(--size-350);
 
 	&:hover {
 		text-decoration: underline;
@@ -274,10 +280,9 @@ const ReplyButton = styled(Button)`
 `;
 
 const DeleteBtn = styled.button`
-	padding: 1rem;
+	${IconStyles}
 	transition: all 0.2s;
 	display: flex;
-	margin-top: -1rem;
 
 	&:hover {
 		opacity: 0.6;

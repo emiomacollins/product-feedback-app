@@ -56,7 +56,7 @@ const Toggle = styled.button<ToggleProps>`
 `;
 
 const ProfilePic = styled.img`
-	width: 4rem;
+	width: 3.6rem;
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 100%;

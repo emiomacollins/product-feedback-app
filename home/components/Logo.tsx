@@ -8,7 +8,7 @@ interface Props {
 export default function Logo(props: Props) {
 	return (
 		<Container gap={0} {...props}>
-			<h2>Your Product</h2>
+			<Heading>Your Product</Heading>
 			<SubHeading>Feedback Forum</SubHeading>
 		</Container>
 	);
@@ -18,7 +18,11 @@ const Container = styled(Grid)`
 	color: var(--white);
 `;
 
+const Heading = styled.h2`
+	font-size: var(--size-650);
+`;
+
 const SubHeading = styled.p`
 	opacity: 0.8;
-	font-size: 350;
+	font-size: var(--size-350);
 `;

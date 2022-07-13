@@ -44,7 +44,7 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	return (
 		<Container>
 			<Header>
-				<GoBackLink />
+				<GoBackLink to={routes.home} />
 				<Link href={`${routes.editFeedback}/${id}`}>
 					<Button
 						$color='blue-dark'

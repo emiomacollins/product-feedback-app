@@ -37,7 +37,7 @@ export default function Controls() {
 					</Count>
 				</Show>
 
-				<Dropdown
+				<StyledDropdown
 					label='Sort-by'
 					setValue={handleSetSort}
 					selected={{ label: feedbackSort, value: feedbackSort }}
@@ -65,9 +65,15 @@ const Content = styled.div`
 	${flexStyles}
 	justify-content: space-between;
 	justify-items: left;
-	/* flex-wrap: wrap; */
-	gap: 1rem;
+	gap: 1rem 2rem;
 	padding-block: 1rem;
+	flex-wrap: wrap;
+
+	@media ${Breakpoints.mobileDown} {
+		> * {
+			flex-grow: 1;
+		}
+	}
 
 	@media ${Breakpoints.tabletDown} {
 		${contentStyles}
@@ -90,4 +96,8 @@ const Count = styled.div`
 
 const CountIcon = styled.div`
 	display: flex;
+`;
+
+const StyledDropdown = styled(Dropdown)`
+	justify-content: center;
 `;

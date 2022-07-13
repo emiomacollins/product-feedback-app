@@ -4,11 +4,15 @@ import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
 import { BoldLink } from '../styled-components/BoldLink';
 import { Flex } from '../styled-components/Flex';
 
-export default function GoBackLink() {
+interface Props {
+	to?: string;
+}
+
+export default function GoBackLink({ to }: Props) {
 	const router = useRouter();
 
 	function handleGoBack() {
-		router.back();
+		to ? router.push(to) : router.back();
 	}
 
 	return (

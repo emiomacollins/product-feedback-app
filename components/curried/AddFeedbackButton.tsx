@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 import PlusIconPath from '../../assets/svgs/icon-plus.svg';
 import { routes } from '../../constants/routes';
 import Button from '../Button';
@@ -14,11 +14,20 @@ export default function AddFeedbackButton() {
 			message='Sign in to add a Feedback'
 		>
 			<Button>
-				<Flex gap={0.5}>
-					<Image src={PlusIconPath} alt='' width={20} height={20} />
+				<StyledFlex gap={0.5}>
+					<Icon src={PlusIconPath.src} alt='' />
 					<span>Add Feedback</span>
-				</Flex>
+				</StyledFlex>
 			</Button>
 		</WithUser>
 	);
 }
+
+const Icon = styled.img`
+	width: 2rem;
+	flex-shrink: 0;
+`;
+
+const StyledFlex = styled(Flex)`
+	justify-content: center;
+`;
