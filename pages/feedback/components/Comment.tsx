@@ -214,6 +214,7 @@ export default function Comment(props: Props) {
 
 const Container = styled.div`
 	--profile-pic-size: 4rem;
+	--line-width: 1.2px;
 	display: grid;
 	gap: 1.5rem 2rem;
 	grid-template-columns: auto 1fr auto;
@@ -222,13 +223,13 @@ const Container = styled.div`
 	position: relative;
 
 	&:not(:last-child) {
-		border-bottom: 1.5px solid var(--black-transparent-100);
+		border-bottom: var(--line-width) solid var(--black-transparent-100);
 	}
 `;
 
 const Line = styled.div`
 	position: absolute;
-	width: 1.5px;
+	width: var(--line-width);
 	background: var(--black-transparent-100);
 	height: calc(var(--replies-height) - 5rem);
 
@@ -243,6 +244,7 @@ const Name = styled.p`
 	color: var(--blue-dark);
 	font-weight: 800;
 	text-transform: capitalize;
+	/* white-space: nowrap; */
 `;
 
 const Username = styled.p`
@@ -253,6 +255,7 @@ const Username = styled.p`
 const ProfilePic = styled.img`
 	border-radius: 100%;
 	width: var(--profile-pic-size);
+	min-width: var(--profile-pic-size);
 	aspect-ratio: 1;
 	object-position: top;
 	object-fit: cover;

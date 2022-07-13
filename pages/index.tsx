@@ -71,7 +71,10 @@ const Content = styled.div`
 `;
 
 const Cards = styled(Grid)`
-	align-content: flex-start;
+	position: sticky;
+	top: 2rem;
+	left: 0px;
+
 	@media ${Breakpoints.desktopDown} {
 		grid-template-columns: repeat(3, 1fr);
 	}

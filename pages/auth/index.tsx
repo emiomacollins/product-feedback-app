@@ -240,6 +240,7 @@ const Container = styled.div`
 	${contentStyles}
 	min-height: calc(90vh - (2 * var(--app-padding)));
 	display: grid;
+	gap: 2rem;
 	align-content: center;
 	max-width: 470px;
 `;

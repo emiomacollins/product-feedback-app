@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import styled, { css } from 'styled-components';
 import noUserIconPath from '../../assets/svgs/user-icon.svg';
@@ -19,7 +18,7 @@ export default function ProfileDropdown({ withDropdown = true, ...props }: Props
 	return (
 		<Container ref={ref} {...props}>
 			<Toggle showBorder={user ? true : false} onClick={toggle}>
-				<Image src={photoUrl || noUserIconPath} alt='' layout='fill' />
+				<ProfilePic src={photoUrl || noUserIconPath.src} alt='' />
 			</Toggle>
 
 			{withDropdown && (
@@ -35,6 +34,7 @@ export default function ProfileDropdown({ withDropdown = true, ...props }: Props
 
 const Container = styled.div`
 	position: relative;
+	display: flex;
 `;
 
 interface ToggleProps {
@@ -42,21 +42,21 @@ interface ToggleProps {
 }
 
 const Toggle = styled.button<ToggleProps>`
-	width: 4.5rem;
-	aspect-ratio: 1;
 	border-radius: 100%;
-	position: relative;
-
-	img {
-		border-radius: 100%;
-		object-fit: cover;
-	}
 
 	${(p) =>
 		p.showBorder &&
 		css`
 			border: 2.5px solid var(--light);
 		`}
+`;
+
+const ProfilePic = styled.img`
+	width: 4rem;
+	aspect-ratio: 1;
+	object-fit: cover;
+	border-radius: 100%;
+	display: flex;
 `;
 
 interface ExpandedProps {

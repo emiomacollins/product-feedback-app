@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { ButtonHTMLAttributes, useState } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import ArrowDownIcon from '../assets/svgs/custom/ArrowDownIcon';
 import checkIconPath from '../assets/svgs/icon-check.svg';
@@ -15,21 +15,19 @@ export interface DropdownOption {
 export interface DropdownProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	label?: string;
 	options: DropdownOption[];
-	initialValue?: DropdownOption;
+	selected: DropdownOption;
 	setValue?: (value: any) => any;
 }
 
 export default function Dropdown(props: DropdownProps) {
-	const { label, options, setValue, initialValue, ...restProps } = props;
+	const { label, options, setValue, selected, ...restProps } = props;
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
-	const [selected, setSelected] = useState(initialValue || options[0]);
 	// make un-focusable when dropdown is not expanded
 	const canFocus = expanded ? {} : { tabIndex: -1 };
 
 	function handleSetOption(option: DropdownOption) {
 		const { value } = option;
 		setValue?.(value);
-		setSelected(option);
 		setExpanded(false);
 	}
 
@@ -126,7 +124,7 @@ const Option = styled.button`
 	${flexStyles}
 	gap: 4rem;
 	justify-content: space-between;
-	padding: 1.2rem 2rem;
+	padding: 1.3rem 2.5rem;
 	color: var(--gray);
 	text-align: left;
 	min-width: max-content;

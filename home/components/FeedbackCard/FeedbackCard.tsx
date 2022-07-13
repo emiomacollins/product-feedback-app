@@ -135,6 +135,7 @@ const Container = styled(Card)`
 	color: var(--gray);
 	gap: 2rem 4rem;
 	grid-template-columns: 1fr auto;
+	padding-block: 2.5rem;
 
 	@media ${Breakpoints.tabletUp} {
 		grid-template-columns: auto 1fr auto;

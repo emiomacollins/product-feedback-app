@@ -15,20 +15,54 @@ interface Props
 		ButtonHTMLAttributes<HTMLButtonElement>,
 		LoadingProps {
 	children: ReactNode;
+	tooltip?: string;
 }
 
-function Button({ children, isLoading, ...props }: Props, ref: Ref<Element>) {
+function Button(props: Props, ref: Ref<Element>) {
+	const { children, isLoading, tooltip, ...restProps } = props;
+
 	return (
-		<Container ref={ref as any} {...props}>
-			{isLoading && <StyledSpinner color='white' />}
-			<Children isLoading={isLoading}>{children}</Children>
+		<Container>
+			{tooltip && <Tooltip>{tooltip}</Tooltip>}
+			<Btn ref={ref as any} {...restProps}>
+				{isLoading && <StyledSpinner color='white' />}
+				<Children isLoading={isLoading}>{children}</Children>
+			</Btn>
 		</Container>
 	);
 }
 
 export default forwardRef(Button);
 
-export const Container = styled.button<StyleProps>`
+const Tooltip = styled.div`
+	position: absolute;
+	top: calc(100% + 1rem);
+	right: 0;
+	color: var(--blue-dark);
+	background: var(--white);
+	box-shadow: var(--shadow-400);
+	white-space: nowrap;
+	padding: 1.5rem;
+	border-radius: var(--radius-300);
+	font-weight: 500;
+	pointer-events: none;
+	opacity: 0;
+	transition: all 0.2s;
+	z-index: 1;
+`;
+
+const Container = styled.div`
+	position: relative;
+	display: grid;
+
+	&:hover {
+		${Tooltip} {
+			opacity: 1;
+		}
+	}
+`;
+
+export const Btn = styled.button<StyleProps>`
 	padding: 1rem 2rem;
 	color: var(--white);
 	font-weight: 600;

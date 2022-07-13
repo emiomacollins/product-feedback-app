@@ -11,6 +11,7 @@ import { flexStyles } from '../../components/styled-components/Flex';
 import { routes } from '../../constants/routes';
 import FeedbackCard from '../../home/components/FeedbackCard/FeedbackCard';
 import NoFeedbackMessage from '../../home/components/NoFeedbackMessage';
+import { useAuth } from '../../hooks/useAuth';
 import fetchFeedback from '../../hooks/useFeedback/api/fetchFeedback';
 import { useFeedback } from '../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackComments } from '../../hooks/useFeedbackComments/api/fetchFeedbackComments';
@@ -25,6 +26,7 @@ interface Props {
 
 export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const router = useRouter();
+	const { user } = useAuth();
 	const { id } = router.query;
 	const { data: feedback } = useFeedback({
 		id: id as string,
@@ -37,15 +39,22 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	});
 
 	const commentCount = comments?.length || 0;
-
-	// TODO: Ping cloud functions
+	const userOwnsFeedback = feedback?.creator === user?.uid;
 
 	return (
 		<Container>
 			<Header>
 				<GoBackLink />
 				<Link href={`${routes.editFeedback}/${id}`}>
-					<Button $color='blue-dark'>Edit Feedback</Button>
+					<Button
+						$color='blue-dark'
+						disabled={!userOwnsFeedback}
+						tooltip={
+							userOwnsFeedback ? '' : 'You can only edit your feedback'
+						}
+					>
+						Edit Feedback
+					</Button>
 				</Link>
 			</Header>
 
@@ -83,7 +92,7 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 
 const Container = styled.div`
 	${contentStyles}
-	max-width: 700px;
+	max-width: 725px;
 	display: grid;
 	gap: 3rem;
 	margin-bottom: 10rem;

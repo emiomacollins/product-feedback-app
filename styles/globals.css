@@ -12,7 +12,7 @@
 	font-size: 62.5%;
 
 	--app-padding: 5rem;
-	--disabled-opacity: 0.4;
+	--disabled-opacity: 0.5;
 
 	--size-300: clamp(1.2rem, 1.1vw, 1.4rem);
 	--size-350: clamp(1.3rem, 1.25vw, 1.6rem);
@@ -66,9 +66,18 @@ body {
 	font-size: var(--size-400);
 	line-height: 1.5;
 	background: var(--light);
-	overflow-x: hidden !important;
-	min-height: 100vh;
 	color: var(--gray);
+}
+
+/* navbar translate x causes overflow 
+   & nav bar only shows from tablet Down
+   didn't put it for desktop cus it affects position sticky for cards
+*/
+@media (max-width: 800px) {
+	html,
+	body {
+		overflow-x: hidden !important;
+	}
 }
 
 ::-webkit-scrollbar {

@@ -48,7 +48,10 @@ export default function CreateFeedback({ editing }: Props) {
 			onSuccess() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
 				setSuccess(true);
-				router.push(routes.home);
+
+				editing
+					? router.push(`${routes.feedback}/${editing.id}`)
+					: router.push(routes.home);
 			},
 		}
 	);
@@ -97,7 +100,7 @@ export default function CreateFeedback({ editing }: Props) {
 					submitMutation(editing ? { ...editing, ...values } : values);
 				}}
 			>
-				{() => (
+				{({ values: { category, status } }) => (
 					<StyledForm>
 						<Icon>
 							<Image
@@ -127,9 +130,9 @@ export default function CreateFeedback({ editing }: Props) {
 								>
 									<Select
 										name='category'
-										initialValue={{
-											label: FeedbackCategory.feature,
-											value: FeedbackCategory.feature,
+										selected={{
+											label: category,
+											value: category,
 										}}
 										options={Object.values(FeedbackCategory).map(
 											(category) => ({
@@ -147,9 +150,9 @@ export default function CreateFeedback({ editing }: Props) {
 									>
 										<Select
 											name='status'
-											initialValue={{
-												label: editing.status,
-												value: editing.status,
+											selected={{
+												label: status || '',
+												value: status,
 											}}
 											options={Object.values(FeedbackStatus).map(
 												(status) => ({
@@ -189,7 +192,7 @@ export default function CreateFeedback({ editing }: Props) {
 									</Button>
 								)}
 
-								<Link href={routes.home}>
+								<Link href={`${routes.feedback}/${editing?.id}`}>
 									<Button $color='blue-dark' type='button'>
 										Cancel
 									</Button>

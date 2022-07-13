@@ -13,7 +13,11 @@ import { FeedbackStatus } from '../../types/feedback';
 
 type StatusCounts = { [status: string]: number };
 
-export default function RoadmapCard() {
+interface Props {
+	onClick?: () => void;
+}
+
+export default function RoadmapCard({ onClick }: Props) {
 	const { query } = useFeedbacks();
 	const { data: feedbacks } = query;
 
@@ -32,7 +36,7 @@ export default function RoadmapCard() {
 			<RoadmapRow>
 				<Heading>Roadmap</Heading>
 				<Link href={routes.roadmap} passHref>
-					<BoldLink>View</BoldLink>
+					<BoldLink onClick={onClick}>View</BoldLink>
 				</Link>
 			</RoadmapRow>
 

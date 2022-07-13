@@ -26,7 +26,7 @@ export default function NoFeedbackMessage({
 				<Heading>{message || 'There is no feedback yet'}</Heading>
 				<Text>
 					{details ||
-						'Got a suggestion? Found a bug that needs to be squashed? We lovehearing about new ideas to improve our app.'}
+						'Got a suggestion? Found a bug that needs to be squashed? We love hearing about new ideas to improve our app.'}
 				</Text>
 			</Grid>
 			{CustomButton || <AddFeedbackButton />}

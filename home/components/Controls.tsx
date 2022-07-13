@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import bellIconPath from '../../assets/svgs/icon-suggestions.svg';
 import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
@@ -7,16 +7,16 @@ import Dropdown from '../../components/Dropdown';
 import Show from '../../components/Show';
 import { contentStyles } from '../../components/styled-components/Content';
 import { flexStyles } from '../../components/styled-components/Flex';
-import WithUser from '../../components/WithUser/WithUser';
 import { Breakpoints } from '../../constants/breakpoints';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
-import { setFeedbackSort } from '../../lib/redux/slices/feedback';
+import { getFeedbackSort, setFeedbackSort } from '../../lib/redux/slices/feedback';
 import { FeedbackSortBy } from '../../types/feedback';
 
 export default function Controls() {
 	const dispatch = useDispatch();
 	const { processedFeedbacks } = useFeedbacks();
 	const count = processedFeedbacks?.length;
+	const feedbackSort = useSelector(getFeedbackSort);
 
 	function handleSetSort(value: FeedbackSortBy) {
 		dispatch(setFeedbackSort(value));
@@ -40,6 +40,7 @@ export default function Controls() {
 				<Dropdown
 					label='Sort-by'
 					setValue={handleSetSort}
+					selected={{ label: feedbackSort, value: feedbackSort }}
 					options={Object.values(FeedbackSortBy).map((sort) => ({
 						label: sort,
 						value: sort,
