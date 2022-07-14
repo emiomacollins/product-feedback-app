@@ -6,13 +6,20 @@ interface Props {
 	feedbackId: string;
 	commentId: string;
 	reply: FeedbackCommentReply;
+	isPing?: boolean;
 }
 
-export default async function replyComment({ commentId, feedbackId, reply }: Props) {
+export default async function replyComment({
+	commentId,
+	feedbackId,
+	reply,
+	isPing = false,
+}: Props) {
 	const callable = httpsCallable(functions, 'replyComment');
 	await callable({
 		feedbackId,
 		commentId,
 		reply,
+		isPing,
 	});
 }

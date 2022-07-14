@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import GoBackLink from '../../components/curried/GoBackLink';
@@ -17,6 +17,8 @@ import { useFeedback } from '../../hooks/useFeedback/useFeedback';
 import { fetchFeedbackComments } from '../../hooks/useFeedbackComments/api/fetchFeedbackComments';
 import { useFeedbackComments } from '../../hooks/useFeedbackComments/useFeedbackComments';
 import { Feedback as FeedbackType, FeedbackComment } from '../../types/feedback';
+import addComment from './api/addComment';
+import replyComment from './api/replyComment';
 import AddComment from './components/AddCommentForm';
 import Comment from './components/Comment';
 interface Props {
@@ -40,6 +42,12 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 
 	const commentCount = comments?.length || 0;
 	const userOwnsFeedback = feedback?.creator === user?.uid;
+
+	useEffect(() => {
+		// ping cloud functions
+		replyComment({ isPing: true, commentId: '', feedbackId: '', reply: {} as any });
+		addComment({ isPing: true, feedbackId: '', comment: {} as any });
+	}, []);
 
 	return (
 		<Container>

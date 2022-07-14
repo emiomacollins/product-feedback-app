@@ -26,7 +26,7 @@ export default function FeedbackList({
 }: Props) {
 	return (
 		<Container>
-			<Grid>
+			<Grid gap={0.6}>
 				<Heading>{heading}</Heading>
 				<p>{description}</p>
 			</Grid>
@@ -64,10 +64,22 @@ interface StatusCardProps {
 
 const StatusCard = styled(Card)<StatusCardProps>`
 	${gridStyles}
+	position: relative;
 	gap: 0;
-	border-top: 4px solid var(--${(p) => p.color});
 	padding: 0;
 	padding-top: 2rem;
+	border-radius: var(--radius-300);
+	overflow: hidden;
+
+	&:after {
+		content: '';
+		width: 100%;
+		height: 6px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: var(--${(p) => p.color});
+	}
 `;
 
 const StatusCardHeading = styled(Flex)`
