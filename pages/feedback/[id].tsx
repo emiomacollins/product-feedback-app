@@ -44,9 +44,11 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const userOwnsFeedback = feedback?.creator === user?.uid;
 
 	useEffect(() => {
+		if (!user) return;
 		// ping cloud functions
 		replyComment({ isPing: true, commentId: '', feedbackId: '', reply: {} as any });
 		addComment({ isPing: true, feedbackId: '', comment: {} as any });
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (
