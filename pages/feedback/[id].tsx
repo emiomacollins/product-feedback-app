@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import GoBackLink from '../../components/curried/GoBackLink';
@@ -30,6 +31,7 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const router = useRouter();
 	const { user } = useAuth();
 	const { id } = router.query;
+	const [pinged, setPinged] = useState(false);
 	const { data: feedback } = useFeedback({
 		id: id as string,
 		initialValue: initialFeedback,
@@ -44,11 +46,11 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const userOwnsFeedback = feedback?.creator === user?.uid;
 
 	useEffect(() => {
-		if (!user) return;
-		// ping cloud functions
+		if (!user || pinged) return;
+		// ping cloud functions to reduce cold start
 		replyComment({ isPing: true, commentId: '', feedbackId: '', reply: {} as any });
 		addComment({ isPing: true, feedbackId: '', comment: {} as any });
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		setPinged(true);
 	}, []);
 
 	return (
@@ -79,8 +81,8 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 							<Heading>
 								{commentCount} Comment{commentCount !== 1 && 's'}
 							</Heading>
-							{comments?.map((comment) => (
-								<Comment key={comment.text} comment={comment} />
+							{comments?.map((comment, i) => (
+								<Comment key={comment.text + i} comment={comment} />
 							))}
 						</Comments>
 					)}
