@@ -40,11 +40,16 @@ export const Badge = styled.button<Props>`
 	${(p) =>
 		p.$active &&
 		css`
-			background: var(--blue) !important;
+			background: var(--blue);
 			color: var(--white);
 
 			&:hover {
 				background: var(--blue);
+			}
+
+			&:focus {
+				background: var(--blue);
+				opacity: 0.9;
 			}
 		`}
 `;

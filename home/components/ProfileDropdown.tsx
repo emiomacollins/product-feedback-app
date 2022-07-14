@@ -14,6 +14,7 @@ interface Props {
 export default function ProfileDropdown({ withDropdown = true, ...props }: Props) {
 	const { user, photoUrl } = useAuth();
 	const { expanded, toggle, ref } = useToggleWithClickAway();
+	const canFocus = expanded ? {} : { tabIndex: -1 };
 
 	return (
 		<Container ref={ref} {...props}>
@@ -24,7 +25,9 @@ export default function ProfileDropdown({ withDropdown = true, ...props }: Props
 			{withDropdown && (
 				<Dropdown expanded={expanded}>
 					<Link href={routes.auth}>
-						<Button $color='blue'>{user ? 'Sign Out' : 'Sign In'}</Button>
+						<Button {...canFocus} $color='blue'>
+							{user ? 'Sign Out' : 'Sign In'}
+						</Button>
 					</Link>
 				</Dropdown>
 			)}

@@ -1,35 +1,22 @@
 import Link from 'next/link';
-import { useMemo } from 'react';
 import styled from 'styled-components';
 import { Bold } from '../../components/styled-components/Bold';
 import { BoldLink } from '../../components/styled-components/BoldLink';
 import { Card } from '../../components/styled-components/Card';
+import { Dot } from '../../components/styled-components/Dot';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';
 import { Grid } from '../../components/styled-components/Grid';
 import { routes } from '../../constants/routes';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
-import { Color } from '../../types/colors';
-import { FeedbackStatus } from '../../types/feedback';
-
-type StatusCounts = { [status: string]: number };
+import { FeedbackStatus, statusColors } from '../../types/feedback';
 
 interface Props {
 	onClick?: () => void;
 }
 
 export default function RoadmapCard({ onClick }: Props) {
-	const { query } = useFeedbacks();
+	const { query, statusCounts } = useFeedbacks();
 	const { data: feedbacks } = query;
-
-	const statusCounts = useMemo(() => {
-		return feedbacks?.reduce((obj: StatusCounts, feedback) => {
-			const currentCount = obj[feedback.status];
-			return {
-				...obj,
-				[feedback.status]: currentCount ? currentCount + 1 : 1,
-			};
-		}, {});
-	}, [feedbacks]);
 
 	return (
 		<Roadmap>
@@ -44,17 +31,10 @@ export default function RoadmapCard({ onClick }: Props) {
 				{Object.values(FeedbackStatus).map((status, i) => {
 					if (status === FeedbackStatus.suggestion) return null;
 
-					type Colors = { [status: string]: Color };
-					const colors: Colors = {
-						[FeedbackStatus.planned]: 'orange',
-						[FeedbackStatus.inProgress]: 'purple',
-						[FeedbackStatus.live]: 'blue',
-					};
-
 					return (
 						<RoadmapRow key={`roadmap-${status}`}>
 							<Flex gap={2}>
-								<Dot color={colors[status]} />
+								<Dot color={statusColors[status]} />
 								{status}
 							</Flex>
 							<Bold weight={800}>{statusCounts?.[status] || 0}</Bold>
@@ -80,15 +60,4 @@ const RoadmapRow = styled.div`
 
 const Heading = styled.h2`
 	color: var(--blue-dark);
-`;
-
-interface DotProps {
-	color: Color;
-}
-
-const Dot = styled.span<DotProps>`
-	width: 1rem;
-	aspect-ratio: 1;
-	border-radius: 100%;
-	background: var(--${(p) => p.color || 'purple'});
 `;

@@ -67,8 +67,22 @@ export function useFeedbacks({ initialValue }: Props = {}) {
 		return filteredFeedbacks;
 	}, [sortBy, categoryFilter, query]);
 
+	type StatusCounts = { [status: string]: number };
+	const statusCounts = useMemo(() => {
+		const { data: feedbacks } = query;
+
+		return feedbacks?.reduce((obj: StatusCounts, feedback) => {
+			const currentCount = obj[feedback.status];
+			return {
+				...obj,
+				[feedback.status]: currentCount ? currentCount + 1 : 1,
+			};
+		}, {});
+	}, [query]);
+
 	return {
 		query,
 		processedFeedbacks,
+		statusCounts,
 	};
 }

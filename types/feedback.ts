@@ -1,3 +1,5 @@
+import { Color } from './colors';
+
 export enum FeedbackSortBy {
 	mostRecent = 'Most Recent',
 	mostUpvotes = 'Most Upvotes',
@@ -20,6 +22,12 @@ export enum FeedbackStatus {
 	inProgress = 'In-Progress',
 	live = 'Live',
 }
+
+export const statusColors: { [status: string]: Color } = {
+	[FeedbackStatus.planned]: 'orange',
+	[FeedbackStatus.inProgress]: 'purple',
+	[FeedbackStatus.live]: 'blue',
+};
 
 export interface FeedbackComment {
 	id: string;

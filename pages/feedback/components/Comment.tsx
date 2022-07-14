@@ -265,6 +265,10 @@ const ProfilePic = styled.img`
 const IconStyles = css`
 	padding: 1rem;
 	margin-top: -1rem;
+
+	&:focus {
+		outline-color: var(--blue);
+	}
 `;
 
 const ReplyButton = styled(Button)`
@@ -286,10 +290,6 @@ const DeleteBtn = styled.button`
 
 	&:hover {
 		opacity: 0.6;
-	}
-
-	&:focus {
-		outline-color: var(--blue);
 	}
 `;
 

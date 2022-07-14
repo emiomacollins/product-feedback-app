@@ -39,7 +39,6 @@ const Home = ({ initialFeedbacks }: Props) => {
 						</LogoCard>
 
 						<Filters />
-
 						<RoadmapCard />
 					</Cards>
 				</Show>

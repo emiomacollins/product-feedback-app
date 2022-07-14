@@ -72,8 +72,7 @@ export const Btn = styled.button<StyleProps>`
 	transition: all 0.2s;
 	position: relative;
 
-	&:hover,
-	&:active {
+	&:hover {
 		opacity: 0.9;
 	}
 
@@ -88,6 +87,10 @@ export const Btn = styled.button<StyleProps>`
 		&:active {
 			transform: scale(1);
 		}
+	}
+
+	&:focus {
+		outline-color: var(--${(p) => p.$color || 'purple'});
 	}
 
 	${({ $color }) => css`

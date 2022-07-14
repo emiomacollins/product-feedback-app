@@ -39,6 +39,7 @@
 	--black-transparent-100: rgba(0, 0, 0, 0.06);
 	--black-transparent-200: rgba(0, 0, 0, 0.1);
 	--purple-transparent: hsla(282, 83%, 52%, 0.4);
+	--gray-transparent: hsla(224, 20%, 49%, 0.7);
 
 	--gradient: radial-gradient(
 		128.88% 128.88% at 103.9% -10.39%,
@@ -149,10 +150,5 @@ h5 {
 	overflow-x: hidden;
 	overflow-y: hidden;
 	padding-block: 0.1em;
-	margin-bottom: -0.1em;
-}
-
-p {
-	padding-block: 0;
-	margin-bottom: 0;
+	margin-block: -0.1em;
 }

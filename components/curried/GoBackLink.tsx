@@ -1,14 +1,16 @@
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import ArrowDownIcon from '../../assets/svgs/custom/ArrowDownIcon';
+import { Color } from '../../types/colors';
 import { BoldLink } from '../styled-components/BoldLink';
 import { Flex } from '../styled-components/Flex';
 
 interface Props {
 	to?: string;
+	color?: Color;
 }
 
-export default function GoBackLink({ to }: Props) {
+export default function GoBackLink({ to, color, ...props }: Props) {
 	const router = useRouter();
 
 	function handleGoBack() {
@@ -16,9 +18,14 @@ export default function GoBackLink({ to }: Props) {
 	}
 
 	return (
-		<StyledLink color='gray' as={'button'} onClick={handleGoBack}>
+		<StyledLink
+			color={color || 'gray'}
+			as={'button'}
+			onClick={handleGoBack}
+			{...props}
+		>
 			<Flex>
-				<StyledArrowIcon color='gray' /> <span>Go back</span>
+				<StyledArrowIcon color={color || 'gray'} /> <span>Go back</span>
 			</Flex>
 		</StyledLink>
 	);

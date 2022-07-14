@@ -34,15 +34,14 @@ export default function Dropdown(props: DropdownProps) {
 	return (
 		<Container ref={ref}>
 			<Toggle onClick={toggle} expanded={expanded} {...restProps}>
-				<p>
-					{label ? (
-						<Bold>
-							{label}: {selected.label}
-						</Bold>
-					) : (
-						selected.label
-					)}
-				</p>
+				{label ? (
+					<p>
+						<span>{label}: </span>
+						<Bold>{selected.label}</Bold>
+					</p>
+				) : (
+					<p>{selected.label}</p>
+				)}
 				<StyledArrowIcon expanded={expanded} />
 			</Toggle>
 
