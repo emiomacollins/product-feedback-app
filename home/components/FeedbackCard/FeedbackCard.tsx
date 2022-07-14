@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import ArrowDownIcon from '../../../assets/svgs/custom/ArrowDownIcon';
 import commentsIconPath from '../../../assets/svgs/icon-comments.svg';
 import { Badge } from '../../../components/styled-components/Badge';
@@ -23,9 +23,10 @@ import toggleUpvote from './api';
 
 interface Props {
 	feedback: Feedback;
+	mobileOnly?: boolean;
 }
 
-export default function FeedbackCard({ feedback }: Props) {
+export default function FeedbackCard({ feedback, mobileOnly = false, ...props }: Props) {
 	const { user } = useAuth();
 	const queryClient = useQueryClient();
 	const { title, upVotes, commentCount, category, details, id } = feedback;
@@ -101,9 +102,9 @@ export default function FeedbackCard({ feedback }: Props) {
 	);
 
 	return (
-		<Container>
+		<Container mobileOnly={mobileOnly} {...props}>
 			<Link href={`${routes.feedback}/${id}`} passHref>
-				<Info>
+				<Info mobileOnly={mobileOnly}>
 					<Title>{title}</Title>
 					<p>{details}</p>
 					<Badge plain as={'div'}>
@@ -116,7 +117,7 @@ export default function FeedbackCard({ feedback }: Props) {
 				message='Sign in to Upvote a Feedback'
 				onClick={() => toggleUpvoteMutation(id)}
 			>
-				<Upvote $active={upVoted}>
+				<Upvote mobileOnly={mobileOnly} $active={upVoted}>
 					<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
 					<h4>{upVoteCount}</h4>
 				</Upvote>
@@ -130,16 +131,24 @@ export default function FeedbackCard({ feedback }: Props) {
 	);
 }
 
-const Container = styled(Card)`
+interface MobileOnlyProps {
+	mobileOnly: boolean;
+}
+
+const Container = styled(Card)<MobileOnlyProps>`
 	display: grid;
 	color: var(--gray);
 	gap: 2rem 4rem;
 	grid-template-columns: 1fr auto;
 	padding-block: 2.5rem;
 
-	@media ${Breakpoints.tabletUp} {
-		grid-template-columns: auto 1fr auto;
-	}
+	${(p) =>
+		!p.mobileOnly &&
+		css`
+			@media ${Breakpoints.tabletUp} {
+				grid-template-columns: auto 1fr auto;
+			}
+		`}
 `;
 
 const Title = styled.h3`
@@ -147,7 +156,7 @@ const Title = styled.h3`
 	transition: all 0.2s;
 `;
 
-const Info = styled.a`
+const Info = styled.a<MobileOnlyProps>`
 	${gridStyles}
 	grid-column: 1/-1;
 	order: 1;
@@ -163,17 +172,21 @@ const Info = styled.a`
 		outline-color: var(--blue);
 	}
 
-	@media ${Breakpoints.tabletUp} {
-		order: 2;
-		grid-column: unset;
-	}
+	${(p) =>
+		!p.mobileOnly &&
+		css`
+			@media ${Breakpoints.tabletUp} {
+				order: 2;
+				grid-column: unset;
+			}
+		`}
 `;
 
 const UpvoteIcon = styled(ArrowDownIcon)`
 	transform: rotate(180deg);
 `;
 
-const Upvote = styled(Badge)`
+const Upvote = styled(Badge)<MobileOnlyProps>`
 	width: 5rem;
 	min-width: max-content;
 	color: var(--${(p) => (p.$active ? 'white' : 'blue-dark')});
@@ -184,12 +197,21 @@ const Upvote = styled(Badge)`
 	align-items: center;
 	order: 2;
 
+	/* for mobile only font size will increases on desktop so we add extra space */
 	@media ${Breakpoints.tabletUp} {
-		order: 1;
-		align-self: flex-start;
-		display: grid;
-		padding: 1.5rem 1rem;
+		padding-inline: 1.2rem;
 	}
+
+	${(p) =>
+		!p.mobileOnly &&
+		css`
+			@media ${Breakpoints.tabletUp} {
+				order: 1;
+				align-self: flex-start;
+				display: grid;
+				padding: 1.5rem 1rem;
+			}
+		`}
 `;
 
 const Comments = styled(Flex)`

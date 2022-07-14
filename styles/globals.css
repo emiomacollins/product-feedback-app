@@ -12,6 +12,7 @@
 	font-size: 62.5%;
 
 	--app-padding: 5rem;
+	--card-padding: 3rem;
 	--disabled-opacity: 0.5;
 
 	--size-300: clamp(1.2rem, 1.1vw, 1.4rem);
