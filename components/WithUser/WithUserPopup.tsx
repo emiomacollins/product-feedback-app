@@ -28,7 +28,7 @@ export default function WithUserPopup() {
 	return (
 		<Overlay expanded={expanded} onClick={handleClose}>
 			<Container onClick={(e) => e.stopPropagation()}>
-				<Grid gap={0.5}>
+				<Grid gap={0.7}>
 					<Icon src={lockIconPath.src} alt='' />
 					<Heading>{withUserPopup?.message || <br />}</Heading>
 				</Grid>
