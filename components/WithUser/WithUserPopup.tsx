@@ -63,7 +63,7 @@ const Container = styled.div`
 
 const Icon = styled.img`
 	justify-self: center;
-	width: 3.5rem;
+	width: 4rem;
 `;
 
 const Heading = styled.h2`
@@ -73,4 +73,5 @@ const Heading = styled.h2`
 	max-width: 90%;
 	text-align: center;
 	margin-inline: auto;
+	font-weight: 600;
 `;
