@@ -76,7 +76,7 @@ const Cards = styled(Grid)`
 
 	@media ${Breakpoints.desktopUp} {
 		position: sticky;
-		top: 2rem;
+		top: var(--app-padding);
 		left: 0px;
 	}
 `;

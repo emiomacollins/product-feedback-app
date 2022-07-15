@@ -66,7 +66,7 @@ const Content = styled.div`
 	justify-content: space-between;
 	justify-items: left;
 	gap: 1rem 2rem;
-	padding-block: 1rem;
+	padding-block: 1.5rem;
 	flex-wrap: wrap;
 
 	@media ${Breakpoints.mobileDown} {

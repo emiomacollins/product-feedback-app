@@ -51,7 +51,6 @@ interface SignedInProps {
 
 const Toggle = styled.button<SignedInProps>`
 	border-radius: 100%;
-
 	&:focus {
 		outline-offset: -1px;
 	}
@@ -60,7 +59,6 @@ const Toggle = styled.button<SignedInProps>`
 		p.signedIn &&
 		css`
 			box-shadow: 0 0 0 2.5px var(--light);
-
 			&:focus {
 				outline-offset: 0.5rem;
 			}

@@ -55,6 +55,19 @@
 	--radius-300: 0.4em;
 	--radius-400: 0.6em;
 	--radius-500: 0.8em;
+
+	/* TEST DARK-MODE */
+	/* --purple: #9c1dd2;
+	--white: #232a4d;
+	--light: #181d35;
+	--blue-dark: #fff;
+	--blue: #fff;
+	--gray: #fff;
+	--blue-light-300: #13172a;
+	--black-transparent-100: rgba(70, 70, 70, 0.06);
+	--black-transparent-200: rgba(70, 70, 70, 0.1);
+	--gradient: #fff; */
+	/* TEST DARK-MODE */
 }
 
 @media (max-width: 800px) {
