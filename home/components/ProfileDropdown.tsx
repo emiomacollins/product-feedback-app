@@ -15,11 +15,16 @@ export default function ProfileDropdown({ withDropdown = true, ...props }: Props
 	const { user, photoUrl } = useAuth();
 	const { expanded, toggle, ref } = useToggleWithClickAway();
 	const canFocus = expanded ? {} : { tabIndex: -1 };
+	const signedIn = user ? true : false;
 
 	return (
 		<Container ref={ref} {...props}>
-			<Toggle showBorder={user ? true : false} onClick={toggle}>
-				<ProfilePic src={photoUrl || noUserIconPath.src} alt='' />
+			<Toggle signedIn={signedIn} onClick={toggle}>
+				<ProfilePic
+					src={photoUrl || noUserIconPath.src}
+					alt=''
+					signedIn={signedIn}
+				/>
 			</Toggle>
 
 			{withDropdown && (
@@ -40,15 +45,19 @@ const Container = styled.div`
 	display: flex;
 `;
 
-interface ToggleProps {
-	showBorder: boolean;
+interface SignedInProps {
+	signedIn: boolean;
 }
 
-const Toggle = styled.button<ToggleProps>`
+const Toggle = styled.button<SignedInProps>`
 	border-radius: 100%;
 
+	&:focus {
+		outline-offset: -1px;
+	}
+
 	${(p) =>
-		p.showBorder &&
+		p.signedIn &&
 		css`
 			box-shadow: 0 0 0 2.5px var(--light);
 
@@ -58,12 +67,18 @@ const Toggle = styled.button<ToggleProps>`
 		`}
 `;
 
-const ProfilePic = styled.img`
+const ProfilePic = styled.img<SignedInProps>`
 	width: 3.6rem;
 	aspect-ratio: 1;
 	object-fit: cover;
 	border-radius: 100%;
 	display: flex;
+
+	${(p) =>
+		!p.signedIn &&
+		css`
+			width: 4.5rem;
+		`}
 `;
 
 interface ExpandedProps {
