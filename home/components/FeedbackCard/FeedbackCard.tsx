@@ -95,8 +95,9 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 				);
 			},
 			onSettled() {
-				queryClient.invalidateQueries(fetchFeedbacksKey);
-				queryClient.invalidateQueries(fetchFeedbackKey);
+				// disrupts ux
+				// queryClient.invalidateQueries(fetchFeedbacksKey);
+				// queryClient.invalidateQueries(fetchFeedbackKey);
 			},
 		}
 	);
