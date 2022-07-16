@@ -31,9 +31,9 @@ export default function AddComment({ feedback }: Props) {
 	} = useMutation('addComment', addComment, {
 		onError(err: Error) {},
 		onSuccess() {
-			queryClient.invalidateQueries(fetchFeedbackKey);
-			queryClient.invalidateQueries(fetchFeedbacksKey); // initialData does not replace an existing cache data
-			queryClient.invalidateQueries(fetchFeedbackCommentsKey);
+			queryClient.invalidateQueries(fetchFeedbackKey); // for commentCount
+			queryClient.invalidateQueries(fetchFeedbacksKey); // for commentCount (initialData does not replace an existing cache data)
+			queryClient.invalidateQueries(fetchFeedbackCommentsKey); // to see comment added
 		},
 	});
 

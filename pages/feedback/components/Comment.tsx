@@ -71,8 +71,6 @@ export default function Comment(props: Props) {
 		deleteComment,
 		{
 			onMutate({ commentId }) {
-				// let invalidateQueries update fetchFeedback & fetchFeedbacks
-				queryClient.cancelQueries(fetchFeedbackCommentsKey);
 				let prevComments;
 
 				queryClient.setQueriesData(
@@ -94,7 +92,7 @@ export default function Comment(props: Props) {
 			},
 
 			onSettled() {
-				queryClient.invalidateQueries(fetchFeedbackCommentsKey);
+				// queryClient.invalidateQueries(fetchFeedbackCommentsKey); // disrupts ux when deleting multiple comments
 				queryClient.invalidateQueries(fetchFeedbackKey);
 				queryClient.invalidateQueries(fetchFeedbacksKey);
 			},

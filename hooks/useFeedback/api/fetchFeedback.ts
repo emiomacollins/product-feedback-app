@@ -3,6 +3,8 @@ import { db } from '../../../lib/firebase';
 import { Feedback } from '../../../types/feedback';
 
 export default async function fetchFeedback(feedbackId: string) {
+	// console.log(`fetching feedback ${feedbackId}`);
+
 	const feedbackRef = doc(db, `feedbacks/${feedbackId}`);
 	const snapshot = await getDoc(feedbackRef);
 

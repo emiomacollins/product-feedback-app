@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, UseQueryOptions } from 'react-query';
 import { useSelector } from 'react-redux';
 import {
 	getFeedbackCategoryFilter,
@@ -11,17 +11,13 @@ import fetchFeedbacks from './api/fetchFeedbacks';
 export const fetchFeedbacksKey = 'fetchFeedbacks';
 
 interface Props {
-	initialValue?: Feedback[];
+	options?: UseQueryOptions;
 }
 
-export function useFeedbacks({ initialValue }: Props = {}) {
+export function useFeedbacks({ options }: Props = {}) {
 	const sortBy = useSelector(getFeedbackSort);
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
-
-	const query = useQuery(fetchFeedbacksKey, fetchFeedbacks, {
-		staleTime: Infinity,
-		initialData: initialValue,
-	});
+	const query = useQuery(fetchFeedbacksKey, fetchFeedbacks, options as any);
 
 	const processedFeedbacks = useMemo(() => {
 		const { data: feedbacks } = query;

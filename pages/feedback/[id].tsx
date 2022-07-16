@@ -32,14 +32,19 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 	const { user } = useAuth();
 	const { id } = router.query;
 	const [pinged, setPinged] = useState(false);
+
 	const { data: feedback } = useFeedback({
 		id: id as string,
-		initialValue: initialFeedback,
+		options: {
+			initialData: initialFeedback,
+		},
 	});
 
 	const { data: comments } = useFeedbackComments({
 		id: id as string,
-		initialValue: initialComments,
+		options: {
+			initialData: initialComments,
+		},
 	});
 
 	const commentCount = comments?.length || 0;

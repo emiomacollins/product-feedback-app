@@ -20,7 +20,7 @@ interface Props {
 }
 
 const Home = ({ initialFeedbacks }: Props) => {
-	useFeedbacks({ initialValue: initialFeedbacks });
+	useFeedbacks({ options: { initialData: initialFeedbacks } });
 
 	return (
 		<Container>

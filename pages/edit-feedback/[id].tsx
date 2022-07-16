@@ -10,11 +10,14 @@ import CreateFeedback from '../create-feedback';
 export default function EditFeedback() {
 	const router = useRouter();
 	const { user } = useAuth();
+
 	const {
 		query: { id },
 	} = router;
 
-	const query = useFeedback({ id: id as string });
+	const query = useFeedback({
+		id: id as string,
+	});
 
 	return (
 		<LoadQuery query={query}>
