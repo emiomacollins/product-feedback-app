@@ -29,7 +29,11 @@ export default function Roadmap({ initialFeedbacks }: Props) {
 	const {
 		statusCounts,
 		query: { data: feedbacks },
-	} = useFeedbacks({ initialValue: initialFeedbacks });
+	} = useFeedbacks({
+		options: {
+			initialData: initialFeedbacks,
+		},
+	});
 
 	const statusInfoMap: { [status: string]: string } = {
 		[FeedbackStatus.planned]: 'Ideas prioritized for research',
