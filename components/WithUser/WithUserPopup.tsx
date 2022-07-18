@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import lockIconPath from '../../assets/svgs/lock-icon.svg';
+import LockIcon from '../../assets/svgs/custom/LockIcon';
 import { routes } from '../../constants/routes';
 import { getWithUserPopup, setWithUserPopup } from '../../lib/redux/slices/ui';
 import Button from '../Button';
@@ -29,13 +29,14 @@ export default function WithUserPopup() {
 		<Overlay expanded={expanded} onClick={handleClose}>
 			<Container onClick={(e) => e.stopPropagation()}>
 				<Grid gap={0.7}>
-					<Icon src={lockIconPath.src} alt='' />
+					<StyledLockIcon />
 					<Heading>{withUserPopup?.message || <br />}</Heading>
 				</Grid>
+
 				<Link href={routes.auth}>
-					<Button {...canFocus} onClick={handleClose}>
+					<StyledButton {...canFocus} onClick={handleClose}>
 						Sign In
-					</Button>
+					</StyledButton>
 				</Link>
 			</Container>
 		</Overlay>
@@ -61,17 +62,18 @@ const Container = styled.div`
 	text-align: center;
 `;
 
-const Icon = styled.img`
+const StyledLockIcon = styled(LockIcon)`
 	justify-self: center;
-	width: 4rem;
 `;
 
 const Heading = styled.h2`
 	color: var(--blue-dark);
+	font-size: var(--size-650);
 	user-select: none;
 	line-height: 1.3;
-	max-width: 90%;
-	text-align: center;
-	margin-inline: auto;
-	font-weight: 600;
+	font-weight: 500;
+`;
+
+const StyledButton = styled(Button)`
+	padding-block: 1.3rem;
 `;

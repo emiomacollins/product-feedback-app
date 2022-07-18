@@ -33,6 +33,10 @@ const Icon = styled.div<Props>`
 	border-right: 2px solid transparent;
 	animation: spin 1s linear infinite;
 
+	.darkmode & {
+		border-color: var(--blue-dark);
+	}
+
 	@keyframes spin {
 		to {
 			transform: rotate(360deg);

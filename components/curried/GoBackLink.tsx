@@ -36,8 +36,8 @@ const StyledLink = styled(BoldLink)`
 	text-decoration: none;
 	justify-self: left;
 
-	&:focus {
-		outline-color: currentColor;
+	&&:focus {
+		outline-color: var(--${(p) => p.color || 'gray'});
 	}
 `;
 

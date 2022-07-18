@@ -72,6 +72,10 @@ export const Btn = styled.button<StyleProps>`
 	transition: all 0.2s;
 	position: relative;
 
+	.darkmode & {
+		color: var(--blue-dark);
+	}
+
 	&:hover {
 		opacity: 0.9;
 	}
@@ -82,23 +86,30 @@ export const Btn = styled.button<StyleProps>`
 
 	&:disabled {
 		opacity: var(--disabled-opacity);
-		cursor: default;
+		cursor: not-allowed;
 
 		&:active {
 			transform: scale(1);
 		}
 	}
 
-	&:focus {
+	&&:focus {
 		outline-color: var(--${(p) => p.$color || 'purple'});
 	}
 
-	${({ $color }) => css`
-		${$color === 'transparent' &&
+	${(p) =>
+		p.$color === 'transparent' &&
 		css`
 			color: var(--blue);
 		`}
-	`}
+
+	${(p) =>
+		(p.$color === 'blue' || p.$color === 'blue-dark') &&
+		css`
+			.darkmode && {
+				color: var(--white);
+			}
+		`}
 `;
 
 const Children = styled.div<LoadingProps>`

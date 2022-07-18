@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import { ButtonHTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import ArrowDownIcon from '../assets/svgs/custom/ArrowDownIcon';
-import checkIconPath from '../assets/svgs/icon-check.svg';
+import CheckIcon from '../assets/svgs/custom/CheckIcon';
 import useToggleWithClickAway from '../hooks/useToggleWithClickAway';
 import { Bold } from './styled-components/Bold';
 import { flexStyles } from './styled-components/Flex';
@@ -56,9 +55,7 @@ export default function Dropdown(props: DropdownProps) {
 							{...canFocus}
 						>
 							{label}
-							<CheckIcon visible={value === selected.value}>
-								<Image src={checkIconPath} alt='' />
-							</CheckIcon>
+							<StyledCheckIcon $visible={value === selected.value} />
 						</Option>
 					);
 				})}
@@ -141,10 +138,10 @@ const Option = styled.button`
 `;
 
 interface CheckIconProps {
-	visible: boolean;
+	$visible: boolean;
 }
 
-const CheckIcon = styled.div<CheckIconProps>`
+const StyledCheckIcon = styled(CheckIcon)<CheckIconProps>`
 	transition: all 0.2s;
-	opacity: ${(p) => (p.visible ? 1 : 0)};
+	opacity: ${(p) => (p.$visible ? 1 : 0)};
 `;

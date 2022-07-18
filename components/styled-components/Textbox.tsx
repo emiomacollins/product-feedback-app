@@ -16,6 +16,10 @@ export const textboxStyles = css<TextboxStyleProps>`
 	&::placeholder {
 		color: inherit;
 		opacity: 0.5;
+
+		.darkmode & {
+			color: #bbc2d6d8;
+		}
 	}
 
 	&:focus {
