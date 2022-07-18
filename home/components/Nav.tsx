@@ -28,7 +28,7 @@ export default function Nav() {
 
 	useEffect(() => {
 		const calculateNavHeight = () => {
-			const height = navRef.current?.clientHeight;
+			const height = navRef.current?.offsetHeight;
 			setNavHeight(height ? +height : 0);
 		};
 		calculateNavHeight();
