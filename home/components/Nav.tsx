@@ -26,17 +26,18 @@ export default function Nav() {
 	const [navHeight, setNavHeight] = useState(0);
 	const handleClose = () => setExpanded(false);
 
+	const calculateNavHeight = () => {
+		const height = navRef.current?.clientHeight;
+		setNavHeight(height ? +height : 0);
+	};
+
 	useEffect(() => {
-		const calculateNavHeight = () => {
-			const height = navRef.current?.offsetHeight;
-			setNavHeight(height ? +height : 0);
-		};
-		calculateNavHeight();
 		window.addEventListener('resize', calculateNavHeight);
 		return () => window.removeEventListener('resize', calculateNavHeight);
 	}, []);
 
 	useEffect(() => {
+		calculateNavHeight();
 		document.documentElement.style.overflow = expanded ? 'hidden' : 'unset';
 	}, [expanded]);
 
