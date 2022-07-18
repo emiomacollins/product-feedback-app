@@ -14,10 +14,7 @@ import { Breakpoints } from '../../../constants/breakpoints';
 import { routes } from '../../../constants/routes';
 import { useAuth } from '../../../hooks/useAuth';
 import { fetchFeedbackKey } from '../../../hooks/useFeedback/useFeedback';
-import {
-	fetchFeedbacksKey,
-	useFeedbacks,
-} from '../../../hooks/useFeedbacks/useFeedbacks';
+import { fetchFeedbacksKey } from '../../../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../../../types/feedback';
 import toggleUpvote from './api';
 
@@ -36,66 +33,62 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 		return Object.keys(upVotes).length;
 	}, [upVotes]);
 
-	const {
-		query: { isLoading: loadingFeedbacks, data: feedbacks },
-	} = useFeedbacks();
-
 	const { mutate: toggleUpvoteMutation, isLoading: togglingUpvote } = useMutation(
 		'toggleUpvote',
 		toggleUpvote,
 		{
 			// optimistic updates to hide cold start
-			onMutate() {
-				// clear query refetches in progress
-				queryClient.cancelQueries(fetchFeedbackKey);
-				queryClient.cancelQueries(fetchFeedbacksKey);
+			// onMutate() {
+			// 	// clear query refetches in progress
+			// 	queryClient.cancelQueries(fetchFeedbackKey);
+			// 	queryClient.cancelQueries(fetchFeedbacksKey);
 
-				const { uid } = user || {};
-				if (!uid) return;
-				const prevUpvotes = feedback.upVotes;
-				const { [uid]: userUpvote, ...withoutUserUpvotes } = prevUpvotes;
+			// 	const { uid } = user || {};
+			// 	if (!uid) return;
+			// 	const prevUpvotes = feedback.upVotes;
+			// 	const { [uid]: userUpvote, ...withoutUserUpvotes } = prevUpvotes;
 
-				queryClient.setQueriesData(fetchFeedbackKey, {
-					...feedback,
-					upVotes: {
-						...withoutUserUpvotes,
-						...(userUpvote ? {} : { [uid]: true }),
-					},
-				});
+			// 	queryClient.setQueriesData(fetchFeedbackKey, {
+			// 		...feedback,
+			// 		upVotes: {
+			// 			...withoutUserUpvotes,
+			// 			...(userUpvote ? {} : { [uid]: true }),
+			// 		},
+			// 	});
 
-				queryClient.setQueriesData(
-					fetchFeedbacksKey,
-					feedbacks?.map((feedback) => {
-						if (feedback.id === id)
-							return {
-								...feedback,
-								upVotes: {
-									...withoutUserUpvotes,
-									...(userUpvote ? {} : { [uid]: true }),
-								},
-							};
-						return feedback;
-					})
-				);
+			// 	queryClient.setQueriesData(
+			// 		fetchFeedbacksKey,
+			// 		feedbacks?.map((feedback) => {
+			// 			if (feedback.id === id)
+			// 				return {
+			// 					...feedback,
+			// 					upVotes: {
+			// 						...withoutUserUpvotes,
+			// 						...(userUpvote ? {} : { [uid]: true }),
+			// 					},
+			// 				};
+			// 			return feedback;
+			// 		})
+			// 	);
 
-				return {
-					prevUpvotes,
-				};
-			},
-			onError(_, feedbackId, context) {
-				const { prevUpvotes } = context || {};
-				queryClient.setQueriesData(fetchFeedbackKey, prevUpvotes);
-				queryClient.setQueriesData(
-					fetchFeedbacksKey,
-					feedbacks?.map((feedback) => {
-						if (feedback.id === feedbackId)
-							return { ...feedback, upVotes: prevUpvotes };
-						return feedback;
-					})
-				);
-			},
-			onSettled() {
-				// disrupts ux
+			// 	return {
+			// 		prevUpvotes,
+			// 	};
+			// },
+			// onError(_, feedbackId, context) {
+			// 	const { prevUpvotes } = context || {};
+			// 	queryClient.setQueriesData(fetchFeedbackKey, prevUpvotes);
+			// 	queryClient.setQueriesData(
+			// 		fetchFeedbacksKey,
+			// 		feedbacks?.map((feedback) => {
+			// 			if (feedback.id === feedbackId)
+			// 				return { ...feedback, upVotes: prevUpvotes };
+			// 			return feedback;
+			// 		})
+			// 	);
+			// },
+			// optimistic update is causing a lot of syncing issues
+			onSuccess() {
 				queryClient.invalidateQueries(fetchFeedbacksKey);
 				queryClient.invalidateQueries(fetchFeedbackKey);
 			},
@@ -118,7 +111,11 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 				message='Sign in to Upvote a Feedback'
 				onClick={() => toggleUpvoteMutation(id)}
 			>
-				<Upvote mobileOnly={mobileOnly} $active={upVoted}>
+				<Upvote
+					mobileOnly={mobileOnly}
+					$active={upVoted}
+					disabled={togglingUpvote}
+				>
 					<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
 					<h4>{upVoteCount}</h4>
 				</Upvote>
