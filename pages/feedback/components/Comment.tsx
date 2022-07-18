@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import styled, { css } from 'styled-components';
 import * as yup from 'yup';
-import deleteIconPath from '../../../assets/svgs/delete-icon.svg';
+import TrashIcon from '../../../assets/svgs/custom/TrashIcon';
 import Button from '../../../components/Button';
 import TextArea from '../../../components/formik/TextArea';
 import { ErrorMessage } from '../../../components/styled-components/ErrorMessage';
@@ -142,7 +142,7 @@ export default function Comment(props: Props) {
 						})
 					}
 				>
-					<DeleteIcon src={deleteIconPath.src} alt='' />
+					<TrashIcon />
 				</DeleteBtn>
 			) : null}
 
@@ -285,15 +285,11 @@ const DeleteBtn = styled.button`
 	${IconStyles}
 	transition: all 0.2s;
 	display: flex;
+	padding: 0;
 
 	&:hover {
 		opacity: 0.6;
 	}
-`;
-
-const DeleteIcon = styled.img`
-	width: var(--size-700);
-	aspect-ratio: 1;
 `;
 
 const Text = styled.p`

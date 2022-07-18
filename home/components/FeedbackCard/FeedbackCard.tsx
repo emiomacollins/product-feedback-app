@@ -96,8 +96,8 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 			},
 			onSettled() {
 				// disrupts ux
-				// queryClient.invalidateQueries(fetchFeedbacksKey);
-				// queryClient.invalidateQueries(fetchFeedbackKey);
+				queryClient.invalidateQueries(fetchFeedbacksKey);
+				queryClient.invalidateQueries(fetchFeedbackKey);
 			},
 		}
 	);
@@ -169,8 +169,15 @@ const Info = styled.a<MobileOnlyProps>`
 	&:focus {
 		${Title} {
 			color: var(--blue);
+			.darkmode & {
+				opacity: 0.8;
+			}
 		}
 		outline-color: var(--blue);
+	}
+
+	&:focus {
+		outline-offset: 7.5px;
 	}
 
 	${(p) =>

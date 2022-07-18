@@ -55,19 +55,21 @@
 	--radius-300: 0.4em;
 	--radius-400: 0.6em;
 	--radius-500: 0.8em;
+}
 
-	/* TEST DARK-MODE */
-	/* --purple: #9c1dd2;
+.darkmode {
+	--purple: #7c5dfa;
+	--red: #fc6565;
 	--white: #232a4d;
 	--light: #181d35;
 	--blue-dark: #fff;
 	--blue: #fff;
 	--gray: #fff;
 	--blue-light-300: #13172a;
-	--black-transparent-100: rgba(70, 70, 70, 0.06);
-	--black-transparent-200: rgba(70, 70, 70, 0.1);
-	--gradient: #fff; */
-	/* TEST DARK-MODE */
+	--black-transparent-100: rgba(100, 100, 100, 0.15);
+	--black-transparent-200: rgba(100, 100, 100, 0.3);
+	--shadow-400: 0 0 30px 5px rgba(0, 0, 0, 0.15);
+	--shadow-500: var(--shadow-400);
 }
 
 @media (max-width: 800px) {
@@ -151,6 +153,12 @@ input:focus {
 	outline-style: dashed;
 	outline-width: 2px;
 	outline-color: var(--white);
+}
+
+.darkmode a:focus,
+.darkmode button:focus,
+.darkmode input:focus {
+	outline-color: var(--blue-dark);
 }
 
 /* hide extra long words gotten from user input */

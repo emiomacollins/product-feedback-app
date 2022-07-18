@@ -59,6 +59,11 @@ const Toggle = styled.button<SignedInProps>`
 		p.signedIn &&
 		css`
 			box-shadow: 0 0 0 2.5px var(--light);
+
+			.darkmode & {
+				box-shadow: 0 0 0 2.5px var(--blue);
+			}
+
 			&:focus {
 				outline-offset: 0.5rem;
 			}

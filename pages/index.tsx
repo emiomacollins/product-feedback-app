@@ -11,10 +11,10 @@ import Logo from '../home/components/Logo';
 import Nav from '../home/components/Nav';
 import ProfileDropdown from '../home/components/ProfileDropdown';
 import RoadmapCard from '../home/components/RoadmapCard';
+import ThemeToggle from '../home/components/ThemeToggle';
 import fetchFeedbacks from '../hooks/useFeedbacks/api/fetchFeedbacks';
 import { useFeedbacks } from '../hooks/useFeedbacks/useFeedbacks';
 import { Feedback } from '../types/feedback';
-
 interface Props {
 	initialFeedbacks: Feedback[];
 }
@@ -40,6 +40,7 @@ const Home = ({ initialFeedbacks }: Props) => {
 
 						<Filters />
 						<RoadmapCard />
+						<ThemeToggle />
 					</Cards>
 				</Show>
 
