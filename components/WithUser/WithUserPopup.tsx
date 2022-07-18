@@ -71,7 +71,7 @@ const Heading = styled.h2`
 	font-size: var(--size-650);
 	user-select: none;
 	line-height: 1.3;
-	font-weight: 500;
+	font-weight: 600;
 `;
 
 const StyledButton = styled(Button)`
