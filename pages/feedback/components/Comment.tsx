@@ -249,6 +249,10 @@ const Name = styled.p`
 const Username = styled.p`
 	font-size: var(--size-350);
 	line-height: 1;
+
+	.darkmode & {
+		opacity: 0.6;
+	}
 `;
 
 const ProfilePic = styled.img`
