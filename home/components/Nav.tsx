@@ -17,6 +17,7 @@ import Filters from './Filters';
 import Logo from './Logo';
 import ProfileDropdown from './ProfileDropdown';
 import RoadmapCard from './RoadmapCard';
+import ThemeToggle from './ThemeToggle';
 
 export default function Nav() {
 	const { user, fullName, username } = useAuth();
@@ -79,6 +80,7 @@ export default function Nav() {
 
 				<Filters onClick={handleClose} />
 				<RoadmapCard onClick={handleClose} />
+				<ThemeToggle />
 			</Sidebar>
 		</Container>
 	);

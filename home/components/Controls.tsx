@@ -1,7 +1,6 @@
-import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import bellIconPath from '../../assets/svgs/icon-suggestions.svg';
+import BellIcon from '../../assets/svgs/custom/BellIcon';
 import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
 import Dropdown from '../../components/Dropdown';
 import Show from '../../components/Show';
@@ -28,7 +27,7 @@ export default function Controls() {
 				<Show on={Breakpoints.tabletUp}>
 					<Count>
 						<CountIcon>
-							<Image src={bellIconPath} alt='' />
+							<BellIcon />
 						</CountIcon>
 						<span>
 							{count} Feedback
@@ -100,4 +99,8 @@ const CountIcon = styled.div`
 
 const StyledDropdown = styled(Dropdown)`
 	justify-content: center;
+
+	.darkmode &:focus {
+		outline-color: var(--white);
+	}
 `;

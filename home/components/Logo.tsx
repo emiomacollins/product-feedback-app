@@ -16,6 +16,10 @@ export default function Logo(props: Props) {
 
 const Container = styled(Grid)`
 	color: var(--white);
+
+	.darkmode & {
+		color: var(--blue-dark);
+	}
 `;
 
 const Heading = styled.h2`

@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import styled from 'styled-components';
-import EmptyIconPath from '../../assets/svgs/illustration-empty.svg';
+import NotFoundIcon from '../../assets/svgs/custom/NotFoundIcon';
 import AddFeedbackButton from '../../components/curried/AddFeedbackButton';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
@@ -19,9 +18,7 @@ export default function NoFeedbackMessage({
 }: Props) {
 	return (
 		<Container {...props}>
-			<Icon>
-				<Image src={EmptyIconPath} alt='' />
-			</Icon>
+			<NotFoundIcon />
 			<Grid>
 				<Heading>{message || 'There is no feedback yet'}</Heading>
 				<Text>
@@ -45,16 +42,6 @@ const Container = styled.div`
 	gap: 3rem;
 	place-content: center;
 	justify-items: center;
-`;
-
-const Icon = styled.div`
-	position: relative;
-	width: clamp(8rem, 8vw, 12rem);
-	aspect-ratio: 1;
-
-	img {
-		object-fit: contain;
-	}
 `;
 
 const Heading = styled.h2`

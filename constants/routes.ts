@@ -6,3 +6,5 @@ export const routes = {
 	createFeedback: '/create-feedback',
 	editFeedback: '/edit-feedback',
 };
+
+export const unProtectedRoutes = [routes.auth, routes.feedback, routes.roadmap];
