@@ -11,6 +11,7 @@ import { useMutation } from 'react-query';
 import styled, { css } from 'styled-components';
 import * as yup from 'yup';
 import Button from '../../components/Button';
+import GoBackLink from '../../components/curried/GoBackLink';
 import Textbox from '../../components/formik/Textbox';
 import FormInput from '../../components/FormInput';
 import { cardStyles } from '../../components/styled-components/Card';
@@ -93,6 +94,7 @@ export default function Auth() {
 
 	return (
 		<Container>
+			<GoBackLink to={routes.home} />
 			<Formik
 				initialValues={{
 					email: '',
@@ -230,9 +232,15 @@ export default function Auth() {
 
 						{error && <ErrorMessage>{error.message}</ErrorMessage>}
 
-						<Submit type='submit' disabled={isLoading} isLoading={isLoading}>
-							{isSignUp ? 'Sign Up' : 'Login'}
-						</Submit>
+						<Grid>
+							<Submit
+								type='submit'
+								disabled={isLoading}
+								isLoading={isLoading}
+							>
+								{isSignUp ? 'Sign Up' : 'Login'}
+							</Submit>
+						</Grid>
 					</StyledForm>
 				)}
 			</Formik>

@@ -32,11 +32,6 @@ export default function Nav() {
 	};
 
 	useEffect(() => {
-		window.addEventListener('resize', calculateNavHeight);
-		return () => window.removeEventListener('resize', calculateNavHeight);
-	}, []);
-
-	useEffect(() => {
 		calculateNavHeight();
 		document.documentElement.style.overflow = expanded ? 'hidden' : 'unset';
 	}, [expanded]);
