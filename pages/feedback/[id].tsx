@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -56,7 +55,7 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 		replyComment({ isPing: true, commentId: '', feedbackId: '', reply: {} as any });
 		addComment({ isPing: true, feedbackId: '', comment: {} as any });
 		setPinged(true);
-	}, []);
+	}, [pinged, user]);
 
 	return (
 		<Container>

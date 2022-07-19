@@ -1,19 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { contentStyles } from '../../components/styled-components/Content';
 import { Grid } from '../../components/styled-components/Grid';
 import { Breakpoints } from '../../constants/breakpoints';
+import { useAuth } from '../../hooks/useAuth';
 import { useFeedbacks } from '../../hooks/useFeedbacks/useFeedbacks';
 import toggleUpvote from './FeedbackCard/api';
 import FeedbackCard from './FeedbackCard/FeedbackCard';
 import NoFeedbackMessage from './NoFeedbackMessage';
 
 export default function FeedbackList() {
+	const { user } = useAuth();
 	const { processedFeedbacks } = useFeedbacks();
+	const [pinged, setPinged] = useState(false);
 
 	useEffect(() => {
+		if (!user || pinged) return;
 		toggleUpvote({ isPing: true, feedbackId: '' });
-	}, []);
+		setPinged(true);
+	}, [user, pinged]);
 
 	return (
 		<Container gap={2}>
