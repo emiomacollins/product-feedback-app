@@ -97,8 +97,4 @@ export default function NotFoundIcon() {
 	);
 }
 
-const Icon = styled.svg`
-	position: relative;
-	width: clamp(8rem, 8vw, 12rem);
-	aspect-ratio: 1;
-`;
+const Icon = styled.svg``;

@@ -16,6 +16,7 @@ export default function FeedbackList() {
 
 	useEffect(() => {
 		if (!user || pinged) return;
+		// ping cloud function
 		toggleUpvote({ isPing: true, feedbackId: '' });
 		setPinged(true);
 	}, [user, pinged]);

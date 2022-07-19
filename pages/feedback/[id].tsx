@@ -85,8 +85,8 @@ export default function Feedback({ initialFeedback, initialComments }: Props) {
 							<Heading>
 								{commentCount} Comment{commentCount !== 1 && 's'}
 							</Heading>
-							{comments?.map((comment, i) => (
-								<Comment key={comment.text + i} comment={comment} />
+							{comments?.map((comment) => (
+								<Comment key={comment.id} comment={comment} />
 							))}
 						</Comments>
 					)}
