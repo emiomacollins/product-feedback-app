@@ -109,7 +109,7 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 
 			<WithUser
 				message='Sign in to Upvote a Feedback'
-				onClick={() => toggleUpvoteMutation(id)}
+				onClick={() => toggleUpvoteMutation({ feedbackId: id })}
 			>
 				<Upvote
 					mobileOnly={mobileOnly}
