@@ -27,14 +27,12 @@ interface Props {
 }
 
 export default function Comment(props: Props) {
-	const { comment, reply, commentId, ...restProps } = props;
 	const queryClient = useQueryClient();
 	const router = useRouter();
+	const { comment, reply, commentId, ...restProps } = props;
 	const replyInputRef = useRef<HTMLTextAreaElement | null>(null);
-	const repliesRef = useRef<HTMLDivElement | null>(null);
 	const textRef = useRef<HTMLParagraphElement | null>(null);
 	const [textHeight, setTextHeight] = useState(0);
-	const [repliesHeight, setRepliesHeight] = useState(0);
 
 	const {
 		expanded: replyExpanded,
@@ -99,23 +97,16 @@ export default function Comment(props: Props) {
 		}
 	);
 
-	const updateHeights = () => {
-		setRepliesHeight(repliesRef.current?.clientHeight || 0);
-		setTextHeight(textRef.current?.clientHeight || 0);
-	};
-
 	useEffect(() => {
 		replyExpanded && replyInputRef.current?.focus();
 	}, [replyExpanded]);
 
 	useEffect(() => {
-		updateHeights();
-	}, [replyExpanded, props]);
-
-	useEffect(() => {
-		window.addEventListener('resize', updateHeights);
-		return () => window.removeEventListener('resize', updateHeights);
-	}, []);
+		const rowGap = 20;
+		const textHeight = textRef.current?.clientHeight || 0;
+		const replyInputHeight = replyInputRef.current?.clientHeight || 0;
+		setTextHeight(textHeight + (replyInputHeight ? replyInputHeight + rowGap : 0));
+	}, [replyExpanded]);
 
 	return (
 		<Container {...restProps}>
@@ -196,14 +187,14 @@ export default function Comment(props: Props) {
 			)}
 
 			{comment && comment.replies.length > 0 && (
-				<Replies
-					ref={repliesRef as any}
-					repliesHeight={repliesHeight}
-					textHeight={textHeight}
-				>
-					<Line />
-					{comment.replies.map((reply) => (
-						<Reply key={reply.text} reply={reply} commentId={comment.id} />
+				<Replies>
+					<Line textHeight={textHeight} />
+					{comment.replies.map((reply, i) => (
+						<Reply
+							key={reply.text + i}
+							reply={reply}
+							commentId={comment.id}
+						/>
 					))}
 				</Replies>
 			)}
@@ -214,11 +205,14 @@ export default function Comment(props: Props) {
 const Container = styled.div`
 	--profile-pic-size: 4rem;
 	--line-width: 1.2px;
+	--padding: 3rem;
+	--row-gap: 1.5rem;
+
 	display: grid;
-	gap: 1.5rem 2rem;
+	gap: var(--row-gap) 2rem;
 	grid-template-columns: auto 1fr auto;
 	align-items: center;
-	padding-block: 3rem;
+	padding-block: var(--padding);
 	position: relative;
 
 	&:not(:last-child) {
@@ -226,16 +220,21 @@ const Container = styled.div`
 	}
 `;
 
-const Line = styled.div`
+interface LineProps {
+	textHeight: number;
+}
+
+const Line = styled.div<LineProps>`
+	--text-height: ${(p) => p.textHeight}px;
 	position: absolute;
 	width: var(--line-width);
 	background: var(--black-transparent-100);
-	height: calc(var(--replies-height) - 5rem);
+	height: 90%;
 
 	@media ${Breakpoints.tabletUp} {
-		height: calc(var(--replies-height) + var(--text-height));
-		top: calc(var(--profile-pic-size) + 4rem);
-		left: calc(var(--profile-pic-size) / 2);
+		height: calc(90% + var(--text-height));
+		left: calc(-1 * var(--profile-pic-size));
+		transform: translateY(calc(-1 * (var(--text-height) + var(--row-gap))));
 	}
 `;
 
@@ -243,7 +242,6 @@ const Name = styled.p`
 	color: var(--blue-dark);
 	font-weight: 800;
 	text-transform: capitalize;
-	/* white-space: nowrap; */
 `;
 
 const Username = styled.p`
@@ -268,7 +266,7 @@ const IconStyles = css`
 	padding: 1rem;
 	margin-top: -1rem;
 
-	&:focus {
+	&&:focus {
 		outline-color: var(--blue);
 	}
 `;
@@ -298,6 +296,7 @@ const DeleteBtn = styled.button`
 
 const Text = styled.p`
 	grid-column: 1/-1;
+	position: relative;
 
 	@media ${Breakpoints.tabletUp} {
 		grid-column: 2/-2;
@@ -316,18 +315,11 @@ const ReplyGrid = styled(Form)`
 	}
 `;
 
-interface RepliesProps {
-	repliesHeight: number;
-	textHeight: number;
-}
-
-const Replies = styled.div<RepliesProps>`
-	--replies-height: ${(p) => p.repliesHeight}px;
-	--text-height: ${(p) => p.textHeight}px;
-
+const Replies = styled.div`
 	grid-column: 1/-1;
 	display: grid;
 	gap: 2rem;
+	position: relative; // for Line
 
 	@media ${Breakpoints.tabletUp} {
 		grid-column: 2/-1;
