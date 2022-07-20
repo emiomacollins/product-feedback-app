@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import styled from 'styled-components';
 import { Bold } from '../../components/styled-components/Bold';
-import { BoldLink } from '../../components/styled-components/BoldLink';
+import { BoldLink } from '../../components/curried/BoldLink';
 import { Card } from '../../components/styled-components/Card';
 import { Dot } from '../../components/styled-components/Dot';
 import { Flex, flexStyles } from '../../components/styled-components/Flex';

@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export interface TextboxStyleProps {
+interface Props {
 	isError?: boolean;
 }
 
-export const textboxStyles = css<TextboxStyleProps>`
+export const textboxStyles = css<Props>`
 	padding: 1.5rem 2rem;
 	background: var(--light);
 	border: 0;

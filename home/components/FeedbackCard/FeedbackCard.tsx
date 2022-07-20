@@ -37,60 +37,9 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 		'toggleUpvote',
 		toggleUpvote,
 		{
-			// optimistic updates to hide cold start
-			// onMutate() {
-			// 	// clear query refetches in progress
-			// 	queryClient.cancelQueries(fetchFeedbackKey);
-			// 	queryClient.cancelQueries(fetchFeedbacksKey);
-
-			// 	const { uid } = user || {};
-			// 	if (!uid) return;
-			// 	const prevUpvotes = feedback.upVotes;
-			// 	const { [uid]: userUpvote, ...withoutUserUpvotes } = prevUpvotes;
-
-			// 	queryClient.setQueriesData(fetchFeedbackKey, {
-			// 		...feedback,
-			// 		upVotes: {
-			// 			...withoutUserUpvotes,
-			// 			...(userUpvote ? {} : { [uid]: true }),
-			// 		},
-			// 	});
-
-			// 	queryClient.setQueriesData(
-			// 		fetchFeedbacksKey,
-			// 		feedbacks?.map((feedback) => {
-			// 			if (feedback.id === id)
-			// 				return {
-			// 					...feedback,
-			// 					upVotes: {
-			// 						...withoutUserUpvotes,
-			// 						...(userUpvote ? {} : { [uid]: true }),
-			// 					},
-			// 				};
-			// 			return feedback;
-			// 		})
-			// 	);
-
-			// 	return {
-			// 		prevUpvotes,
-			// 	};
-			// },
-			// onError(_, feedbackId, context) {
-			// 	const { prevUpvotes } = context || {};
-			// 	queryClient.setQueriesData(fetchFeedbackKey, prevUpvotes);
-			// 	queryClient.setQueriesData(
-			// 		fetchFeedbacksKey,
-			// 		feedbacks?.map((feedback) => {
-			// 			if (feedback.id === feedbackId)
-			// 				return { ...feedback, upVotes: prevUpvotes };
-			// 			return feedback;
-			// 		})
-			// 	);
-			// },
-			// optimistic update is causing a lot of syncing issues
 			onSuccess() {
-				queryClient.invalidateQueries(fetchFeedbacksKey);
-				queryClient.invalidateQueries(fetchFeedbackKey);
+				queryClient.invalidateQueries(fetchFeedbacksKey); // sync home page
+				queryClient.invalidateQueries(fetchFeedbackKey); // sync feedback page
 			},
 		}
 	);
@@ -116,7 +65,7 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 					$active={upVoted}
 					disabled={togglingUpvote}
 				>
-					<UpvoteIcon color={upVoted ? 'white' : 'blue'} />
+					<StyledArrowIcon color={upVoted ? 'white' : 'blue'} />
 					<h4>{upVoteCount}</h4>
 				</Upvote>
 			</WithUser>
@@ -187,7 +136,7 @@ const Info = styled.a<MobileOnlyProps>`
 		`}
 `;
 
-const UpvoteIcon = styled(ArrowDownIcon)`
+const StyledArrowIcon = styled(ArrowDownIcon)`
 	transform: rotate(180deg);
 `;
 

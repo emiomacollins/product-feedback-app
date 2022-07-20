@@ -1,11 +1,9 @@
-import { httpsCallable } from 'firebase/functions';
-import { functions } from '../../lib/firebase';
+import { callable } from '../../lib/firebase';
 
 export default async function verifyUsername(username: string) {
-	const callable = httpsCallable(functions, 'verifyUsername');
-	const res = await callable({
-		username,
+	const { data: valid } = await callable({
+		name: 'verifyUsername',
+		data: { username },
 	});
-
-	return res.data as boolean;
+	return valid as boolean;
 }

@@ -13,6 +13,7 @@ export default function Textbox(props: Props) {
 	const [fields, meta] = useField({ name, type });
 	const isError = meta.touched && meta.error ? true : false;
 
+	// add custom onBlur & not break formik's onBlur
 	const handleBlur: FocusEventHandler<HTMLInputElement> = (e) => {
 		fields.onBlur(e);
 		onBlur?.(e);

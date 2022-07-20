@@ -15,17 +15,15 @@ export interface DropdownProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	label?: string;
 	options: DropdownOption[];
 	selected: DropdownOption;
-	setValue?: (value: any) => any;
+	setValue: (value: any) => any;
 }
 
 export default function Dropdown(props: DropdownProps) {
 	const { label, options, setValue, selected, ...restProps } = props;
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
-	// make un-focusable when dropdown is not expanded
 	const canFocus = expanded ? {} : { tabIndex: -1 };
 
-	function handleSetOption(option: DropdownOption) {
-		const { value } = option;
+	function handleSetValue(value: any) {
 		setValue?.(value);
 		setExpanded(false);
 	}
@@ -50,7 +48,7 @@ export default function Dropdown(props: DropdownProps) {
 					return (
 						<Option
 							key={label}
-							onClick={() => handleSetOption(option)}
+							onClick={() => handleSetValue(value)}
 							type='button'
 							{...canFocus}
 						>

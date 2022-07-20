@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Color } from '../../types/colors';
 
 interface Props {
@@ -6,11 +6,14 @@ interface Props {
 }
 
 export const Link = styled.a<Props>`
-	${({ color }) => css`
-		color: var(--${color || 'blue'});
+	color: var(--${(p) => p.color || 'blue'});
+	cursor: pointer;
 
-		&:focus {
-			outline-color: currentColor;
-		}
-	`}
+	&:hover {
+		text-decoration: underline;
+	}
+
+	&:focus {
+		outline-color: currentColor;
+	}
 `;

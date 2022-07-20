@@ -29,16 +29,11 @@ interface Props {
 export default function Comment(props: Props) {
 	const queryClient = useQueryClient();
 	const router = useRouter();
+	const [textHeight, setTextHeight] = useState(0);
 	const { comment, reply, commentId, ...restProps } = props;
+	const { expanded: replyExpanded, toggle: toggleReplyExpanded } = useToggle();
 	const replyInputRef = useRef<HTMLTextAreaElement | null>(null);
 	const textRef = useRef<HTMLParagraphElement | null>(null);
-	const [textHeight, setTextHeight] = useState(0);
-
-	const {
-		expanded: replyExpanded,
-		toggle: toggleReplyExpanded,
-		setExpanded,
-	} = useToggle();
 
 	const {
 		username: currentUserUsername,

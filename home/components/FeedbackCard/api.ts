@@ -1,5 +1,4 @@
-import { httpsCallable } from 'firebase/functions';
-import { auth, functions } from '../../../lib/firebase';
+import { callable } from '../../../lib/firebase';
 
 // todo create enum for callable functions
 
@@ -8,8 +7,9 @@ interface Props {
 	isPing?: boolean;
 }
 
-export default async function toggleUpvote({ feedbackId, isPing = false }: Props) {
-	const { uid } = auth.currentUser || {};
-	const callable = httpsCallable(functions, 'toggleUpvote');
-	await callable({ feedbackId, uid, isPing });
+export default async function toggleUpvote(data: Props) {
+	await callable({
+		name: 'toggleUpvote',
+		data,
+	});
 }

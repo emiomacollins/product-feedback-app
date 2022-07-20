@@ -12,8 +12,8 @@ interface LoadingProps {
 }
 interface Props
 	extends StyleProps,
-		ButtonHTMLAttributes<HTMLButtonElement>,
-		LoadingProps {
+		LoadingProps,
+		ButtonHTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
 	tooltip?: string;
 }
@@ -63,14 +63,14 @@ const Container = styled.div`
 `;
 
 export const Btn = styled.button<StyleProps>`
+	position: relative;
 	padding: 1rem 2rem;
 	color: var(--white);
-	font-weight: 600;
 	background: var(--${(p) => p.$color || 'purple'});
 	border-radius: var(--radius-400);
+	font-weight: 600;
 	white-space: nowrap;
 	transition: all 0.2s;
-	position: relative;
 
 	.darkmode & {
 		color: var(--blue-dark);
@@ -93,6 +93,7 @@ export const Btn = styled.button<StyleProps>`
 		}
 	}
 
+	/* to overwrite global */
 	&&:focus {
 		outline-color: var(--${(p) => p.$color || 'purple'});
 	}

@@ -1,5 +1,4 @@
-import { httpsCallable } from 'firebase/functions';
-import { functions } from '../../../lib/firebase';
+import { callable } from '../../../lib/firebase';
 import { FeedbackComment } from '../../../types/feedback';
 
 interface Props {
@@ -8,11 +7,9 @@ interface Props {
 	isPing?: boolean;
 }
 
-export default async function addComment({ feedbackId, comment, isPing = false }: Props) {
-	const callable = httpsCallable(functions, 'addComment');
+export default async function addComment(data: Props) {
 	await callable({
-		feedbackId,
-		comment,
-		isPing,
+		name: 'addComment',
+		data,
 	});
 }

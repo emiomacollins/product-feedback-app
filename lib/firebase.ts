@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import { getFunctions } from 'firebase/functions';
+import { getFunctions, httpsCallable } from 'firebase/functions';
 
 const firebaseConfig = {
 	apiKey: 'AIzaSyBLttaqkr1nQ3BsU1g5xZtXyZNkwiO_4iA',
@@ -14,13 +14,17 @@ const firebaseConfig = {
 	measurementId: 'G-ZEKP1WRC5S',
 };
 
-// Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-// export const analytics = getAnalytics(app);
-
 export const db = getFirestore(app);
+
 export const auth = getAuth(app);
+
 export const functions = getFunctions(app);
-// TODO: remove for prod
-// connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+
+export const callable = ({ name, data }: { name: string; data?: any }) =>
+	httpsCallable(functions, name)(data);
+
+// if (process.env.NODE_ENV !== 'production') {
+// 	connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+// }

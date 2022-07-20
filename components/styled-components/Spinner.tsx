@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Color } from '../../types/colors';
 
-interface Props {
+interface StyleProps {
 	color?: Color;
 }
 
-function Spinner(props: Props) {
+function Spinner(props: StyleProps) {
 	return (
 		<Container>
 			<Icon {...props} />
@@ -25,7 +25,7 @@ const Container = styled.div`
 	left: 0;
 `;
 
-const Icon = styled.div<Props>`
+const Icon = styled.div<StyleProps>`
 	height: 2.5em;
 	aspect-ratio: 1;
 	border-radius: 50%;
