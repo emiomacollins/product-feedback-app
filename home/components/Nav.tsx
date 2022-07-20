@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import gradientPath from '../../assets/images/gradient-mobile.png';
 import closeIconPath from '../../assets/svgs/icon-close.svg';
@@ -22,8 +22,9 @@ import ThemeToggle from './ThemeToggle';
 export default function Nav() {
 	const { user, fullName, username } = useAuth();
 	const { expanded, toggle, setExpanded } = useToggle();
-	const navRef = useRef<HTMLDivElement>(null);
 	const [navHeight, setNavHeight] = useState(0);
+	const navRef = useRef<HTMLDivElement>(null);
+
 	const handleClose = () => setExpanded(false);
 
 	const calculateNavHeight = () => {
@@ -55,17 +56,15 @@ export default function Nav() {
 
 			<Sidebar expanded={expanded}>
 				<Grid gap={1}>
-					<Flex>
-						{user && (
-							<Fragment>
-								<StyledProfileDropdown withDropdown={false} />
-								<Grid gap={0}>
-									<FullName>{fullName}</FullName>
-									<Username>@{username}</Username>
-								</Grid>
-							</Fragment>
-						)}
-					</Flex>
+					{user && (
+						<Flex>
+							<StyledProfileDropdown withDropdown={false} />
+							<Grid gap={0}>
+								<FullName>{fullName}</FullName>
+								<Username>@{username}</Username>
+							</Grid>
+						</Flex>
+					)}
 
 					<Link href={routes.auth}>
 						<Button $color='blue' onClick={handleClose}>

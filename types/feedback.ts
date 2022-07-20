@@ -26,7 +26,7 @@ export enum FeedbackStatus {
 export const statusColors: { [status: string]: Color } = {
 	[FeedbackStatus.planned]: 'orange',
 	[FeedbackStatus.inProgress]: 'purple',
-	[FeedbackStatus.live]: 'blue',
+	[FeedbackStatus.live]: 'blue-light',
 };
 
 export interface FeedbackComment {

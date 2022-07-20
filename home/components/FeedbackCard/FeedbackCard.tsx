@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import ArrowDownIcon from '../../../assets/svgs/custom/ArrowDownIcon';
 import commentsIconPath from '../../../assets/svgs/icon-comments.svg';
 import { Badge } from '../../../components/styled-components/Badge';
@@ -45,9 +45,9 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 	);
 
 	return (
-		<Container mobileOnly={mobileOnly} {...props}>
+		<Container className={mobileOnly ? 'mobile' : 'desktop'} {...props}>
 			<Link href={`${routes.feedback}/${id}`} passHref>
-				<Info mobileOnly={mobileOnly}>
+				<Info>
 					<Title>{title}</Title>
 					<p>{details}</p>
 					<Badge plain as={'div'}>
@@ -60,11 +60,7 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 				message='Sign in to Upvote a Feedback'
 				onClick={() => toggleUpvoteMutation({ feedbackId: id })}
 			>
-				<Upvote
-					mobileOnly={mobileOnly}
-					$active={upVoted}
-					disabled={togglingUpvote}
-				>
+				<Upvote $active={upVoted} disabled={togglingUpvote}>
 					<StyledArrowIcon color={upVoted ? 'white' : 'blue'} />
 					<h4>{upVoteCount}</h4>
 				</Upvote>
@@ -78,24 +74,18 @@ export default function FeedbackCard({ feedback, mobileOnly = false, ...props }:
 	);
 }
 
-interface MobileOnlyProps {
-	mobileOnly: boolean;
-}
-
-const Container = styled(Card)<MobileOnlyProps>`
+const Container = styled(Card)`
 	display: grid;
 	color: var(--gray);
 	gap: 2rem 4rem;
 	grid-template-columns: 1fr auto;
 	padding-block: 2.5rem;
 
-	${(p) =>
-		!p.mobileOnly &&
-		css`
-			@media ${Breakpoints.tabletUp} {
-				grid-template-columns: auto 1fr auto;
-			}
-		`}
+	&.desktop {
+		@media ${Breakpoints.tabletUp} {
+			grid-template-columns: auto 1fr auto;
+		}
+	}
 `;
 
 const Title = styled.h3`
@@ -103,7 +93,7 @@ const Title = styled.h3`
 	transition: all 0.2s;
 `;
 
-const Info = styled.a<MobileOnlyProps>`
+const Info = styled.a`
 	${gridStyles}
 	grid-column: 1/-1;
 	order: 1;
@@ -126,21 +116,19 @@ const Info = styled.a<MobileOnlyProps>`
 		outline-offset: 7.5px;
 	}
 
-	${(p) =>
-		!p.mobileOnly &&
-		css`
-			@media ${Breakpoints.tabletUp} {
-				order: 2;
-				grid-column: unset;
-			}
-		`}
+	.desktop & {
+		@media ${Breakpoints.tabletUp} {
+			order: 2;
+			grid-column: unset;
+		}
+	}
 `;
 
 const StyledArrowIcon = styled(ArrowDownIcon)`
 	transform: rotate(180deg);
 `;
 
-const Upvote = styled(Badge)<MobileOnlyProps>`
+const Upvote = styled(Badge)`
 	width: 5rem;
 	min-width: max-content;
 	color: var(--${(p) => (p.$active ? 'white' : 'blue-dark')});
@@ -156,16 +144,14 @@ const Upvote = styled(Badge)<MobileOnlyProps>`
 		padding-inline: 1.2rem;
 	}
 
-	${(p) =>
-		!p.mobileOnly &&
-		css`
-			@media ${Breakpoints.tabletUp} {
-				order: 1;
-				align-self: flex-start;
-				display: grid;
-				padding: 1.5rem 1rem;
-			}
-		`}
+	.desktop & {
+		@media ${Breakpoints.tabletUp} {
+			order: 1;
+			align-self: flex-start;
+			display: grid;
+			padding: 1.5rem 1rem;
+		}
+	}
 `;
 
 const Comments = styled(Flex)`

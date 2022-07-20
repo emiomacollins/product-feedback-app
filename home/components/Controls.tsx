@@ -37,7 +37,7 @@ export default function Controls() {
 				</Show>
 
 				<StyledDropdown
-					label='Sort-by'
+					title='Sort-by'
 					setValue={handleSetSort}
 					selected={{ label: feedbackSort, value: feedbackSort }}
 					options={Object.values(FeedbackSortBy).map((sort) => ({

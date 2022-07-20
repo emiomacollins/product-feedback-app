@@ -101,6 +101,10 @@ const Dropdown = styled(Card)<ExpandedProps>`
 	transform: scale(var(--scale));
 	transition: all 0.2s;
 
+	.darkmode & {
+		background: var(--light);
+	}
+
 	${(p) =>
 		p.expanded &&
 		css`

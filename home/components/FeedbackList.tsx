@@ -23,8 +23,8 @@ export default function FeedbackList() {
 
 	return (
 		<Container gap={2}>
-			{processedFeedbacks.length > 0 ? (
-				processedFeedbacks.map((feedback) => (
+			{processedFeedbacks?.length > 0 ? (
+				processedFeedbacks?.map((feedback) => (
 					<FeedbackCard key={feedback.id} feedback={feedback} />
 				))
 			) : (

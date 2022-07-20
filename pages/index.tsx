@@ -30,7 +30,7 @@ const Home = ({ initialFeedbacks }: Props) => {
 
 			<Content>
 				<Show on={Breakpoints.tabletUp}>
-					<Cards gap={2.5}>
+					<Cards gap={2}>
 						<LogoCard>
 							<Flex spaceBetween>
 								<Logo />

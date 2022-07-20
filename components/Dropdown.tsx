@@ -12,14 +12,14 @@ export interface DropdownOption {
 }
 
 export interface DropdownProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-	label?: string;
+	title?: string;
 	options: DropdownOption[];
 	selected: DropdownOption;
 	setValue: (value: any) => any;
 }
 
 export default function Dropdown(props: DropdownProps) {
-	const { label, options, setValue, selected, ...restProps } = props;
+	const { title: label, options, setValue, selected, ...restProps } = props;
 	const { ref, expanded, toggle, setExpanded } = useToggleWithClickAway();
 	const canFocus = expanded ? {} : { tabIndex: -1 };
 
@@ -104,6 +104,10 @@ const Options = styled.div<ExpandedProps>`
 	opacity: 0;
 	transition: transform 0.2s, opacity 0.1s;
 	z-index: 99;
+
+	.darkmode & {
+		background: var(--light);
+	}
 
 	${(p) =>
 		p.expanded &&
