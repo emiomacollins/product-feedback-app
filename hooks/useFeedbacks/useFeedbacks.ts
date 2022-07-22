@@ -26,11 +26,7 @@ export function useFeedbacks({ options }: Props = {}) {
 		type Order = 'asc' | 'desc';
 		type sortCallback = (a: Feedback, b: Feedback) => number;
 
-		const sortByMostRecent: sortCallback = (a, b) => {
-			const dateA = new Date(a.dateAdded);
-			const dateB = new Date(b.dateAdded);
-			return dateA > dateB ? -1 : 1;
-		};
+		const sortByMostRecent: sortCallback = () => 1; // most recent by default
 
 		const sortByUpVotes = (order: Order, a: Feedback, b: Feedback) => {
 			const oneGreater =
@@ -47,7 +43,7 @@ export function useFeedbacks({ options }: Props = {}) {
 			return 1;
 		};
 
-		const sortByFunctionMappings: { [FeedbackSortBy: string]: sortCallback } = {
+		const sortCallbackMap: { [FeedbackSortBy: string]: sortCallback } = {
 			[FeedbackSortBy.mostRecent]: sortByMostRecent,
 			[FeedbackSortBy.mostUpvotes]: (...args) => sortByUpVotes('asc', ...args),
 			[FeedbackSortBy.leastUpvotes]: (...args) => sortByUpVotes('desc', ...args),
@@ -55,7 +51,8 @@ export function useFeedbacks({ options }: Props = {}) {
 			[FeedbackSortBy.leastComments]: (...args) => sortByComments('desc', ...args),
 		};
 
-		const sortedFeedbacks = [...feedbacks].sort(sortByFunctionMappings[sortBy]);
+		const sortedFeedbacks = [...feedbacks].sort(sortCallbackMap[sortBy]);
+
 		const filteredFeedbacks = sortedFeedbacks.filter((feedback) => {
 			return categoryFilter ? feedback.category === categoryFilter : true;
 		});

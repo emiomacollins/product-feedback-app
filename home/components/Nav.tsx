@@ -58,7 +58,7 @@ export default function Nav() {
 				<Grid gap={1}>
 					{user && (
 						<Flex>
-							<StyledProfileDropdown withDropdown={false} />
+							<StyledProfileDropdown showDropdown={false} />
 							<Grid gap={0}>
 								<FullName>{fullName}</FullName>
 								<Username>@{username}</Username>

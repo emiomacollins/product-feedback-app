@@ -3,11 +3,11 @@ import useToggle from './useToggle';
 
 export default function useToggleWithClickAway(initialValue: boolean = false) {
 	const { expanded, setExpanded, toggle } = useToggle(initialValue);
-	const ref = useRef<any>();
+	const ref = useRef<HTMLElement | null>(null);
 
 	useEffect(() => {
 		const onClick = (e: MouseEvent) => {
-			if (ref.current?.contains(e.target)) return;
+			if (ref.current?.contains(e.target as Node)) return;
 			setExpanded(false);
 		};
 

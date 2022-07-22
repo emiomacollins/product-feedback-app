@@ -29,7 +29,7 @@ export default function Dropdown(props: DropdownProps) {
 	}
 
 	return (
-		<Container ref={ref}>
+		<Container ref={ref as any}>
 			<Toggle onClick={toggle} expanded={expanded} {...restProps}>
 				{label ? (
 					<p>

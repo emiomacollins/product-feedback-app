@@ -8,17 +8,17 @@ import { useAuth } from '../../hooks/useAuth';
 import useToggleWithClickAway from '../../hooks/useToggleWithClickAway';
 
 interface Props {
-	withDropdown?: boolean;
+	showDropdown?: boolean;
 }
 
-export default function ProfileDropdown({ withDropdown = true, ...props }: Props) {
+export default function ProfileDropdown({ showDropdown = true, ...props }: Props) {
 	const { user, photoUrl } = useAuth();
 	const { expanded, toggle, ref } = useToggleWithClickAway();
 	const canFocus = expanded ? {} : { tabIndex: -1 };
 	const signedIn = user ? true : false;
 
 	return (
-		<Container ref={ref} {...props}>
+		<Container ref={ref as any} {...props}>
 			<Toggle signedIn={signedIn} onClick={toggle}>
 				<ProfilePic
 					src={photoUrl || noUserIconPath.src}
@@ -27,7 +27,7 @@ export default function ProfileDropdown({ withDropdown = true, ...props }: Props
 				/>
 			</Toggle>
 
-			{withDropdown && (
+			{showDropdown && (
 				<Dropdown expanded={expanded}>
 					<Link href={routes.auth}>
 						<Button {...canFocus} $color='blue'>

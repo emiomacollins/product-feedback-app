@@ -34,6 +34,8 @@ const Label = styled.p`
 `;
 
 const Toggle = styled.button<ThemeProps>`
+	--circle-width: 2rem;
+	--gap: 0.5rem;
 	position: relative;
 	background: var(--gray);
 	border-radius: 10em;
@@ -49,18 +51,15 @@ const Toggle = styled.button<ThemeProps>`
 	${(p) =>
 		p.theme === 'darkmode' &&
 		css`
-			justify-content: right;
 			${Circle} {
-				left: calc(100% - var(--width) - var(--gap));
+				left: calc(100% - var(--circle-width) - var(--gap));
 			}
 		`}
 `;
 
 const Circle = styled.div`
-	--width: 2rem;
-	--gap: 0.5rem;
 	background: var(--white);
-	width: var(--width);
+	width: var(--circle-width);
 	aspect-ratio: 1;
 	border-radius: 100%;
 	position: absolute;
