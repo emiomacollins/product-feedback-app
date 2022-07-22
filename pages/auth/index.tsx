@@ -74,8 +74,8 @@ export default function Auth() {
 
 				await createUserWithEmailAndPassword(auth, email, password);
 
-				const usersRef = doc(db, `users/${auth.currentUser?.uid}`);
-				await setDoc(usersRef, {
+				const userRef = doc(db, `users/${auth.currentUser?.uid}`);
+				await setDoc(userRef, {
 					fullName,
 					photoUrl: photoUrl?.url,
 					username,

@@ -42,8 +42,8 @@ export default function Comment(props: Props) {
 		user: currentUser,
 	} = useAuth();
 
-	const { text, user } = comment || reply || {};
-	const { fullName, photoUrl, username } = user || {};
+	const { text, user } = (comment || reply) as FeedbackComment | FeedbackCommentReply;
+	const { fullName, photoUrl, username } = user;
 	const hasTag = reply?.text.startsWith('@');
 	const taggedUsername = hasTag ? text?.split(' ')[0] : '';
 	const restOfText = hasTag ? text?.split(' ').slice(1).join(' ') : text;
