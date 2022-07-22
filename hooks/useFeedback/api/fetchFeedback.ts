@@ -3,8 +3,6 @@ import { db } from '../../../lib/firebase';
 import { Feedback } from '../../../types/feedback';
 
 export default async function fetchFeedback(feedbackId: string) {
-	// console.log(`fetching feedback ${feedbackId}`);
-
 	const feedbackRef = doc(db, `feedbacks/${feedbackId}`);
 	const snapshot = await getDoc(feedbackRef);
 
@@ -14,6 +12,7 @@ export default async function fetchFeedback(feedbackId: string) {
 	return {
 		id: snapshot.id,
 		...data,
+		// serialize for ssr
 		dateAdded: new Date(data.dateAdded.toDate()).toISOString(),
 	} as Feedback;
 }

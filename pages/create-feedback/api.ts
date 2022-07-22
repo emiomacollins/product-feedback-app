@@ -8,6 +8,7 @@ export interface CreateFeedbackProps {
 	category: FeedbackCategory;
 }
 
+// TODO: either add security rules to validate properties or use cloud functions to create
 export default async function createFeedback(props: CreateFeedbackProps) {
 	const feedbacksRef = collection(db, `feedbacks`);
 	await addDoc(feedbacksRef, {

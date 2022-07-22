@@ -1,16 +1,14 @@
 import { useQuery, UseQueryOptions } from 'react-query';
-import { FeedbackComment } from '../../types/feedback';
 import { fetchFeedbackComments } from './api/fetchFeedbackComments';
 
 export const fetchFeedbackCommentsKey = `fetchFeedbackComments`;
 
 interface Props {
 	id: string;
-	initialValue?: FeedbackComment[];
 	options?: UseQueryOptions;
 }
 
-export function useFeedbackComments({ id, initialValue, options }: Props) {
+export function useFeedbackComments({ id, options }: Props) {
 	const query = useQuery(
 		[fetchFeedbackCommentsKey, id],
 		({ queryKey }) => {

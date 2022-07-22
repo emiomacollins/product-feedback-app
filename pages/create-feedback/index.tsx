@@ -68,7 +68,7 @@ export default function CreateFeedback({ editing }: Props) {
 		},
 	});
 
-	// todo: add popup for delete feedback btn
+	// TODO: add popup for delete feedback confirmation
 
 	return (
 		<Container success={success}>

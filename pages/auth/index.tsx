@@ -68,10 +68,12 @@ export default function Auth() {
 					}
 				}
 
-				if (!usernameIsValid) {
+				if (usernameIsValid === false) {
 					throw new Error('Username is taken');
 				}
+
 				await createUserWithEmailAndPassword(auth, email, password);
+
 				const usersRef = doc(db, `users/${auth.currentUser?.uid}`);
 				await setDoc(usersRef, {
 					fullName,
@@ -96,17 +98,19 @@ export default function Auth() {
 		<Container>
 			<GoBackLink to={routes.home} />
 			<Formik
-				initialValues={{
-					email: '',
-					password: '',
-					...(isSignUp
-						? {
-								fullName: '',
-								username: '',
-								photoUrl: { label: '', url: '' },
-						  }
-						: {}),
-				}}
+				initialValues={
+					{
+						email: '',
+						password: '',
+						...(isSignUp
+							? {
+									fullName: '',
+									username: '',
+									photoUrl: { label: '', url: '' },
+							  }
+							: {}),
+					} as FormikValues
+				}
 				validationSchema={yup.object({
 					email: yup.string().email('invalid email').required('required'),
 					password: yup
@@ -119,7 +123,7 @@ export default function Auth() {
 								username: yup.string().required('required'),
 								photoUrl: yup.object({
 									label: yup.string(),
-									// TODO: validate
+									// TODO: validate (how do you handle default images?)
 									url: yup.string().required('required'),
 								}),
 						  }

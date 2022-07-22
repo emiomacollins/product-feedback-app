@@ -22,17 +22,11 @@ export default function EditFeedback() {
 	return (
 		<LoadQuery query={query}>
 			{(feedback: Feedback) => {
-				const userOwnsFeedback = feedback.creator === user?.uid;
-
-				if (!userOwnsFeedback) {
+				if (feedback.creator !== user?.uid) {
 					router.push(routes.createFeedback);
+					return <Fragment></Fragment>;
 				}
-
-				return userOwnsFeedback ? (
-					<CreateFeedback editing={feedback} />
-				) : (
-					<Fragment></Fragment>
-				);
+				return <CreateFeedback editing={feedback} />;
 			}}
 		</LoadQuery>
 	);
