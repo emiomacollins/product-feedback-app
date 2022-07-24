@@ -19,6 +19,7 @@ export function useFeedbacks({ options }: Props = {}) {
 	const categoryFilter = useSelector(getFeedbackCategoryFilter);
 	const query = useQuery(fetchFeedbacksKey, fetchFeedbacks, options as any);
 
+	// TODO: these memos should not be in a hook. consider using redux
 	const processedFeedbacks = useMemo(() => {
 		const { data: feedbacks } = query;
 		if (!feedbacks) return [];

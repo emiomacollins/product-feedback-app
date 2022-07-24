@@ -4,7 +4,6 @@ import LoadQuery from '../../components/LoadQuery';
 import { routes } from '../../constants/routes';
 import { useAuth } from '../../hooks/useAuth';
 import { useFeedback } from '../../hooks/useFeedback/useFeedback';
-import { Feedback } from '../../types/feedback';
 import CreateFeedback from '../create-feedback';
 
 export default function EditFeedback() {
@@ -21,7 +20,7 @@ export default function EditFeedback() {
 
 	return (
 		<LoadQuery query={query}>
-			{(feedback: Feedback) => {
+			{(feedback) => {
 				if (feedback.creator !== user?.uid) {
 					router.push(routes.createFeedback);
 					return <Fragment></Fragment>;

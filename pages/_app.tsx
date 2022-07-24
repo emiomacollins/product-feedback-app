@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Fragment, ReactNode, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import { Provider, useSelector } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import styled from 'styled-components';
@@ -27,7 +28,7 @@ const queryClient = new QueryClient({
 export default function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
+			<PersistGate persistor={persistor}>
 				<QueryClientProvider client={queryClient}>
 					<AuthProvider>
 						<Wrapper>
@@ -53,6 +54,8 @@ function Wrapper({ children }: WrapperProps) {
 
 	return (
 		<Fragment>
+			<ReactQueryDevtools initialIsOpen={false} />
+
 			<Head>
 				<title>Feedback Forum</title>
 				<link rel='icon' href='/favicon_.ico' />
